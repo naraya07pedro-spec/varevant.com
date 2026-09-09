@@ -31,11 +31,18 @@ for p in ROOT.rglob('*.html'):
     ok(f'{rel} canonical', 'rel="canonical"' in txt, 'missing canonical')
     ok(f'{rel} noindex', 'noindex' not in txt.lower(), 'page is noindex')
     for href in re.findall(r'href="([^"]+)"', txt):
-        if href.startswith(('http://','https://','mailto:','tel:','#','javascript:')): continue
-        target=(p.parent/href.split('#')[0].split('?')[0]).resolve()
-        if href.endswith('/'):
+        if href.startswith(('http://','https://','mailto:','tel:','#','javascript:')):
+            continue
+        clean=href.split('#')[0].split('?')[0]
+        if not clean:
+            continue
+        if clean.startswith('/'):
+            target=(ROOT/clean.lstrip('/')).resolve()
+        else:
+            target=(p.parent/clean).resolve()
+        if clean.endswith('/'):
             target=target/'index.html'
-        if href and not target.exists():
+        if not target.exists():
             ok(f'{rel} internal link {href}', False, 'target missing')
 
 # JSON-LD syntax check for every script block.
