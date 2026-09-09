@@ -36,7 +36,7 @@ jobs:
       - name: Commit daily log only when changed
         shell: bash
         run: |
-          if git diff --quiet -- geo/logs; then
+          if [[ -z "$(git status --porcelain -- geo/logs)" ]]; then
             echo "No GEO log changes to commit."
             exit 0
           fi
