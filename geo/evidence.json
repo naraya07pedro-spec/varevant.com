@@ -1,0 +1,26 @@
+{
+  "policy": "Claims may be reused as citation-supporting evidence only when the repository contains a verifiable source or the operator verifies an external source. Existing first-party claims are not automatically treated as independent evidence.",
+  "claims": [
+    {
+      "claim": "$25K+ captured in extra revenue",
+      "location": "index.html",
+      "status": "EVIDENCE_REQUIRED",
+      "reuse_allowed": false,
+      "notes": "Existing first-party homepage claim. No supporting dataset or source file is present in the repository audit. Do not propagate into new GEO pages or research until verified."
+    },
+    {
+      "claim": "38 leads sorted automatically",
+      "location": "index.html",
+      "status": "EVIDENCE_REQUIRED",
+      "reuse_allowed": false,
+      "notes": "Existing first-party homepage claim. No supporting dataset or source file is present in the repository audit."
+    },
+    {
+      "claim": "15 clients closed hands-free",
+      "location": "index.html",
+      "status": "EVIDENCE_REQUIRED",
+      "reuse_allowed": false,
+      "notes": "Existing first-party homepage claim. No supporting dataset or source file is present in the repository audit."
+    }
+  ]
+}
