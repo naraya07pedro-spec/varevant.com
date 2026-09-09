@@ -36,6 +36,16 @@ viewport?.addEventListener('pointerleave',()=>dragging=false);
 const tooltip=$('.hotspot-tooltip');
 $$('.hotspot').forEach(h=>h.addEventListener('click',()=>{tooltip.textContent=h.dataset.hotspot;tooltip.classList.add('show');clearTimeout(window.hotspotTimer);window.hotspotTimer=setTimeout(()=>tooltip.classList.remove('show'),4200)}));
 
+// Keep the new HVAC service page connected to the site's rendered navigation graph.
+const footerLinks=$('.footer-links');
+if(footerLinks && !footerLinks.querySelector('a[href="/ai-automation-for-hvac/"]')){
+  const hvacLink=document.createElement('a');
+  hvacLink.href='/ai-automation-for-hvac/';
+  hvacLink.textContent='HVAC Automation';
+  hvacLink.title='AI Automation for HVAC Companies';
+  footerLinks.prepend(hvacLink);
+}
+
 const form=$('#consult-form'), success=$('#form-success');
 form?.addEventListener('submit',e=>{
  e.preventDefault();
