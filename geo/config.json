@@ -1,0 +1,61 @@
+{
+  "version": "1.0.0",
+  "site": "https://varevant.com",
+  "repository": "naraya07pedro-spec/varevant.com",
+  "timezone": "Asia/Jakarta",
+  "schedule_utc": "01:00",
+  "max_actions_per_run": 1,
+  "minimum_opportunity_score": 80,
+  "minimum_quality_score": 90,
+  "priority_markets": [
+    "HVAC",
+    "Roofing",
+    "B2B Agencies"
+  ],
+  "positioning": [
+    "AI Automation",
+    "Revenue Automation",
+    "Speed-to-Lead",
+    "AI Agents",
+    "n8n Automation",
+    "B2B Service Businesses"
+  ],
+  "opportunity_weights": {
+    "commercial_value": 0.25,
+    "ai_recommendation_gap": 0.25,
+    "competitor_advantage": 0.15,
+    "existing_varevant_evidence": 0.15,
+    "ranking_citation_feasibility": 0.10,
+    "authority_opportunity": 0.10
+  },
+  "safe_actions": [
+    "CREATE_NEW_PAGE",
+    "UPDATE_EXISTING_PAGE",
+    "ADD_INTERNAL_LINKS",
+    "ADD_STRUCTURED_DATA",
+    "IMPROVE_ENTITY_SIGNAL",
+    "IMPROVE_CITATION_SUPPORT",
+    "IMPROVE_CASE_STUDY",
+    "FIX_TECHNICAL_SEO",
+    "FIX_INDEXABILITY",
+    "IMPROVE_EXISTING_CONTENT",
+    "NO_ACTION"
+  ],
+  "high_risk": [
+    "homepage positioning overhaul",
+    "pricing changes",
+    "brand identity redesign",
+    "domain or DNS changes",
+    "authentication changes",
+    "billing changes",
+    "database destructive actions",
+    "deleting major pages",
+    "changing legal claims",
+    "changing client claims",
+    "changing core deployment infrastructure"
+  ],
+  "cost_policy": {
+    "default_mode": "FREE_MODE",
+    "paid_services_require_approval": true
+  }
+}
