@@ -1,0 +1,42 @@
+{
+  "date": "2026-09-10",
+  "run_id": "20260910T052426Z-3ffc686c",
+  "mode": "daily",
+  "measurement": {
+    "ChatGPT_SOV": "NOT_MEASURED",
+    "Perplexity_SOV": "NOT_MEASURED",
+    "Gemini_SOV": "NOT_MEASURED"
+  },
+  "top_opportunity": {
+    "market": "B2B Agencies",
+    "target_page": "/white-label-ai-automation/",
+    "proposed_action": "CREATE_NEW_PAGE",
+    "reason": "Commercial prompt coverage exists in the library but dedicated B2B Agencies topical coverage is missing.",
+    "components": {
+      "commercial_value": 90,
+      "ai_recommendation_gap": 95,
+      "competitor_advantage": 70,
+      "existing_varevant_evidence": 60,
+      "ranking_citation_feasibility": 85,
+      "authority_opportunity": 65
+    },
+    "opportunity_score": 80.8
+  },
+  "opportunity_score": 80.8,
+  "action": "NO_ACTION",
+  "target_page": "/white-label-ai-automation/",
+  "reason": "FREE_MODE never fabricates external LLM visibility. Repository-only diagnosis completed; execution is gated to a connected operator with fresh research.",
+  "files_changed": [],
+  "quality_score": 100,
+  "quality_checks": {
+    "robots_exists": true,
+    "sitemap_exists": true,
+    "canonical_home": true,
+    "organization_schema": true,
+    "prompt_library": true
+  },
+  "commit_sha": "4b7621caa0fff65a5610a3d4e319a0e9b7cb457b",
+  "deployment_status": "NOT_CHECKED",
+  "errors": [],
+  "next_recommended_action": "CREATE_NEW_PAGE"
+}
