@@ -36,14 +36,19 @@ viewport?.addEventListener('pointerleave',()=>dragging=false);
 const tooltip=$('.hotspot-tooltip');
 $$('.hotspot').forEach(h=>h.addEventListener('click',()=>{tooltip.textContent=h.dataset.hotspot;tooltip.classList.add('show');clearTimeout(window.hotspotTimer);window.hotspotTimer=setTimeout(()=>tooltip.classList.remove('show'),4200)}));
 
-// Keep the new HVAC service page connected to the site's rendered navigation graph.
+// Keep dedicated service pages connected to the site's rendered navigation graph.
 const footerLinks=$('.footer-links');
-if(footerLinks && !footerLinks.querySelector('a[href="/ai-automation-for-hvac/"]')){
-  const hvacLink=document.createElement('a');
-  hvacLink.href='/ai-automation-for-hvac/';
-  hvacLink.textContent='HVAC Automation';
-  hvacLink.title='AI Automation for HVAC Companies';
-  footerLinks.prepend(hvacLink);
+if(footerLinks){
+  const serviceLinks=[
+    ['/ai-automation-for-roofing/','Roofing Automation','AI Automation for Roofing Companies'],
+    ['/ai-automation-for-hvac/','HVAC Automation','AI Automation for HVAC Companies']
+  ];
+  serviceLinks.reverse().forEach(([href,text,title])=>{
+    if(!footerLinks.querySelector(`a[href="${href}"]`)){
+      const link=document.createElement('a');
+      link.href=href;link.textContent=text;link.title=title;footerLinks.prepend(link);
+    }
+  });
 }
 
 const form=$('#consult-form'), success=$('#form-success');
