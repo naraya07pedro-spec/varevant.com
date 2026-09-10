@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 import argparse, datetime as dt, hashlib, json, os, pathlib, re
+from zoneinfo import ZoneInfo
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 GEO = ROOT / "geo"
 LOGS = GEO / "logs"
+WIB = ZoneInfo("Asia/Jakarta")
 
 
 def load_json(path):
@@ -45,7 +47,6 @@ def discover(config, prompts, pages):
         coverage = sum(1 for s in signals if s.lower() in joined) / len(signals)
         route_exists = (ROOT / routes[market]).exists()
         commercial = max(p["commercial_value"] for p in relevant)
-        # FREE_MODE uses only observable first-party site signals. It does not fabricate LLM SOV.
         opp = {
             "commercial_value": commercial,
             "ai_recommendation_gap": 95 if not route_exists else max(20, round((1-coverage)*100)),
@@ -76,6 +77,35 @@ def quality_snapshot():
     return checks, round(sum(checks.values()) / len(checks) * 100)
 
 
+def preserve_daily_state(existing, fresh):
+    if not existing:
+        return fresh
+    protected = {
+        "proactive_action_taken",
+        "proactive_action",
+        "proactive_target_page",
+        "proactive_commit_sha",
+        "primary_run",
+        "innovation_proposal",
+    }
+    for key in protected:
+        if key in existing:
+            fresh[key] = existing[key]
+    history = existing.get("run_history", [])
+    if not isinstance(history, list):
+        history = []
+    history.append({
+        "run_id": fresh["run_id"],
+        "mode": fresh["mode"],
+        "observed_at": fresh["observed_at"],
+        "action": fresh["action"],
+        "top_opportunity": fresh["top_opportunity"],
+        "quality_score": fresh["quality_score"],
+    })
+    fresh["run_history"] = history[-12:]
+    return fresh
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", choices=["audit", "decision", "daily"], default="daily")
@@ -86,17 +116,18 @@ def main():
     candidates = discover(config, prompts, pages)
     top = candidates[0] if candidates else None
     action = "NO_ACTION"
-    if top and top["opportunity_score"] >= config["minimum_opportunity_score"]:
-        # In FREE_MODE the repository engine diagnoses and logs. Content authoring is intentionally gated
-        # because no paid LLM/search API is assumed and fabricated research is forbidden.
-        action = "NO_ACTION"
     checks, qscore = quality_snapshot()
-    now = dt.datetime.now(dt.timezone.utc)
-    run_id = now.strftime("%Y%m%dT%H%M%SZ") + "-" + hashlib.sha1(str(now.timestamp()).encode()).hexdigest()[:8]
+
+    now_utc = dt.datetime.now(dt.timezone.utc)
+    now_local = now_utc.astimezone(WIB)
+    local_date = now_local.date().isoformat()
+    run_id = now_utc.strftime("%Y%m%dT%H%M%SZ") + "-" + hashlib.sha1(str(now_utc.timestamp()).encode()).hexdigest()[:8]
+
     log = {
-        "date": now.date().isoformat(),
+        "date": local_date,
         "run_id": run_id,
         "mode": args.mode,
+        "observed_at": now_local.isoformat(),
         "measurement": {
             "ChatGPT_SOV": "NOT_MEASURED",
             "Perplexity_SOV": "NOT_MEASURED",
@@ -115,8 +146,11 @@ def main():
         "errors": [],
         "next_recommended_action": top["proposed_action"] if top else "NO_ACTION",
     }
+
     LOGS.mkdir(parents=True, exist_ok=True)
-    out = LOGS / f"{now.date().isoformat()}.json"
+    out = LOGS / f"{local_date}.json"
+    existing = load_json(out) if out.exists() else None
+    log = preserve_daily_state(existing, log)
     out.write_text(json.dumps(log, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(log, indent=2))
 
