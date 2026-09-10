@@ -1,0 +1,52 @@
+{
+  "date": "2026-09-10",
+  "run_mode": "PRIMARY_ACTION_RUN",
+  "measurement": {
+    "ChatGPT_SOV": "NOT_MEASURED",
+    "Perplexity_SOV": "NOT_MEASURED",
+    "Gemini_SOV": "NOT_MEASURED"
+  },
+  "top_opportunity": {
+    "market": "Roofing",
+    "action": "CREATE_NEW_PAGE",
+    "target_page": "/ai-automation-for-roofing/",
+    "score": 88.3,
+    "components": {
+      "commercial_value": 95,
+      "ai_recommendation_gap": 95,
+      "competitor_advantage": 90,
+      "existing_varevant_evidence": 75,
+      "ranking_citation_feasibility": 90,
+      "authority_opportunity": 70
+    }
+  },
+  "evidence": [
+    "VAREVANT production had a dedicated HVAC page but no dedicated Roofing page at run start.",
+    "Fresh commercial-intent search surfaced dedicated roofing AI automation competitors including PardisNet and Madifyx.",
+    "Competitor pages emphasize roofing-specific missed-call response, lead qualification, CRM integration, booking and estimate follow-up.",
+    "VAREVANT homepage already states Roofing as a target market, so a dedicated roofing page strengthens an existing positioning rather than inventing a new one."
+  ],
+  "files_changed": [
+    "ai-automation-for-roofing/index.html",
+    "sitemap.xml",
+    "script.js",
+    "llms.txt",
+    "geo/logs/2026-09-10-primary.json"
+  ],
+  "quality": {
+    "status": "PASS_STATIC_REVIEW",
+    "score": 100,
+    "notes": "New page contains title, meta description, canonical, index/follow directive, valid structured-data structure, no fabricated performance claims, and links only to existing local routes or mailto targets. Existing homepage and HVAC page were not modified."
+  },
+  "innovation_proposal": {
+    "observed_gap": "Competitors increasingly package ROI calculators, demos and proof-heavy vertical assets that are more citable than generic service pages.",
+    "evidence": "Fresh results included a public ROI calculator and vertical live-demo patterns among AI automation competitors.",
+    "target_buyer_query_cluster": "HVAC and Roofing buyers comparing AI automation vendors and estimating operational value.",
+    "expected_citation_commercial_value": "High if based on transparent assumptions and real first-party or public datasets.",
+    "effort": "MEDIUM",
+    "risk": "MEDIUM",
+    "confidence": "0.78",
+    "status": "VALIDATE",
+    "proposal": "Validate a transparent Speed-to-Lead Cost-of-Delay Calculator or diagnostic before building; do not publish benchmark numbers without a defensible dataset."
+  }
+}
