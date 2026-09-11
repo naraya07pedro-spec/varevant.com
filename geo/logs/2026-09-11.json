@@ -37,7 +37,7 @@
     "prompt_library": true
   },
   "commit_sha": "11ab6687c5f82e811f075ed7bed0fb453d71075a",
-  "deployment_status": "NOT_CHECKED",
+  "deployment_status": "MAIN_MERGED_PRODUCTION_FETCH_PENDING",
   "errors": [],
   "next_recommended_action": "IMPROVE_EXISTING_CONTENT",
   "primary_run": {
@@ -76,6 +76,27 @@
     "proposal": "Transparent Speed-to-Lead Cost-of-Delay Diagnostic using user-entered values only, with no invented industry benchmarks."
   },
   "proactive_action_taken": true,
+  "verification_run": {
+    "run_mode": "VERIFICATION_FIRST_RUN",
+    "observed_at": "2026-09-11T20:00:31+07:00",
+    "action": "CORRECTIVE_REPAIR",
+    "reason": "Fresh production crawler output for the homepage did not expose the JavaScript-injected HVAC, Roofing, or White-Label links. Service discovery therefore depended on client-side rendering for non-JS crawlers.",
+    "repair": "Added the three existing service links directly to static homepage footer HTML; no new growth initiative or content page was created.",
+    "files_changed": ["index.html"],
+    "repair_commit": "509a3fcd53b845d6ad55a8bd1d2cc147bc39ed19",
+    "verification": {
+      "service_pages_exist_in_repository": true,
+      "sitemap_contains_home_hvac_roofing_white_label": true,
+      "robots_allows_crawl": true,
+      "white_label_canonical_present": true,
+      "white_label_index_follow_present": true,
+      "white_label_structured_data_present": true,
+      "static_homepage_service_links_present_after_repair": true,
+      "external_search_index_white_label": "NOT_FOUND_YET",
+      "production_route_fetch_white_label": "NOT_VERIFIED_BY_AVAILABLE_WEB_FETCH"
+    },
+    "result": "REPAIR_MERGED_TO_MAIN"
+  },
   "run_history": [
     {
       "run_id": "20260911T052203Z-783355f8",
@@ -98,6 +119,14 @@
         "opportunity_score": 63.2
       },
       "quality_score": 100
+    },
+    {
+      "run_id": "20260911T200031+0700-verification",
+      "mode": "verification",
+      "observed_at": "2026-09-11T20:00:31+07:00",
+      "action": "CORRECTIVE_REPAIR",
+      "target_page": "/white-label-ai-automation/",
+      "repair_commit": "509a3fcd53b845d6ad55a8bd1d2cc147bc39ed19"
     }
   ]
 }
