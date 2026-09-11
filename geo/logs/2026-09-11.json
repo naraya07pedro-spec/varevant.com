@@ -1,9 +1,45 @@
 {
   "date": "2026-09-11",
-  "proactive_action_taken": true,
-  "proactive_action": "CREATE_NEW_PAGE",
-  "proactive_target_page": "/white-label-ai-automation/",
-  "opportunity_score": 86.8,
+  "run_id": "20260911T052203Z-783355f8",
+  "mode": "daily",
+  "observed_at": "2026-09-11T12:22:03.793473+07:00",
+  "measurement": {
+    "ChatGPT_SOV": "NOT_MEASURED",
+    "Perplexity_SOV": "NOT_MEASURED",
+    "Gemini_SOV": "NOT_MEASURED"
+  },
+  "top_opportunity": {
+    "market": "B2B Agencies",
+    "target_page": "/white-label-ai-automation/",
+    "proposed_action": "IMPROVE_EXISTING_CONTENT",
+    "reason": "Commercial prompt coverage exists in the library but dedicated B2B Agencies topical coverage is present but incomplete.",
+    "components": {
+      "commercial_value": 90,
+      "ai_recommendation_gap": 50,
+      "competitor_advantage": 45,
+      "existing_varevant_evidence": 60,
+      "ranking_citation_feasibility": 60,
+      "authority_opportunity": 65
+    },
+    "opportunity_score": 63.2
+  },
+  "opportunity_score": 63.2,
+  "action": "NO_ACTION",
+  "target_page": "/white-label-ai-automation/",
+  "reason": "FREE_MODE never fabricates external LLM visibility. Repository-only diagnosis completed; execution is gated to a connected operator with fresh research.",
+  "files_changed": [],
+  "quality_score": 100,
+  "quality_checks": {
+    "robots_exists": true,
+    "sitemap_exists": true,
+    "canonical_home": true,
+    "organization_schema": true,
+    "prompt_library": true
+  },
+  "commit_sha": "11ab6687c5f82e811f075ed7bed0fb453d71075a",
+  "deployment_status": "NOT_CHECKED",
+  "errors": [],
+  "next_recommended_action": "IMPROVE_EXISTING_CONTENT",
   "primary_run": {
     "run_mode": "PRIMARY_ACTION_RUN",
     "action": "CREATE_NEW_PAGE",
@@ -25,25 +61,8 @@
       "geo/logs/2026-09-11.json"
     ]
   },
-  "measurement": {
-    "ChatGPT_SOV": "NOT_MEASURED",
-    "Perplexity_SOV": "NOT_MEASURED",
-    "Gemini_SOV": "NOT_MEASURED"
-  },
-  "fresh_evidence": {
-    "varevant_site_search": "NO_RELIABLE_INDEXED_VERTICAL_RESULT_OBSERVED_IN_FRESH_SEARCH",
-    "competitor_pattern": "Dedicated vertical and white-label pages repeatedly expose explicit buyer problem, systems delivered, integration stack, delivery model, and proof or demonstration layers.",
-    "production_homepage_fetch": "HEALTHY",
-    "existing_unsupported_numeric_claims": "EVIDENCE_REQUIRED"
-  },
-  "continuous_intelligence": {
-    "last_run": "2026-09-10 VERIFICATION_FIRST_RUN repaired daily state preservation.",
-    "24h": "HVAC and Roofing topical routes exist; external indexing remains unverified in accessible fresh search. White-label commercial coverage was still absent before this action.",
-    "7d": "Site moved from homepage-only indexed architecture toward three dedicated commercial-intent vertical/partner routes. No legitimate SOV trend can yet be claimed.",
-    "30d": "Insufficient persistent measurement history for recommendation-share or citation trend claims. Use NOT_MEASURED until a legitimate measurement source exists.",
-    "repeated_competitor_advantage": "Specialized pages plus concrete demos/calculators/proof and explicit tool/integration details.",
-    "persistent_bottleneck": "Independent authority, verifiable proof, and external indexing/citation signals remain weaker than topical page coverage."
-  },
+  "proactive_target_page": "/white-label-ai-automation/",
+  "proactive_action": "CREATE_NEW_PAGE",
   "innovation_proposal": {
     "status": "VALIDATE",
     "type": "STRATEGIC_PROPOSAL",
@@ -55,5 +74,30 @@
     "risk": "LOW_TO_MEDIUM if calculations use user-supplied inputs and disclose assumptions",
     "confidence": "MEDIUM_HIGH",
     "proposal": "Transparent Speed-to-Lead Cost-of-Delay Diagnostic using user-entered values only, with no invented industry benchmarks."
-  }
+  },
+  "proactive_action_taken": true,
+  "run_history": [
+    {
+      "run_id": "20260911T052203Z-783355f8",
+      "mode": "daily",
+      "observed_at": "2026-09-11T12:22:03.793473+07:00",
+      "action": "NO_ACTION",
+      "top_opportunity": {
+        "market": "B2B Agencies",
+        "target_page": "/white-label-ai-automation/",
+        "proposed_action": "IMPROVE_EXISTING_CONTENT",
+        "reason": "Commercial prompt coverage exists in the library but dedicated B2B Agencies topical coverage is present but incomplete.",
+        "components": {
+          "commercial_value": 90,
+          "ai_recommendation_gap": 50,
+          "competitor_advantage": 45,
+          "existing_varevant_evidence": 60,
+          "ranking_citation_feasibility": 60,
+          "authority_opportunity": 65
+        },
+        "opportunity_score": 63.2
+      },
+      "quality_score": 100
+    }
+  ]
 }
