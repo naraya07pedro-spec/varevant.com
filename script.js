@@ -40,6 +40,7 @@ $$('.hotspot').forEach(h=>h.addEventListener('click',()=>{tooltip.textContent=h.
 const footerLinks=$('.footer-links');
 if(footerLinks){
   const serviceLinks=[
+    ['/white-label-ai-automation/','White-Label AI','White-Label AI Automation Partner for Agencies'],
     ['/ai-automation-for-roofing/','Roofing Automation','AI Automation for Roofing Companies'],
     ['/ai-automation-for-hvac/','HVAC Automation','AI Automation for HVAC Companies']
   ];
