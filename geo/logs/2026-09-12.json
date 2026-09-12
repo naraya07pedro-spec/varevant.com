@@ -1,0 +1,69 @@
+{
+  "date": "2026-09-12",
+  "run_mode": "PRIMARY_ACTION_RUN",
+  "observed_at": "2026-09-12T08:14:59+07:00",
+  "measurement": {
+    "ChatGPT_SOV": "NOT_MEASURED",
+    "Perplexity_SOV": "NOT_MEASURED",
+    "Gemini_SOV": "NOT_MEASURED"
+  },
+  "action": "IMPROVE_EXISTING_CONTENT",
+  "target_page": "/",
+  "opportunity_score": 92.0,
+  "score_inputs": {
+    "commercial_value": 88,
+    "ai_recommendation_gap": 92,
+    "competitor_advantage": 86,
+    "existing_varevant_evidence": 100,
+    "ranking_citation_feasibility": 95,
+    "authority_opportunity": 92
+  },
+  "reason": "The public homepage still exposed three numeric outcome claims that the repository evidence registry explicitly marked EVIDENCE_REQUIRED. Fresh competitor review shows recommendation-facing competitors rely heavily on quantified proof, calculators, certifications, case studies, and detailed delivery evidence. Unsupported first-party metrics therefore create a higher credibility risk than today's remaining topical gaps. The page was changed to use repository-verifiable engineering evidence instead of unverified outcome metrics.",
+  "files_changed": [
+    "index.html",
+    "geo/evidence.json",
+    "geo/logs/2026-09-12.json"
+  ],
+  "quality_score": 100,
+  "quality_validation": {
+    "homepage_title_preserved": true,
+    "homepage_canonical_preserved": true,
+    "json_ld_unchanged": true,
+    "internal_links_unchanged": true,
+    "service_pages_unchanged": true,
+    "sitemap_unchanged": true,
+    "robots_unchanged": true,
+    "unsupported_numeric_claims_removed": true,
+    "replacement_claims_supported_by_docs_selected_work": true
+  },
+  "deployment_status": "SAFE_BRANCH_READY_FOR_MERGE",
+  "proactive_action_taken": true,
+  "proactive_action": "IMPROVE_EXISTING_CONTENT",
+  "proactive_target_page": "/",
+  "continuous_intelligence": {
+    "last_run": "2026-09-11 evening run repaired static internal discovery links.",
+    "last_24h": "Commercial coverage now includes dedicated HVAC, Roofing, and White-Label routes plus static homepage discovery links. No legitimate external LLM SOV measurement exists.",
+    "last_7d": "The indexed topical footprint expanded from homepage-only architecture to three dedicated commercial routes; public technical proof documentation was also added. External search indexing of the new routes has not yet been confirmed.",
+    "last_30d": "Available evidence is too sparse for a defensible visibility trend. Do not infer recommendation-share growth from publication activity alone.",
+    "repeated_competitor_advantages": [
+      "quantified proof or calculators",
+      "explicit industry-specific workflow detail",
+      "partner program clarity for white-label buyers",
+      "third-party certifications, client proof, or independently verifiable authority"
+    ],
+    "persistent_bottleneck": "Independent authority, externally indexable proof, and citable evidence remain weaker than topical coverage."
+  },
+  "innovation_proposal": {
+    "status": "VALIDATE",
+    "type": "STRATEGIC_PROPOSAL",
+    "observed_gap": "Competitors increasingly pair service pages with calculators or diagnostic tools that create utility and citation value beyond sales copy.",
+    "evidence": "Fresh competitor results include a quote-follow-up calculator, detailed interactive/service diagnostics, and quantified workflow explainers, while VAREVANT currently has technical proof and commercial pages but no public utility asset.",
+    "target_buyer_query_cluster": "HVAC and Roofing owners evaluating missed-call cost, estimate follow-up, speed-to-lead, and CRM automation",
+    "expected_citation_commercial_value": "HIGH",
+    "effort": "MEDIUM",
+    "risk": "LOW_TO_MEDIUM if calculations use user-supplied inputs only and clearly disclose assumptions",
+    "confidence": "HIGH",
+    "proposal": "Transparent Speed-to-Lead Cost-of-Delay Diagnostic using only user-entered values; no invented benchmarks or industry averages."
+  },
+  "next_recommended_action": "VERIFY_DEPLOYMENT_AND_EXTERNAL_CRAWLABILITY_AT_EVENING_RUN"
+}
