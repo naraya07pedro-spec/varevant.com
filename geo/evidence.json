@@ -4,23 +4,23 @@
     {
       "claim": "$25K+ captured in extra revenue",
       "location": "index.html",
-      "status": "EVIDENCE_REQUIRED",
+      "status": "REMOVED_FROM_PUBLIC_SITE_EVIDENCE_REQUIRED",
       "reuse_allowed": false,
-      "notes": "Existing first-party homepage claim. No supporting dataset or source file is present in the repository audit. Do not propagate into new GEO pages or research until verified."
+      "notes": "Removed from the public homepage on 2026-09-12 because no supporting dataset or source file was present in the repository audit. Do not restore or reuse until independently verifiable evidence is available."
     },
     {
       "claim": "38 leads sorted automatically",
       "location": "index.html",
-      "status": "EVIDENCE_REQUIRED",
+      "status": "REMOVED_FROM_PUBLIC_SITE_EVIDENCE_REQUIRED",
       "reuse_allowed": false,
-      "notes": "Existing first-party homepage claim. No supporting dataset or source file is present in the repository audit."
+      "notes": "Removed from the public homepage on 2026-09-12 because no supporting dataset or source file was present in the repository audit."
     },
     {
       "claim": "15 clients closed hands-free",
       "location": "index.html",
-      "status": "EVIDENCE_REQUIRED",
+      "status": "REMOVED_FROM_PUBLIC_SITE_EVIDENCE_REQUIRED",
       "reuse_allowed": false,
-      "notes": "Existing first-party homepage claim. No supporting dataset or source file is present in the repository audit."
+      "notes": "Removed from the public homepage on 2026-09-12 because no supporting dataset or source file was present in the repository audit."
     }
   ]
 }
