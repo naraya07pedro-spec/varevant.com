@@ -1,60 +1,46 @@
 {
   "date": "2026-09-12",
-  "run_mode": "PRIMARY_ACTION_RUN",
-  "observed_at": "2026-09-12T08:14:59+07:00",
+  "run_id": "20260912T051236Z-19975eee",
+  "mode": "daily",
+  "observed_at": "2026-09-12T12:12:36.158949+07:00",
   "measurement": {
     "ChatGPT_SOV": "NOT_MEASURED",
     "Perplexity_SOV": "NOT_MEASURED",
     "Gemini_SOV": "NOT_MEASURED"
   },
-  "action": "IMPROVE_EXISTING_CONTENT",
-  "target_page": "/",
-  "opportunity_score": 92.0,
-  "score_inputs": {
-    "commercial_value": 88,
-    "ai_recommendation_gap": 92,
-    "competitor_advantage": 86,
-    "existing_varevant_evidence": 100,
-    "ranking_citation_feasibility": 95,
-    "authority_opportunity": 92
+  "top_opportunity": {
+    "market": "B2B Agencies",
+    "target_page": "/white-label-ai-automation/",
+    "proposed_action": "IMPROVE_EXISTING_CONTENT",
+    "reason": "Commercial prompt coverage exists in the library but dedicated B2B Agencies topical coverage is present but incomplete.",
+    "components": {
+      "commercial_value": 90,
+      "ai_recommendation_gap": 50,
+      "competitor_advantage": 45,
+      "existing_varevant_evidence": 60,
+      "ranking_citation_feasibility": 60,
+      "authority_opportunity": 65
+    },
+    "opportunity_score": 63.2
   },
-  "reason": "The public homepage still exposed three numeric outcome claims that the repository evidence registry explicitly marked EVIDENCE_REQUIRED. Fresh competitor review shows recommendation-facing competitors rely heavily on quantified proof, calculators, certifications, case studies, and detailed delivery evidence. Unsupported first-party metrics therefore create a higher credibility risk than today's remaining topical gaps. The page was changed to use repository-verifiable engineering evidence instead of unverified outcome metrics.",
-  "files_changed": [
-    "index.html",
-    "geo/evidence.json",
-    "geo/logs/2026-09-12.json"
-  ],
+  "opportunity_score": 63.2,
+  "action": "NO_ACTION",
+  "target_page": "/white-label-ai-automation/",
+  "reason": "FREE_MODE never fabricates external LLM visibility. Repository-only diagnosis completed; execution is gated to a connected operator with fresh research.",
+  "files_changed": [],
   "quality_score": 100,
-  "quality_validation": {
-    "homepage_title_preserved": true,
-    "homepage_canonical_preserved": true,
-    "json_ld_unchanged": true,
-    "internal_links_unchanged": true,
-    "service_pages_unchanged": true,
-    "sitemap_unchanged": true,
-    "robots_unchanged": true,
-    "unsupported_numeric_claims_removed": true,
-    "replacement_claims_supported_by_docs_selected_work": true
+  "quality_checks": {
+    "robots_exists": true,
+    "sitemap_exists": true,
+    "canonical_home": true,
+    "organization_schema": true,
+    "prompt_library": true
   },
-  "commit_sha": "12b01b615d6968a4da08224fb531d35235abbd3c",
-  "deployment_status": "MAIN_MERGED_PRODUCTION_CRAWLER_STILL_OBSERVED_PREVIOUS_VERSION",
-  "verification_result": "GitHub main contains the evidence-safe homepage. Immediate external crawler fetch still returned the pre-merge homepage with the removed metrics, so production propagation is not yet verified and must be rechecked in the verification-first run.",
-  "proactive_action_taken": true,
+  "commit_sha": "1df361613601929ae9865cdf120c91903649030e",
+  "deployment_status": "NOT_CHECKED",
+  "errors": [],
+  "next_recommended_action": "IMPROVE_EXISTING_CONTENT",
   "proactive_action": "IMPROVE_EXISTING_CONTENT",
-  "proactive_target_page": "/",
-  "continuous_intelligence": {
-    "last_run": "2026-09-11 evening run repaired static internal discovery links.",
-    "last_24h": "Commercial coverage now includes dedicated HVAC, Roofing, and White-Label routes plus static homepage discovery links. No legitimate external LLM SOV measurement exists.",
-    "last_7d": "The indexed topical footprint expanded from homepage-only architecture to three dedicated commercial routes; public technical proof documentation was also added. External search indexing of the new routes has not yet been confirmed.",
-    "last_30d": "Available evidence is too sparse for a defensible visibility trend. Do not infer recommendation-share growth from publication activity alone.",
-    "repeated_competitor_advantages": [
-      "quantified proof or calculators",
-      "explicit industry-specific workflow detail",
-      "partner program clarity for white-label buyers",
-      "third-party certifications, client proof, or independently verifiable authority"
-    ],
-    "persistent_bottleneck": "Independent authority, externally indexable proof, and citable evidence remain weaker than topical coverage."
-  },
   "innovation_proposal": {
     "status": "VALIDATE",
     "type": "STRATEGIC_PROPOSAL",
@@ -67,5 +53,30 @@
     "confidence": "HIGH",
     "proposal": "Transparent Speed-to-Lead Cost-of-Delay Diagnostic using only user-entered values; no invented benchmarks or industry averages."
   },
-  "next_recommended_action": "VERIFY_DEPLOYMENT_AND_EXTERNAL_CRAWLABILITY_AT_EVENING_RUN"
+  "proactive_target_page": "/",
+  "proactive_action_taken": true,
+  "run_history": [
+    {
+      "run_id": "20260912T051236Z-19975eee",
+      "mode": "daily",
+      "observed_at": "2026-09-12T12:12:36.158949+07:00",
+      "action": "NO_ACTION",
+      "top_opportunity": {
+        "market": "B2B Agencies",
+        "target_page": "/white-label-ai-automation/",
+        "proposed_action": "IMPROVE_EXISTING_CONTENT",
+        "reason": "Commercial prompt coverage exists in the library but dedicated B2B Agencies topical coverage is present but incomplete.",
+        "components": {
+          "commercial_value": 90,
+          "ai_recommendation_gap": 50,
+          "competitor_advantage": 45,
+          "existing_varevant_evidence": 60,
+          "ranking_citation_feasibility": 60,
+          "authority_opportunity": 65
+        },
+        "opportunity_score": 63.2
+      },
+      "quality_score": 100
+    }
+  ]
 }
