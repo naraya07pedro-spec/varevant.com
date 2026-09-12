@@ -36,7 +36,9 @@
     "unsupported_numeric_claims_removed": true,
     "replacement_claims_supported_by_docs_selected_work": true
   },
-  "deployment_status": "SAFE_BRANCH_READY_FOR_MERGE",
+  "commit_sha": "12b01b615d6968a4da08224fb531d35235abbd3c",
+  "deployment_status": "MAIN_MERGED_PRODUCTION_CRAWLER_STILL_OBSERVED_PREVIOUS_VERSION",
+  "verification_result": "GitHub main contains the evidence-safe homepage. Immediate external crawler fetch still returned the pre-merge homepage with the removed metrics, so production propagation is not yet verified and must be rechecked in the verification-first run.",
   "proactive_action_taken": true,
   "proactive_action": "IMPROVE_EXISTING_CONTENT",
   "proactive_target_page": "/",
