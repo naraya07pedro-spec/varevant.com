@@ -1,0 +1,39 @@
+name: VAREVANT IndexNow Submission
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**/*.html"
+      - "sitemap.xml"
+      - "robots.txt"
+      - "llms.txt"
+      - "21b9fcd1a38e4c879b6a4e4d1d2f93ac.txt"
+      - "geo/indexnow.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: varevant-indexnow
+  cancel-in-progress: true
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate site before submission
+        run: python geo/qa.py
+
+      - name: Submit sitemap URLs to IndexNow
+        run: python geo/indexnow.py
