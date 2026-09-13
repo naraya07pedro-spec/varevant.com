@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speed-to-Lead Cost Diagnostic | VAREVANT</title>
+<meta name="description" content="Use your own lead volume, missed-response rate, close rate and completed-job value to estimate pipeline exposure from missed or delayed inbound opportunities.">
+<link rel="canonical" href="https://varevant.com/speed-to-lead-diagnostic/">
+<meta name="robots" content="index,follow">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://varevant.com/#organization","name":"VAREVANT","url":"https://varevant.com/"},{"@type":"WebApplication","name":"VAREVANT Speed-to-Lead Cost Diagnostic","url":"https://varevant.com/speed-to-lead-diagnostic/","applicationCategory":"BusinessApplication","operatingSystem":"Any","isAccessibleForFree":true,"publisher":{"@id":"https://varevant.com/#organization"}}]}</script>
+<style>body{margin:0;background:#05070d;color:#f5f1e8;font:16px Arial,sans-serif;line-height:1.6}.wrap{max-width:980px;margin:auto;padding:28px}.top{border-bottom:1px solid #29303c}.brand{font-weight:800;letter-spacing:.12em;text-decoration:none}.hero{padding:60px 28px}.hero h1{font:400 clamp(44px,7vw,78px)/1 Georgia,serif;margin:12px 0}.hero p{max-width:760px;color:#bec5cf;font-size:19px}.note,.panel{border:1px solid #29303c;border-radius:14px;background:#0b1018;padding:22px}.tool{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding-bottom:60px}.field{margin:16px 0}.field label{display:block;font-weight:700;margin-bottom:5px}.field small{display:block;color:#919ba8}.field input{width:100%;box-sizing:border-box;background:#05070d;color:#fff;border:1px solid #35404e;border-radius:8px;padding:12px;font-size:17px}.result{border-bottom:1px solid #29303c;padding:12px 0}.result span{color:#9ca6b3;display:block}.result strong{font-size:28px}.formula{color:#dec17f}.related{border-top:1px solid #29303c;padding:40px 28px}.related a{color:#dec17f;margin-right:18px}footer{border-top:1px solid #29303c;color:#919ba8}@media(max-width:760px){.tool{grid-template-columns:1fr}}</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="brand" href="/">VAREVANT</a></div></header>
+<main>
+<section class="wrap hero"><p>SPEED-TO-LEAD DIAGNOSTIC</p><h1>Model the cost of missed or delayed lead response using your own data.</h1><p>No industry-average conversion multiplier is hidden in this tool. Every rate that affects the output comes from values you enter.</p><div class="note"><strong>Planning model only.</strong> This is not a forecast or revenue guarantee. Use measured CRM, call-tracking and completed-job data whenever possible.</div></section>
+<section class="wrap tool">
+<div class="panel"><h2>Your inputs</h2>
+<div class="field"><label for="leads">Inbound opportunities per month</label><input id="leads" type="number" min="0" placeholder="120"><small>Calls, forms, messages or other inbound opportunities.</small></div>
+<div class="field"><label for="missed">Missed or materially delayed (%)</label><input id="missed" type="number" min="0" max="100" placeholder="18"><small>Use your own measured rate.</small></div>
+<div class="field"><label for="close">Close rate on reached qualified leads (%)</label><input id="close" type="number" min="0" max="100" placeholder="35"><small>Use your historical rate.</small></div>
+<div class="field"><label for="value">Average completed job / deal value</label><input id="value" type="number" min="0" placeholder="850"><small>Use completed revenue rather than quote value.</small></div>
+<div class="field"><label for="recover">Optional recoverable scenario (%)</label><input id="recover" type="number" min="0" max="100" placeholder=""><small>Your own scenario assumption; leave blank if unknown.</small></div>
+</div>
+<div class="panel"><h2>Calculated exposure</h2>
+<div class="result"><span>Missed / delayed opportunities</span><strong id="r1">—</strong></div>
+<div class="result"><span>Potential jobs represented</span><strong id="r2">—</strong></div>
+<div class="result"><span>Monthly pipeline exposure</span><strong id="r3">—</strong></div>
+<div class="result"><span>Annualized exposure</span><strong id="r4">—</strong></div>
+<div class="result"><span>Your recovery scenario</span><strong id="r5">—</strong></div>
+<p class="formula">Formula: inbound opportunities × missed/delayed rate × your close rate × average completed job value.</p>
+<p>The optional recovery result applies only the percentage you entered. It does not assume VAREVANT or automation will recover that amount.</p></div>
+</section>
+<section class="wrap related"><h2>Implementation paths</h2><a href="/ai-automation-for-hvac/">HVAC Automation</a><a href="/ai-automation-for-roofing/">Roofing Automation</a><a href="/white-label-ai-automation/">White-Label AI Automation</a></section>
+</main>
+<footer><div class="wrap">VAREVANT · Evidence before claims.</div></footer>
+<script>const ids=['leads','missed','close','value','recover'];const v=id=>Math.max(0,parseFloat(document.getElementById(id).value)||0);const p=id=>Math.min(100,v(id))/100;const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);function calc(){const leads=v('leads'),missed=leads*p('missed'),jobs=missed*p('close'),monthly=jobs*v('value');r1.textContent=leads?missed.toFixed(1):'—';r2.textContent=jobs?jobs.toFixed(1):'—';r3.textContent=monthly?money(monthly):'—';r4.textContent=monthly?money(monthly*12):'—';r5.textContent=(recover.value&&monthly)?money(monthly*p('recover'))+' / month':'—'}ids.forEach(id=>document.getElementById(id).addEventListener('input',calc));</script>
+</body>
+</html>
