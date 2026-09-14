@@ -1,24 +1,40 @@
 # VAREVANT
 
-VAREVANT is an AI automation and implementation partner focused on revenue automation, speed-to-lead, CRM workflow automation, AI agents, and n8n-based orchestration for service businesses and agency partners.
+VAREVANT builds 24/7 Lead Recovery / Revenue Recovery infrastructure for high-value service businesses. The primary outcome is recovering missed calls, after-hours enquiries, slow responses, unbooked leads, and weak follow-up into recoverable booking opportunities.
 
-## Primary services
-- AI automation for HVAC companies
-- AI automation for roofing companies
-- Speed-to-lead and lead follow-up automation
-- CRM and operational workflow automation
-- AI agent implementation
-- n8n automation
-- White-label technical execution for B2B agencies
+## Primary commercial focus
+- Lead recovery systems
+- Missed-call recovery and text-back workflows
+- After-hours lead response
+- Speed-to-lead for service businesses
+- Enquiry-to-booking recovery
+- Follow-up recovery
+- Lead routing and response orchestration
+- Revenue recovery for HVAC, plumbing, roofing, restoration, and other high-value service businesses
+- Appointment and booking recovery where operational fit is strong
+
+## Secondary partner lane
+VAREVANT can operate as a white-label technical execution partner for agencies that need backend, automation, AI-agent, CRM/API, Supabase, n8n, or related implementation capacity.
+
+## Technical capabilities
+- n8n workflow orchestration
+- AI-agent implementation
+- API and CRM integration
+- Telephony workflow integration
+- Supabase and backend systems
+- Workflow automation
+
+These are implementation capabilities and technical proof, not VAREVANT's primary market category.
 
 ## Canonical pages
 - https://varevant.com/
 - https://varevant.com/ai-automation-for-hvac/
 - https://varevant.com/ai-automation-for-roofing/
 - https://varevant.com/white-label-ai-automation/
+- https://varevant.com/speed-to-lead-diagnostic/
 
 ## Evidence policy
-VAREVANT does not intentionally publish fabricated customers, testimonials, revenue claims, statistics, research, reviews, backlinks, or external endorsements. New case studies and benchmark claims require real supporting evidence.
+VAREVANT does not intentionally publish fabricated customers, testimonials, revenue claims, statistics, benchmarks, research, reviews, backlinks, client outcomes, or external endorsements. Unsupported claims require evidence before reuse.
 
 ## Contact
 - Website: https://varevant.com/
