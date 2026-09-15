@@ -6,6 +6,22 @@ VAREVANT works with businesses and agencies that already know what needs to impr
 
 This repository is the public-facing engineering surface behind [varevant.com](https://varevant.com). It intentionally shows the delivery approach, selected work, architecture patterns, and public-safe proof without exposing private client data, credentials, production secrets, or confidential workflow exports.
 
+## Engineering / hiring snapshot
+
+**Evan Naraya — Automation & Integration Engineer**
+
+This repository also functions as public technical proof for implementation-focused work involving workflow automation, API/webhook integration, database-backed state, backend orchestration, and bounded AI-assisted systems.
+
+**Core public technical surface:** JavaScript · REST APIs · Webhooks · PostgreSQL/Supabase · n8n orchestration architecture · deterministic gates · retries · deduplication · logging · human approval boundaries
+
+Fastest proof path:
+
+1. [`examples/reliable-lead-routing/`](examples/reliable-lead-routing/) — directly inspectable and testable code for validation, suppression, idempotency, bounded classification, manual-review fallback, and retry behavior.
+2. [`docs/TECHNICAL-REVIEW.md`](docs/TECHNICAL-REVIEW.md) — five-minute technical review guide.
+3. [BIMMCA Intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence) — Supabase-backed dashboard/application proof fed by an n8n monitoring architecture.
+
+The goal is to make engineering decisions reviewable without inflating private production work into claims that cannot be verified publicly.
+
 ## Technical reviewer quick start
 
 If you are reviewing this repository for engineering capability rather than marketing copy, use this path:
