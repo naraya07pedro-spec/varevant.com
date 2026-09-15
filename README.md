@@ -6,6 +6,19 @@ VAREVANT works with businesses and agencies that already know what needs to impr
 
 This repository is the public-facing engineering surface behind [varevant.com](https://varevant.com). It intentionally shows the delivery approach, selected work, architecture patterns, and public-safe proof without exposing private client data, credentials, production secrets, or confidential workflow exports.
 
+## Technical reviewer quick start
+
+If you are reviewing this repository for engineering capability rather than marketing copy, use this path:
+
+- [`docs/TECHNICAL-REVIEW.md`](docs/TECHNICAL-REVIEW.md) — five-minute technical review guide
+- [`docs/SELECTED-WORK.md`](docs/SELECTED-WORK.md) — evidence-led selected work and public proof boundaries
+- [`docs/PRODUCTION-SAFETY.md`](docs/PRODUCTION-SAFETY.md) — production safeguards and deterministic control boundaries
+- [`docs/DELIVERY-MODEL.md`](docs/DELIVERY-MODEL.md) — implementation, handoff, and white-label delivery model
+- [`assets/varevant-workflow.png`](assets/varevant-workflow.png) — public workflow architecture visual
+- [BIMMCA Intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence) — Supabase-backed dashboard/application proof fed by an n8n monitoring architecture
+
+The useful question for review is not “how many tools are listed?” but whether the public evidence shows a coherent approach to validation, routing, integration, state, failure handling, and controlled AI use.
+
 ## What we build
 
 - Workflow and pipeline automation
