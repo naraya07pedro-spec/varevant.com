@@ -1,0 +1,24 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.local
+
+# Dependencies / build output
+node_modules/
+dist/
+coverage/
+
+# Python tooling
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+
+# Logs and local OS/editor noise
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
