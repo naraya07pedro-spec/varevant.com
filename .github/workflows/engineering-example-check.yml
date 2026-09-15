@@ -1,0 +1,25 @@
+name: Engineering example checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'examples/reliable-lead-routing/**'
+      - '.github/workflows/engineering-example-check.yml'
+  pull_request:
+    paths:
+      - 'examples/reliable-lead-routing/**'
+      - '.github/workflows/engineering-example-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test-reference-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Run reference workflow tests
+        run: node --test examples/reliable-lead-routing/workflow.test.js
