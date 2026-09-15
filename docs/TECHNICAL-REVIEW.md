@@ -5,10 +5,11 @@ This guide is for engineers, hiring teams, agency partners, or technical reviewe
 ## Five-minute review path
 
 1. Read [`SELECTED-WORK.md`](SELECTED-WORK.md) for the evidence-backed project map.
-2. Read [`PRODUCTION-SAFETY.md`](PRODUCTION-SAFETY.md) for the control boundaries used around automation and AI-assisted workflows.
-3. Inspect [`../assets/varevant-workflow.png`](../assets/varevant-workflow.png) for the public workflow architecture visual.
-4. Review the separate [BIMMCA Intelligence repository](https://github.com/naraya07pedro-spec/bimmca-intelligence) for a Supabase-backed dashboard/application surface fed by an n8n monitoring architecture.
-5. Use [`DELIVERY-MODEL.md`](DELIVERY-MODEL.md) to understand how implementation scope, handoff, and white-label boundaries are handled.
+2. Run the tested [`Reliable Lead Routing`](../examples/reliable-lead-routing/) reference implementation to inspect deterministic gates, idempotency, bounded AI routing, and retry behavior in code.
+3. Read [`PRODUCTION-SAFETY.md`](PRODUCTION-SAFETY.md) for the control boundaries used around automation and AI-assisted workflows.
+4. Inspect [`../assets/varevant-workflow.png`](../assets/varevant-workflow.png) for the public workflow architecture visual.
+5. Review the separate [BIMMCA Intelligence repository](https://github.com/naraya07pedro-spec/bimmca-intelligence) for a Supabase-backed dashboard/application surface fed by an n8n monitoring architecture.
+6. Use [`DELIVERY-MODEL.md`](DELIVERY-MODEL.md) to understand how implementation scope, handoff, and white-label boundaries are handled.
 
 ## What the public work demonstrates
 
@@ -56,6 +57,18 @@ Some production logic should not be public. The review surface therefore separat
 This is a deliberate security and evidence decision, not an attempt to imply hidden results that cannot be verified.
 
 ## Selected public evidence
+
+### Reliable Lead Routing reference implementation
+
+**What it demonstrates:** directly inspectable and testable code for validation, suppression, geography gates, idempotency, bounded classification, manual-review fallback, and bounded retry behavior.
+
+Files:
+
+- [`../examples/reliable-lead-routing/README.md`](../examples/reliable-lead-routing/README.md)
+- [`../examples/reliable-lead-routing/workflow.js`](../examples/reliable-lead-routing/workflow.js)
+- [`../examples/reliable-lead-routing/workflow.test.js`](../examples/reliable-lead-routing/workflow.test.js)
+
+This is a sanitized reference implementation, not client code or a production export.
 
 ### VAREVANT Revenue Operations System
 
