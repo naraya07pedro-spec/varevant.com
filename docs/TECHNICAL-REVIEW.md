@@ -4,12 +4,12 @@ This guide is for engineers, hiring teams, agency partners, or technical reviewe
 
 ## Five-minute review path
 
-1. Read [`SELECTED-WORK.md`](SELECTED-WORK.md) for the evidence-backed project map.
-2. Run the tested [`Reliable Lead Routing`](../examples/reliable-lead-routing/) reference implementation to inspect deterministic gates, idempotency, bounded AI routing, and retry behavior in code.
+1. Start with [`Production Integration Reference`](../examples/production-integration-reference/) for inspectable TypeScript, PostgreSQL, HMAC verification, durable idempotency, REST integration, retry classification, tests, and a sanitized n8n export.
+2. Run [`Reliable Lead Routing`](../examples/reliable-lead-routing/) to inspect deterministic gates and bounded AI routing.
 3. Read [`PRODUCTION-SAFETY.md`](PRODUCTION-SAFETY.md) for the control boundaries used around automation and AI-assisted workflows.
-4. Inspect [`../assets/varevant-workflow.png`](../assets/varevant-workflow.png) for the public workflow architecture visual.
-5. Review the separate [BIMMCA Intelligence repository](https://github.com/naraya07pedro-spec/bimmca-intelligence) for a Supabase-backed dashboard/application surface fed by an n8n monitoring architecture.
-6. Use [`DELIVERY-MODEL.md`](DELIVERY-MODEL.md) to understand how implementation scope, handoff, and white-label boundaries are handled.
+4. Read [`SELECTED-WORK.md`](SELECTED-WORK.md) for the evidence-backed project map.
+5. Review the separate [BIMMCA Intelligence repository](https://github.com/naraya07pedro-spec/bimmca-intelligence) for a Supabase-backed dashboard/application surface.
+6. Use [`DELIVERY-MODEL.md`](DELIVERY-MODEL.md) to understand implementation, handoff, and white-label boundaries.
 
 ## What the public work demonstrates
 
@@ -57,6 +57,20 @@ Some production logic should not be public. The review surface therefore separat
 This is a deliberate security and evidence decision, not an attempt to imply hidden results that cannot be verified.
 
 ## Selected public evidence
+
+### Production Integration Reference
+
+**What it demonstrates:** directly inspectable TypeScript for a production-style integration boundary: HMAC webhook verification, atomic PostgreSQL reservation, restart-safe idempotency, real HTTP integration code, retry classification, structured logging, tests, and a sanitized n8n export.
+
+Files:
+
+- [`../examples/production-integration-reference/README.md`](../examples/production-integration-reference/README.md)
+- [`../examples/production-integration-reference/src/handler.ts`](../examples/production-integration-reference/src/handler.ts)
+- [`../examples/production-integration-reference/src/idempotency.ts`](../examples/production-integration-reference/src/idempotency.ts)
+- [`../examples/production-integration-reference/tests/`](../examples/production-integration-reference/tests/)
+- [`../examples/production-integration-reference/n8n/workflow.sanitized.json`](../examples/production-integration-reference/n8n/workflow.sanitized.json)
+
+This is a public-safe reference implementation, not a claim of client production usage.
 
 ### Reliable Lead Routing reference implementation
 

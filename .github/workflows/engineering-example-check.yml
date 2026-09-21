@@ -5,21 +5,40 @@ on:
     branches: [main]
     paths:
       - 'examples/reliable-lead-routing/**'
+      - 'examples/production-integration-reference/**'
       - '.github/workflows/engineering-example-check.yml'
   pull_request:
     paths:
       - 'examples/reliable-lead-routing/**'
+      - 'examples/production-integration-reference/**'
       - '.github/workflows/engineering-example-check.yml'
 
 permissions:
   contents: read
 
 jobs:
-  test-reference-workflow:
+  test-reference-workflows:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Run reference workflow tests
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run lead-routing reference tests
         run: node --test examples/reliable-lead-routing/workflow.test.js
+
+      - name: Install production-integration reference dependencies
+        working-directory: examples/production-integration-reference
+        run: npm install --no-audit --no-fund
+
+      - name: Typecheck production-integration reference
+        working-directory: examples/production-integration-reference
+        run: npm run typecheck
+
+      - name: Test production-integration reference
+        working-directory: examples/production-integration-reference
+        run: npm test

@@ -1,0 +1,117 @@
+{
+  "name": "Public Reference - Reliable Integration Intake",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "public-reference-lead",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-node",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id",
+              "name": "id",
+              "value": "={{ String($json.body.id || '').trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "email",
+              "name": "email",
+              "value": "={{ String($json.body.email || '').trim().toLowerCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "region",
+              "name": "region",
+              "value": "={{ String($json.body.region || '').trim().toUpperCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "source",
+              "name": "source",
+              "value": "={{ String($json.body.source || 'unknown').trim().toLowerCase() }}",
+              "type": "string"
+            },
+            {
+              "id": "message",
+              "name": "message",
+              "value": "={{ String($json.body.message || '').trim() }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "normalize-node",
+      "name": "Normalize Input",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.INTEGRATION_SERVICE_URL + '/events/lead' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-webhook-signature",
+              "value": "={{ $env.INTEGRATION_WEBHOOK_SIGNATURE }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "service-node",
+      "name": "Integration Service",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 0]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}"
+      },
+      "id": "response-node",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [760, 0]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Normalize Input", "type": "main", "index": 0 }]]
+    },
+    "Normalize Input": {
+      "main": [[{ "node": "Integration Service", "type": "main", "index": 0 }]]
+    },
+    "Integration Service": {
+      "main": [[{ "node": "Respond", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

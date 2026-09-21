@@ -12,13 +12,14 @@ This repository is the public-facing engineering surface behind [varevant.com](h
 
 This repository also functions as public technical proof for implementation-focused work involving workflow automation, API/webhook integration, database-backed state, backend orchestration, and bounded AI-assisted systems.
 
-**Core public technical surface:** JavaScript · REST APIs · Webhooks · PostgreSQL/Supabase · n8n orchestration architecture · deterministic gates · retries · deduplication · logging · human approval boundaries
+**Core public technical surface:** TypeScript/JavaScript · REST APIs · Webhooks · PostgreSQL/Supabase · n8n orchestration · HMAC verification · durable idempotency · bounded retries · logging · human approval boundaries
 
 Fastest proof path:
 
-1. [`examples/reliable-lead-routing/`](examples/reliable-lead-routing/) — directly inspectable and testable code for validation, suppression, idempotency, bounded classification, manual-review fallback, and retry behavior.
-2. [`docs/TECHNICAL-REVIEW.md`](docs/TECHNICAL-REVIEW.md) — five-minute technical review guide.
-3. [BIMMCA Intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence) — Supabase-backed dashboard/application proof fed by an n8n monitoring architecture.
+1. [`examples/production-integration-reference/`](examples/production-integration-reference/) — TypeScript + PostgreSQL reference for webhook verification, durable idempotency, REST integration, retry classification, tests, and a sanitized n8n export.
+2. [`examples/reliable-lead-routing/`](examples/reliable-lead-routing/) — directly inspectable code for deterministic gates, bounded classification, manual-review fallback, and retry behavior.
+3. [`docs/TECHNICAL-REVIEW.md`](docs/TECHNICAL-REVIEW.md) — five-minute technical review guide.
+4. [BIMMCA Intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence) — Supabase-backed dashboard/application proof fed by an n8n monitoring architecture.
 
 The goal is to make engineering decisions reviewable without inflating private production work into claims that cannot be verified publicly.
 
@@ -26,6 +27,7 @@ The goal is to make engineering decisions reviewable without inflating private p
 
 If you are reviewing this repository for engineering capability rather than marketing copy, use this path:
 
+- [`examples/production-integration-reference/`](examples/production-integration-reference/) — runnable TypeScript/PostgreSQL integration proof
 - [`docs/TECHNICAL-REVIEW.md`](docs/TECHNICAL-REVIEW.md) — five-minute technical review guide
 - [`docs/SELECTED-WORK.md`](docs/SELECTED-WORK.md) — evidence-led selected work and public proof boundaries
 - [`docs/PRODUCTION-SAFETY.md`](docs/PRODUCTION-SAFETY.md) — production safeguards and deterministic control boundaries
@@ -148,6 +150,9 @@ When a system cannot be published safely, the public proof is limited to a sanit
 ├── content/                         # Content assets
 ├── geo/                             # GEO / AI recommendation content layer
 ├── docs/                            # Engineering and delivery documentation
+├── examples/
+│   ├── production-integration-reference/ # TypeScript/Postgres/n8n integration proof
+│   └── reliable-lead-routing/       # Deterministic routing reference
 ├── script.js
 ├── styles.css
 ├── robots.txt
