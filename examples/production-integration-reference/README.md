@@ -1,5 +1,7 @@
 # Production Integration Reference
 
+> Historical source snapshot. Use the [standalone repository](https://github.com/naraya07pedro-spec/production-integration-reference) for the maintained implementation, hardened failure handling, real PostgreSQL CI tests, and current run instructions.
+
 A public-safe TypeScript reference showing the engineering controls behind a small but realistic system-to-system integration.
 
 This is **not client code and not a production export**. It exists so a technical reviewer can inspect more than architecture prose: webhook verification, durable idempotency, retry classification, a real HTTP integration boundary, PostgreSQL state, tests, and a sanitized n8n workflow export are all represented in code.

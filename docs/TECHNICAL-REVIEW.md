@@ -4,7 +4,7 @@ This guide is for engineers, hiring teams, agency partners, or technical reviewe
 
 ## Five-minute review path
 
-1. Start with [`Production Integration Reference`](../examples/production-integration-reference/) for inspectable TypeScript, PostgreSQL, HMAC verification, durable idempotency, REST integration, retry classification, tests, and a sanitized n8n export.
+1. Start with [`Production Integration Reference`](https://github.com/naraya07pedro-spec/production-integration-reference) for inspectable TypeScript, PostgreSQL, HMAC verification, durable idempotency, REST integration, retry classification, tests, and a sanitized n8n export.
 2. Run [`Reliable Lead Routing`](../examples/reliable-lead-routing/) to inspect deterministic gates and bounded AI routing.
 3. Read [`PRODUCTION-SAFETY.md`](PRODUCTION-SAFETY.md) for the control boundaries used around automation and AI-assisted workflows.
 4. Read [`SELECTED-WORK.md`](SELECTED-WORK.md) for the evidence-backed project map.
@@ -64,11 +64,11 @@ This is a deliberate security and evidence decision, not an attempt to imply hid
 
 Files:
 
-- [`../examples/production-integration-reference/README.md`](../examples/production-integration-reference/README.md)
-- [`../examples/production-integration-reference/src/handler.ts`](../examples/production-integration-reference/src/handler.ts)
-- [`../examples/production-integration-reference/src/idempotency.ts`](../examples/production-integration-reference/src/idempotency.ts)
-- [`../examples/production-integration-reference/tests/`](../examples/production-integration-reference/tests/)
-- [`../examples/production-integration-reference/n8n/workflow.sanitized.json`](../examples/production-integration-reference/n8n/workflow.sanitized.json)
+- [`README.md`](https://github.com/naraya07pedro-spec/production-integration-reference/blob/main/README.md)
+- [`src/handler.ts`](https://github.com/naraya07pedro-spec/production-integration-reference/blob/main/src/handler.ts)
+- [`src/idempotency.ts`](https://github.com/naraya07pedro-spec/production-integration-reference/blob/main/src/idempotency.ts)
+- [`tests/`](https://github.com/naraya07pedro-spec/production-integration-reference/tree/main/tests/)
+- [`n8n/workflow.sanitized.json`](https://github.com/naraya07pedro-spec/production-integration-reference/blob/main/n8n/workflow.sanitized.json)
 
 This is a public-safe reference implementation, not a claim of client production usage.
 
