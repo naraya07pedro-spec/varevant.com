@@ -4,11 +4,15 @@ on:
   push:
     branches: [main]
     paths:
+      - 'README.md'
+      - 'docs/**'
       - 'examples/reliable-lead-routing/**'
       - 'examples/production-integration-reference/**'
       - '.github/workflows/engineering-example-check.yml'
   pull_request:
     paths:
+      - 'README.md'
+      - 'docs/**'
       - 'examples/reliable-lead-routing/**'
       - 'examples/production-integration-reference/**'
       - '.github/workflows/engineering-example-check.yml'

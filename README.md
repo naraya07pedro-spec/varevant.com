@@ -6,38 +6,21 @@ VAREVANT works with businesses and agencies that already know what needs to impr
 
 This repository is the public-facing engineering surface behind [varevant.com](https://varevant.com). It intentionally shows the delivery approach, selected work, architecture patterns, and public-safe proof without exposing private client data, credentials, production secrets, or confidential workflow exports.
 
-## Engineering / hiring snapshot
+## Technical review path
 
 **Evan Naraya — Automation & Integration Engineer**
 
-This repository also functions as public technical proof for implementation-focused work involving workflow automation, API/webhook integration, database-backed state, backend orchestration, and bounded AI-assisted systems.
+The standalone flagship is the primary maintained implementation reference. The local integration example is retained as its historical source.
 
-**Core public technical surface:** TypeScript/JavaScript · REST APIs · Webhooks · PostgreSQL/Supabase · n8n orchestration · HMAC verification · durable idempotency · bounded retries · logging · human approval boundaries
+1. [Production Integration Reference](https://github.com/naraya07pedro-spec/production-integration-reference) — TypeScript webhooks, PostgreSQL idempotency, retries, tests, and CI.
+2. [Reliable Lead Routing](examples/reliable-lead-routing/) — runnable deterministic gates, bounded classification, manual-review fallback, and retry behavior.
+3. [Technical review guide](docs/TECHNICAL-REVIEW.md) — implementation decisions and review entry points.
+4. [Production safety](docs/PRODUCTION-SAFETY.md) — documented safeguards and control boundaries.
+5. [Historical n8n evidence](https://github.com/naraya07pedro-spec/production-integration-reference/tree/main/docs/evidence) — separate VAREVANT workflow paths, execution history, a manual success, and a visible failure; not runtime validation of the inactive synthetic demo.
+6. [Selected work](docs/SELECTED-WORK.md) — public artifacts and evidence boundaries.
+7. [BIMMCA Intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence) — browser Supabase consumer, source-backed architecture, and offline tests; backend ingestion requires separate evidence.
 
-The standalone [Production Integration Reference](https://github.com/naraya07pedro-spec/production-integration-reference) is the primary maintained technical proof. The local example is retained as its historical source.
-
-Fastest proof path:
-
-1. [Production Integration Reference](https://github.com/naraya07pedro-spec/production-integration-reference) — TypeScript + PostgreSQL reference for webhook verification, durable idempotency, REST integration, retry classification, tests, and a sanitized n8n export.
-2. [`examples/reliable-lead-routing/`](examples/reliable-lead-routing/) — directly inspectable code for deterministic gates, bounded classification, manual-review fallback, and retry behavior.
-3. [`docs/TECHNICAL-REVIEW.md`](docs/TECHNICAL-REVIEW.md) — five-minute technical review guide.
-4. [BIMMCA Intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence) — Supabase-backed dashboard/application proof fed by an n8n monitoring architecture.
-
-The goal is to make engineering decisions reviewable without inflating private production work into claims that cannot be verified publicly.
-
-## Technical reviewer quick start
-
-If you are reviewing this repository for engineering capability rather than marketing copy, use this path:
-
-- [Production Integration Reference](https://github.com/naraya07pedro-spec/production-integration-reference) — runnable TypeScript/PostgreSQL integration proof
-- [`docs/TECHNICAL-REVIEW.md`](docs/TECHNICAL-REVIEW.md) — five-minute technical review guide
-- [`docs/SELECTED-WORK.md`](docs/SELECTED-WORK.md) — evidence-led selected work and public proof boundaries
-- [`docs/PRODUCTION-SAFETY.md`](docs/PRODUCTION-SAFETY.md) — production safeguards and deterministic control boundaries
-- [`docs/DELIVERY-MODEL.md`](docs/DELIVERY-MODEL.md) — implementation, handoff, and white-label delivery model
-- [`assets/varevant-workflow.png`](assets/varevant-workflow.png) — public workflow architecture visual
-- [BIMMCA Intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence) — Supabase-backed dashboard/application proof fed by an n8n monitoring architecture
-
-The useful question for review is not “how many tools are listed?” but whether the public evidence shows a coherent approach to validation, routing, integration, state, failure handling, and controlled AI use.
+These references make implementation and failure-handling decisions inspectable. They do not establish production traffic, uptime, client impact, or business outcomes.
 
 ## What we build
 
@@ -77,7 +60,7 @@ This is also presented as a self-built system, not as a fabricated client case s
 
 ### 3. BIMMCA Intelligence
 
-A separate public repository for an AI Authority Intelligence dashboard connected to Supabase and fed by a VAREVANT n8n monitoring workflow.
+A separate public repository for an AI Authority Intelligence dashboard with a browser Supabase query and Realtime subscription. The upstream n8n monitoring workflow and database policies are outside that repository's verified source.
 
 - [naraya07pedro-spec/bimmca-intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence)
 
@@ -167,3 +150,4 @@ When a system cannot be published safely, the public proof is limited to a sanit
 [evan@varevant.com](mailto:evan@varevant.com) · [varevant.com](https://varevant.com) · [LinkedIn](https://www.linkedin.com/in/evannaraya)
 
 If you are evaluating VAREVANT as an execution partner, the useful starting point is not a generic capability call. Send the current process, the system involved, the part that is failing or too manual, and what a successful handoff should look like.
+
