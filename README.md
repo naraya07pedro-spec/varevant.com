@@ -34,6 +34,15 @@ These references make implementation and failure-handling decisions inspectable.
 
 Technology is treated as the delivery mechanism, not the outcome. A project starts with the current process, the operational friction, and the decision or handoff that is failing.
 
+## Selected client delivery
+
+Public-safe summaries of real client engagements:
+
+- **PT Geget Gigit — Indonesia:** AI-powered CMO automation agent for marketing operations and decision workflows.
+- **EZUmrah — Malaysia:** end-to-end AI automation and integration system for an Umrah travel business.
+
+Implementation details, credentials, client data, and unsupported commercial outcomes are intentionally excluded. See [Selected Work](docs/SELECTED-WORK.md) for scope and evidence boundaries.
+
 ## Public proof
 
 ### 1. VAREVANT Revenue Operations System
