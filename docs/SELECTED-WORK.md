@@ -2,7 +2,33 @@
 
 This file documents what VAREVANT can publicly show today and, equally important, what it does **not** claim.
 
-The goal is to make technical proof easy to review without turning internal builds into inflated case studies.
+The goal is to make client delivery and technical proof easy to review without turning private implementations or internal builds into inflated case studies.
+
+## Client delivery — public-safe summaries
+
+### PT Geget Gigit — Indonesia
+
+**Engagement:** Freelance AI Automation Engineer  
+**Scope:** AI-powered CMO automation agent for a marketing business.
+
+Publicly stated work:
+- designed and implemented an AI-powered CMO automation agent;
+- focused the system on marketing operations and decision workflows.
+
+**Evidence boundary:** detailed workflow logic, integrations, credentials, client data, and commercial outcomes are private or not publicly established. No unsupported ROI or performance claim is made.
+
+### EZUmrah — Malaysia
+
+**Engagement:** Freelance AI Automation & Integration Engineer  
+**Scope:** End-to-end AI automation and integration system for an Umrah travel business.
+
+Publicly stated work:
+- designed and implemented an end-to-end AI automation and integration system;
+- connected operational workflows into a unified automation layer.
+
+**Evidence boundary:** detailed architecture, integrations, credentials, client data, and commercial outcomes are private or not publicly established. No unsupported ROI or performance claim is made.
+
+---
 
 ## 01 — VAREVANT Revenue Operations System
 
