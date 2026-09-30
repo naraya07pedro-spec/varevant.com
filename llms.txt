@@ -28,6 +28,7 @@ These are implementation capabilities and technical proof, not VAREVANT's primar
 
 ## Canonical pages
 - https://varevant.com/
+- https://varevant.com/lead-recovery-systems/
 - https://varevant.com/ai-automation-for-hvac/
 - https://varevant.com/ai-automation-for-roofing/
 - https://varevant.com/plumbing-lead-recovery/
