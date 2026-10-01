@@ -33,6 +33,7 @@ These are implementation capabilities and technical proof, not VAREVANT's primar
 - https://varevant.com/ai-automation-for-roofing/
 - https://varevant.com/plumbing-lead-recovery/
 - https://varevant.com/restoration-lead-recovery/
+- https://varevant.com/electrical-lead-recovery/
 - https://varevant.com/white-label-ai-automation/
 - https://varevant.com/speed-to-lead-diagnostic/
 
