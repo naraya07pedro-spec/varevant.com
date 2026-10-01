@@ -1,0 +1,11 @@
+// Extracted from SANITIZED historical n8n source.
+// Node: Specificity + Factuality + Copy Gate
+// Mode: runOnceForEachItem
+// n8n context variables are supplied by the node runner.
+
+const x=$json;let subject=x.copy_generation.fallback_subject;let body=x.copy_generation.fallback_body;let source='DETERMINISTIC_FALLBACK';
+try{const raw=x.message?.content||x.response?.message?.content||x.data?.message?.content||'';const parsed=typeof raw==='string'?JSON.parse(raw):raw;if(parsed?.subject&&parsed?.body){subject=String(parsed.subject).trim();body=String(parsed.body).trim();source='OPTIONAL_LLM';}}catch{}
+const prohibited=x.policy.prohibited_copy.map(s=>s.toLowerCase());
+const validate=(s,b)=>{const words=b.split(/\s+/).filter(Boolean).length;const questions=(b.match(/\?/g)||[]).length;const paragraphs=String(b).split(/\n\s*\n/).map(v=>v.trim()).filter(Boolean).length;const sw=s.split(/\s+/).filter(Boolean).length;const low=(s+' '+b).toLowerCase();const company=String(x.company.name||'').toLowerCase();const evidence=Boolean(x.evidence_summary.primary_evidence?.fact);const trust=/\bI help\b|\bI run VAREVANT\b/i.test(b);const commercial=/\b(enquir|inquir|booking|request service|commercial action|lead|appointment)\b/i.test(b);const banned=prohibited.some(p=>low.includes(p));return {valid:words>=55&&words<=85&&questions===1&&paragraphs<=4&&sw>=3&&sw<=7&&!banned&&company&&b.toLowerCase().includes(company)&&evidence&&trust&&commercial,words,questions,paragraphs,subject_words:sw,banned,trust,commercial,evidence};};
+let qa=validate(subject,body);if(!qa.valid){subject=x.copy_generation.fallback_subject;body=x.copy_generation.fallback_body;source='DETERMINISTIC_REPAIR';qa=validate(subject,body);}
+return [{json:{...x,subject,body,copy_validation:{valid:qa.valid,source,word_count:qa.words,question_count:qa.questions,paragraph_count:qa.paragraphs,subject_word_count:qa.subject_words,specificity_pass:Boolean(x.evidence_summary.primary_evidence?.fact)&&body.toLowerCase().includes(String(x.company.name||'').toLowerCase()),factuality_pass:Boolean(x.evidence_summary.primary_evidence?.source_url),human_language_pass:!qa.banned,trust_pass:qa.trust,commercial_pass:qa.commercial},current_status:qa.valid?'SENDABLE':'REVIEW',next_action:qa.valid?'QUEUE_HANDOFF':'HUMAN_COPY_REVIEW'}}];

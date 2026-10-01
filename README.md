@@ -1,162 +1,63 @@
 # VAREVANT
 
-**Technical execution for automation, backend systems, and bounded AI agents.**
+**n8n automation, API integrations and bounded AI workflows — engineering by Evan Naraya.**
 
-VAREVANT works with businesses and agencies that already know what needs to improve but need a reliable technical layer to turn that requirement into a working system.
+This repository contains the [VAREVANT website](https://varevant.com), historical internal workflow source, reference examples and delivery documentation. Client implementations remain separate from internal and reference work.
 
-This repository is the public-facing engineering surface behind [varevant.com](https://varevant.com). It intentionally shows the delivery approach, selected work, architecture patterns, and public-safe proof without exposing private client data, credentials, production secrets, or confidential workflow exports.
+## Technical review in three minutes
 
-## Technical review path
+1. **[n8n workflow engineering](n8n/README.md)** — sanitized historical JSON, extracted Code-node logic and offline control tests.
+2. [Claim verification](n8n/extracted/verify-claim.js) → [ambiguous-send handling](n8n/extracted/classify-send-error.js) → [failure modes](n8n/FAILURE-MODES.md).
+3. [Historical execution gallery](https://github.com/naraya07pedro-spec/production-integration-reference/tree/main/docs/operational-evidence) — visible stop/routing paths, history and failure; different workflow revisions.
+4. **[Production Integration Reference](https://github.com/naraya07pedro-spec/production-integration-reference)** — maintained TypeScript/PostgreSQL webhook, reservation, retry, test and CI proof.
+5. [Selected work](docs/SELECTED-WORK.md) — internal artifacts, two client engagement scopes and supporting application work.
 
-**Evan Naraya — Automation & Integration Engineer**
+The [evidence matrix](n8n/EVIDENCE-MATRIX.md) states what each artifact establishes. Export structure and offline tests do not establish a live n8n deployment, delivered email, uptime or business results.
 
-The standalone flagship is the primary maintained implementation reference. The local integration example is retained as its historical source.
+## n8n engineering surface
 
-1. [Production Integration Reference](https://github.com/naraya07pedro-spec/production-integration-reference) — TypeScript webhooks, PostgreSQL idempotency, retries, tests, and CI.
-2. [Reliable Lead Routing](examples/reliable-lead-routing/) — runnable deterministic gates, bounded classification, manual-review fallback, and retry behavior.
-3. [Technical review guide](docs/TECHNICAL-REVIEW.md) — implementation decisions and review entry points.
-4. [Production safety](docs/PRODUCTION-SAFETY.md) — documented safeguards and control boundaries.
-5. [Historical n8n evidence](https://github.com/naraya07pedro-spec/production-integration-reference/tree/main/docs/evidence) — separate VAREVANT workflow paths, execution history, a manual success, and a visible failure; not runtime validation of the inactive synthetic demo.
-6. [Selected work](docs/SELECTED-WORK.md) — public artifacts and evidence boundaries.
-7. [BIMMCA Intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence) — browser Supabase consumer, source-backed architecture, and offline tests; backend ingestion requires separate evidence.
+The historical workflow contains discovery, evidence processing, queue handoff, dispatch, outcome handling and bounce-monitoring branches. Its source exposes live-state rereads, execution-specific claims, payload fingerprints, matching result commits and ambiguous-outcome holds.
 
-These references make implementation and failure-handling decisions inspectable. They do not establish production traffic, uptime, client impact, or business outcomes.
+[Offline tests](n8n/tests/) execute selected original Code-node bodies with synthetic inputs, compile all Code nodes and check graph/privacy integrity. They also expose a concurrency limitation: independent static-data snapshots can both grant a lease. The historical Sheets claim is not represented as atomic database reservation.
 
-## What we build
+## Reference implementations
 
-- Workflow and pipeline automation
-- CRM, API, webhook, and database integrations
-- Internal tools and operational dashboards
-- Backend orchestration and system-to-system workflows
-- AI agents with explicit tools, permissions, and approval boundaries
-- White-label technical execution for agencies
-- Production QA, documentation, and handover
-
-Technology is treated as the delivery mechanism, not the outcome. A project starts with the current process, the operational friction, and the decision or handoff that is failing.
+| Reference | Inspect / run | Boundary |
+| --- | --- | --- |
+| [Reliable Lead Routing](examples/reliable-lead-routing/) | `node --test examples/reliable-lead-routing/workflow.test.js` | Injected classifier, hard gates and manual-review route; process-memory dedupe and broad retries need hardening. |
+| [Standalone integration reference](https://github.com/naraya07pedro-spec/production-integration-reference) | `npm ci`, typecheck, tests, database tests and signed demo in that repo | Maintained synthetic reference, not client production source. |
+| [Older local integration example](examples/production-integration-reference/) | Historical source of the standalone reference | Retained for provenance; use the standalone implementation for current reliability review. |
 
 ## Selected client delivery
 
-Public-safe summaries of real client engagements:
-
-- **PT Geget Gigit — Indonesia:** AI-powered CMO automation agent for marketing operations and decision workflows.
+- **PT Geget Gigit — Indonesia:** AI-powered CMO automation agent for marketing operations.
 - **EZUmrah — Malaysia:** end-to-end AI automation and integration system for an Umrah travel business.
 
-Implementation details, credentials, client data, and unsupported commercial outcomes are intentionally excluded. See [Selected Work](docs/SELECTED-WORK.md) for scope and evidence boundaries.
+These are Evan's engagement-scope statements. Specific client adapters, controls, acceptance records and outcomes are not established by the public artifacts. [Client notes](https://github.com/naraya07pedro-spec/naraya07pedro-spec/blob/main/CLIENT-WORK.md).
 
-## Public proof
+## Delivery and supporting proof
 
-### 1. VAREVANT Revenue Operations System
+- [Technical review guide](docs/TECHNICAL-REVIEW.md) — source-based reviewer path.
+- [Production safety](docs/PRODUCTION-SAFETY.md) and [n8n outbound gate](docs/N8N-OUTBOUND-PRODUCTION-GATE.md) — standards, not proof that every export implements them.
+- [Delivery model](docs/DELIVERY-MODEL.md) — scoping, QA, handoff and white-label boundaries.
+- [BIMMCA Intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence) — Supabase browser query/Realtime consumer and tests; backend ingestion remains separate.
 
-An internal system built and operated by VAREVANT to manage lead flow, routing, follow-up, pipeline state, and operating visibility.
+## Check the n8n evidence pack
 
-Public artifacts in this repository:
+Node.js 24, from this repository root:
 
-- [`assets/varevant-command-center.png`](assets/varevant-command-center.png) — command-center interface
-- [`assets/varevant-workflow.png`](assets/varevant-workflow.png) — workflow architecture visual
-- [`index.html`](index.html) — current public product/service surface
-
-This is presented as **internal engineering proof**, not as a third-party client case study.
-
-### 2. WellnessHub Command Center
-
-A self-built client-management/product system used to demonstrate how multiple operational views can be consolidated into one interface: sales tracking, order state, client history, and product performance.
-
-Public artifact:
-
-- [`assets/wellnesshub-command-center.png`](assets/wellnesshub-command-center.png)
-
-This is also presented as a self-built system, not as a fabricated client case study.
-
-### 3. BIMMCA Intelligence
-
-A separate public repository for an AI Authority Intelligence dashboard with a browser Supabase query and Realtime subscription. The upstream n8n monitoring workflow and database policies are outside that repository's verified source.
-
-- [naraya07pedro-spec/bimmca-intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence)
-
-The public dashboard layer includes competitive authority metrics, strategic gaps, evidence views, and sampled AI-recommendation monitoring. Private automation credentials and backend administration access are not published.
-
-## How we design systems
-
-A typical implementation is structured around a controlled flow rather than a collection of disconnected automations:
-
-```mermaid
-flowchart LR
-    A[Event / Request] --> B[Validate + Normalize]
-    B --> C{Deterministic Gate}
-    C -->|Allowed| D[Route / Orchestrate]
-    C -->|Blocked| X[Stop + Log]
-    D --> E[API / CRM / Database]
-    E --> F{Human approval needed?}
-    F -->|Yes| G[Approval]
-    F -->|No| H[Execute]
-    G --> H
-    H --> I[Persist State]
-    I --> J[Observe / Retry / Handover]
+```sh
+node n8n/scripts/extract-nodes.mjs --check
+node --test n8n/tests/*.test.mjs
+python3 scripts/check-portfolio.py
 ```
 
-Hard gates, permissions, suppression rules, deduplication, and irreversible actions should be deterministic. LLMs are used where language interpretation or bounded judgment is useful; they are not used to invent source data or bypass system controls.
+These checks make no external requests. The sanitized historical export is inactive, has no credential bindings and has disabled external nodes. It is a review artifact, not a deployable workflow.
 
-## Delivery standard
+## Website and disclosure boundary
 
-The public delivery standard is documented here:
+The static website uses `index.html`, `styles.css`, `script.js`, vertical service pages and `assets/`. `geo/` contains separate content/monitoring automation. Portfolio changes are in engineering documentation and evidence.
 
-- [`docs/SELECTED-WORK.md`](docs/SELECTED-WORK.md) — what the public proof actually demonstrates
-- [`docs/DELIVERY-MODEL.md`](docs/DELIVERY-MODEL.md) — how direct and white-label engagements are structured
-- [`docs/PRODUCTION-SAFETY.md`](docs/PRODUCTION-SAFETY.md) — safeguards used when a workflow moves toward production
+No client credentials, private payloads, invented testimonials, revenue lifts or production metrics are supplied. An absent license does not grant reuse rights. Security reporting is described in [SECURITY.md](SECURITY.md).
 
-## White-label execution
-
-For agencies, VAREVANT can work behind the scenes on an agreed technical scope while the agency keeps the end-client relationship.
-
-Typical fit:
-
-- the agency has already won or scoped the business problem;
-- the work needs custom automation, integration, backend, or AI implementation;
-- hiring permanent technical capacity would be inefficient for the scope;
-- delivery ownership, communication boundaries, QA, and handover need to be explicit.
-
-More detail: [varevant.com/white-label-ai-automation](https://varevant.com/white-label-ai-automation/)
-
-## Public / private boundary
-
-Not everything that proves engineering quality should be public.
-
-This repository does **not** publish:
-
-- client credentials or API secrets;
-- service-role/database administration keys;
-- personal or confidential client data;
-- full private production workflows where business logic is sensitive;
-- private commercial terms;
-- fabricated testimonials, project outcomes, or client logos.
-
-When a system cannot be published safely, the public proof is limited to a sanitized architecture, interface, methodology, or non-sensitive implementation detail.
-
-## Repository structure
-
-```text
-.
-├── index.html                       # Main VAREVANT website
-├── white-label-ai-automation/      # Agency delivery / white-label surface
-├── ai-automation-for-hvac/         # Vertical service page
-├── ai-automation-for-roofing/      # Vertical service page
-├── assets/                          # Public-safe visual proof
-├── content/                         # Content assets
-├── geo/                             # GEO / AI recommendation content layer
-├── docs/                            # Engineering and delivery documentation
-├── examples/
-│   ├── production-integration-reference/ # TypeScript/Postgres/n8n integration proof
-│   └── reliable-lead-routing/       # Deterministic routing reference
-├── script.js
-├── styles.css
-├── robots.txt
-└── sitemap.xml
-```
-
-## Contact
-
-**Evan Naraya — VAREVANT**  
-[evan@varevant.com](mailto:evan@varevant.com) · [varevant.com](https://varevant.com) · [LinkedIn](https://www.linkedin.com/in/evannaraya)
-
-If you are evaluating VAREVANT as an execution partner, the useful starting point is not a generic capability call. Send the current process, the system involved, the part that is failing or too manual, and what a successful handoff should look like.
-
+**Evan Naraya** · [evan@varevant.com](mailto:evan@varevant.com) · [LinkedIn](https://www.linkedin.com/in/evannaraya) · [varevant.com](https://varevant.com)

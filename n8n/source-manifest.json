@@ -1,0 +1,20 @@
+{
+  "source": "VAREVANT historical V6 export uploaded 2026-08-07",
+  "sourceDateMeaning": "upload date; creation and deployment dates unverified",
+  "sourceSha256": "b9587f65b949b8967dc59a16eb4d88bc1752ff47c1d73d02c2fa1ef6fe9c14fa",
+  "sanitizedSha256": "6fe84571afbb20b53b2b448918cc9db9719642f8f58e89232caecd5155a0ba91",
+  "published": "2026-10-01",
+  "workflow": "revenue-workflow-v6.sanitized.json",
+  "nodeCount": 117,
+  "codeNodeCount": 60,
+  "edgeCount": 153,
+  "redactions": {
+    "credentials": 17,
+    "locator_values": 30,
+    "webhook_ids": 4,
+    "metadata": true,
+    "sender_alias": true,
+    "external_nodes_disabled": 26
+  },
+  "boundary": "Historical implementation artifact. Not the exact revision pictured in the execution screenshots; no n8n runtime or email delivery claim."
+}
