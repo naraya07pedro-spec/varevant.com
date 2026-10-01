@@ -1,0 +1,22 @@
+name: n8n evidence checks
+on:
+  push:
+    branches: [main]
+    paths: ['README.md', 'docs/**', 'n8n/**', 'scripts/check-portfolio.py', '.github/workflows/n8n-evidence.yml']
+  pull_request:
+    paths: ['README.md', 'docs/**', 'n8n/**', 'scripts/check-portfolio.py', '.github/workflows/n8n-evidence.yml']
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node n8n/scripts/extract-nodes.mjs --check
+      - run: node --test n8n/tests/*.test.mjs
+      - run: python3 scripts/check-portfolio.py
+      - run: git diff --check

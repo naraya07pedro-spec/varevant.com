@@ -1,143 +1,21 @@
-# Technical Review Guide
+# Technical review guide
 
-This guide is for engineers, hiring teams, agency partners, or technical reviewers who want to understand what the public VAREVANT repositories actually demonstrate without relying on marketing claims.
+## Five-minute path
 
-## Five-minute review path
+| Time | Inspect | Check |
+| --- | --- | --- |
+| 0–1 minute | [n8n architecture](../n8n/ARCHITECTURE.md) and [Verify Claim](../n8n/extracted/verify-claim.js) | Branches, ownership, live input and payload checks. |
+| 1–2 minutes | [Send error classification](../n8n/extracted/classify-send-error.js) and [SENT verification](../n8n/extracted/verify-sent-commit.js) | Ambiguous outcome, stop state and matching persistence result. |
+| 2–3 minutes | [Offline tests](../n8n/tests/exported-controls.test.mjs) and [failure modes](../n8n/FAILURE-MODES.md) | Actual selected node bodies tested; static-data/Sheets race and retry limits disclosed. |
+| 3–4 minutes | [Backend handler](https://github.com/naraya07pedro-spec/production-integration-reference/blob/main/src/handler.ts), [reservation](https://github.com/naraya07pedro-spec/production-integration-reference/blob/main/src/idempotency.ts), tests/CI | Atomic reservation before a side effect; downstream idempotency required for safe retries. |
+| 4–5 minutes | [Execution gallery](https://github.com/naraya07pedro-spec/production-integration-reference/tree/main/docs/operational-evidence), [selected work](SELECTED-WORK.md), [BIMMCA contract](https://github.com/naraya07pedro-spec/bimmca-intelligence/blob/main/docs/ARCHITECTURE.md) | Runtime states, client-scope boundary and browser-consumer behavior. |
 
-1. Start with [`Production Integration Reference`](https://github.com/naraya07pedro-spec/production-integration-reference) for inspectable TypeScript, PostgreSQL, HMAC verification, durable idempotency, REST integration, retry classification, tests, and a sanitized n8n export.
-2. Run [`Reliable Lead Routing`](../examples/reliable-lead-routing/) to inspect deterministic gates and bounded AI routing.
-3. Read [`PRODUCTION-SAFETY.md`](PRODUCTION-SAFETY.md) for the control boundaries used around automation and AI-assisted workflows.
-4. Read [`SELECTED-WORK.md`](SELECTED-WORK.md) for the evidence-backed project map.
-5. Review the separate [BIMMCA Intelligence repository](https://github.com/naraya07pedro-spec/bimmca-intelligence) for a Supabase-backed dashboard/application surface.
-6. Use [`DELIVERY-MODEL.md`](DELIVERY-MODEL.md) to understand implementation, handoff, and white-label boundaries.
+## AI and deterministic control
 
-## What the public work demonstrates
+The [historical copy gate](../n8n/extracted/copy-gate.js) validates lexical constraints and supports a deterministic fallback; it does not verify semantic factuality. The [lead-routing reference](../examples/reliable-lead-routing/) validates a bounded classifier output and routes uncertain results to manual review. Neither establishes autonomous tool calling or an authenticated approval system.
 
-### Workflow and orchestration design
+## Standards versus implementation
 
-The public material shows an engineering approach built around controlled state transitions rather than disconnected automations:
+[Production safety](PRODUCTION-SAFETY.md) and [n8n outbound gate](N8N-OUTBOUND-PRODUCTION-GATE.md) describe expected controls. The [evidence matrix](../n8n/EVIDENCE-MATRIX.md) separates implemented, tested and unverified behavior. A checklist is not a runtime result.
 
-```mermaid
-flowchart LR
-    A[Event / Request] --> B[Validate + Normalize]
-    B --> C{Deterministic Gate}
-    C -->|Allowed| D[Route / Orchestrate]
-    C -->|Blocked| X[Stop + Log]
-    D --> E[API / CRM / Database]
-    E --> F{Human approval needed?}
-    F -->|Yes| G[Approval]
-    F -->|No| H[Execute]
-    G --> H
-    H --> I[Persist State]
-    I --> J[Observe / Retry / Handover]
-```
-
-The important distinction is intentional: deterministic rules handle hard gates, permissions, suppression, deduplication, and irreversible actions; LLMs are used where language interpretation or bounded judgment is useful.
-
-### Integration-oriented engineering
-
-The public repositories and documentation cover patterns involving:
-
-- APIs and webhooks;
-- CRM and operational workflow integration;
-- database-backed state;
-- Supabase/PostgreSQL-backed application surfaces;
-- routing and follow-up orchestration;
-- retries, deduplication, logging, and human approval boundaries;
-- documentation and handover for maintainability.
-
-### Public-safe proof
-
-Some production logic should not be public. The review surface therefore separates:
-
-- what can be inspected directly in code or documentation;
-- what can be shown safely as architecture or screenshots;
-- what remains private because it contains credentials, client data, or sensitive operating logic.
-
-This is a deliberate security and evidence decision, not an attempt to imply hidden results that cannot be verified.
-
-## Selected public evidence
-
-### Production Integration Reference
-
-**What it demonstrates:** directly inspectable TypeScript for a production-style integration boundary: HMAC webhook verification, atomic PostgreSQL reservation, restart-safe idempotency, real HTTP integration code, retry classification, structured logging, tests, and a sanitized n8n export.
-
-Files:
-
-- [`README.md`](https://github.com/naraya07pedro-spec/production-integration-reference/blob/main/README.md)
-- [`src/handler.ts`](https://github.com/naraya07pedro-spec/production-integration-reference/blob/main/src/handler.ts)
-- [`src/idempotency.ts`](https://github.com/naraya07pedro-spec/production-integration-reference/blob/main/src/idempotency.ts)
-- [`tests/`](https://github.com/naraya07pedro-spec/production-integration-reference/tree/main/tests/)
-- [`n8n/workflow.sanitized.json`](https://github.com/naraya07pedro-spec/production-integration-reference/blob/main/n8n/workflow.sanitized.json)
-
-This is a public-safe reference implementation, not a claim of client production usage.
-
-### Reliable Lead Routing reference implementation
-
-**What it demonstrates:** directly inspectable and testable code for validation, suppression, geography gates, idempotency, bounded classification, manual-review fallback, and bounded retry behavior.
-
-Files:
-
-- [`../examples/reliable-lead-routing/README.md`](../examples/reliable-lead-routing/README.md)
-- [`../examples/reliable-lead-routing/workflow.js`](../examples/reliable-lead-routing/workflow.js)
-- [`../examples/reliable-lead-routing/workflow.test.js`](../examples/reliable-lead-routing/workflow.test.js)
-
-This is a sanitized reference implementation, not client code or a production export.
-
-### VAREVANT Revenue Operations System
-
-**What it demonstrates:** lead flow, routing, follow-up, pipeline state, operational visibility, and separation between deterministic controls and language-model assistance.
-
-Public artifacts:
-
-- [`../assets/varevant-command-center.png`](../assets/varevant-command-center.png)
-- [`../assets/varevant-workflow.png`](../assets/varevant-workflow.png)
-
-This is internal engineering proof, not a third-party client case study.
-
-### BIMMCA Intelligence
-
-**What it demonstrates:** a public dashboard/application layer that consumes Supabase-backed state produced by a monitoring architecture involving n8n and structured AI-response extraction.
-
-Repository:
-
-- [naraya07pedro-spec/bimmca-intelligence](https://github.com/naraya07pedro-spec/bimmca-intelligence)
-
-The repository explicitly separates sampled AI-response evidence from claims of universal platform visibility.
-
-### WellnessHub Command Center
-
-**What it demonstrates:** consolidation of sales, order, client-history, and product-performance views into one operating interface.
-
-Public artifact:
-
-- [`../assets/wellnesshub-command-center.png`](../assets/wellnesshub-command-center.png)
-
-This is self-built product/systems work and is not represented as a paid third-party implementation without separate evidence.
-
-## What this portfolio does not claim
-
-The public repositories do not claim:
-
-- fabricated client outcomes or revenue lifts;
-- access to private model conversations;
-- production credentials or private client data;
-- that every private workflow is publishable;
-- that a language model is allowed to bypass deterministic business controls.
-
-## Relevant technical surface
-
-The public work is most relevant to roles or projects involving:
-
-- workflow automation;
-- API and webhook integration;
-- backend orchestration;
-- Supabase/PostgreSQL-backed workflows;
-- CRM and revenue-operations systems;
-- bounded AI-agent or LLM-assisted workflows;
-- technical implementation and systems integration.
-
-## Contact
-
-**Evan Naraya — VAREVANT**  
-[evan@varevant.com](mailto:evan@varevant.com) · [varevant.com](https://varevant.com) · [LinkedIn](https://www.linkedin.com/in/evannaraya)
+The old [local integration example](../examples/production-integration-reference/) is historical source. Its successor is the maintained standalone reference; the copies do not have identical hardening or tests.

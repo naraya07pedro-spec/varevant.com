@@ -9,7 +9,7 @@ It demonstrates how VAREVANT separates deterministic controls from AI-assisted i
 - input normalization and validation;
 - suppression before any AI call or side effect;
 - region hard gates;
-- deterministic idempotency / duplicate prevention;
+- sequential duplicate detection within the injected process-memory set;
 - injected classifier interface rather than hard-wiring one AI vendor;
 - confidence thresholds that fall back to manual review;
 - bounded retries around downstream side effects;
@@ -71,5 +71,7 @@ examples/reliable-lead-routing/
 A real deployment would replace the injected `classifier` and `writeAction` functions with specific adapters for the chosen model, CRM, database, queue, or API.
 
 Production deployment would also normally persist idempotency state outside process memory and add structured observability, authentication, access controls, and service-specific retry policies.
+
+The current key includes email, so a changed address changes identity. The seen key is written after the action, so concurrent callers can both pass the gate. Retries repeat every thrown error without provider-specific classification; a non-idempotent action can be duplicated after an ambiguous failure. These are reference limitations, not verified cross-execution guarantees. Use the separate [PostgreSQL integration reference](https://github.com/naraya07pedro-spec/production-integration-reference) for atomic reservation and classified retries.
 
 Those details are intentionally not faked here. The purpose of this example is to make the control pattern directly inspectable and testable.
