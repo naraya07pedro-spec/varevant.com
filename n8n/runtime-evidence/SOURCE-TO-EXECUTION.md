@@ -58,4 +58,6 @@ No exact executed source hash, saved execution ID/date, Code-node body equality,
 
 ## Privacy boundary
 
+The October 2 full accessible-filesystem follow-up checked local structured exports, archives, Git history, OCR and video samples. It found no saved historical V6 execution containing this workflow snapshot. The independently [reproduced V19 handler case](reproduced-recovery/README.md) does not upgrade this historical V6 association to EXACT. [Search coverage](SEARCH-AND-GAPS.md) records the accessible scope and Windows access limit.
+
 The raw export and screenshot remain private. Browser tabs, host, workflow/project/account values, sender text and desktop profile are excluded or covered. Crops, hashes and redaction coordinates are recorded in [visual-manifest.json](visual-manifest.json). To raise this to EXACT MATCH, the required saved execution record is specified in [remaining material](SEARCH-AND-GAPS.md).

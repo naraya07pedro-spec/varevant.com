@@ -1,0 +1,343 @@
+{
+  "label": "REPRODUCED RECOVERY TEST / NOT HISTORICAL PRODUCTION EXECUTION",
+  "executionId": "2",
+  "workflowId": "ReproducedHandlerOnly",
+  "status": "success",
+  "finished": true,
+  "mode": "cli",
+  "startedAt": "2026-10-02 04:11:32.269",
+  "stoppedAt": "2026-10-02 04:11:32.315",
+  "workflowData": {
+    "id": "ReproducedHandlerOnly",
+    "name": "REPRODUCED RECOVERY TEST / NOT HISTORICAL PRODUCTION EXECUTION",
+    "active": false,
+    "isArchived": false,
+    "createdAt": "2026-10-02T04:11:23.041Z",
+    "updatedAt": "2026-10-02T04:11:23.041Z",
+    "nodes": [
+      {
+        "id": "Manual-Test-Trigger",
+        "name": "Manual Test Trigger",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "notice": ""
+        }
+      },
+      {
+        "id": "Synthetic-Fetch-Failure",
+        "name": "Synthetic Fetch Failure",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          200,
+          0
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "language": "javaScript",
+          "jsCode": "return [{json:{\"correlation_id\":\"synthetic-recovery-001\",\"query\":\"synthetic business search\",\"search_html\":\"stale synthetic HTML\",\"request_context\":{\"batch_id\":\"synthetic-batch-001\",\"attempt\":1},\"error\":{\"code\":\"SYNTHETIC_FETCH_FAILURE\",\"message\":\"Synthetic upstream fetch failure\"}}}];",
+          "notice": ""
+        }
+      },
+      {
+        "id": "Handle-Public-Search-Fetch-Error",
+        "name": "Handle Public Search Fetch Error",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          400,
+          0
+        ],
+        "parameters": {
+          "mode": "runOnceForEachItem",
+          "language": "javaScript",
+          "jsCode": "return {json:{...$json,search_html:'',public_search_error:true}};",
+          "notice": ""
+        },
+        "onError": "stopWorkflow"
+      },
+      {
+        "id": "Verify-Reproduced-Handler-Output",
+        "name": "Verify Reproduced Handler Output",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          600,
+          0
+        ],
+        "parameters": {
+          "mode": "runOnceForEachItem",
+          "language": "javaScript",
+          "jsCode": "const expected={\"correlation_id\":\"synthetic-recovery-001\",\"query\":\"synthetic business search\",\"search_html\":\"\",\"request_context\":{\"batch_id\":\"synthetic-batch-001\",\"attempt\":1},\"error\":{\"code\":\"SYNTHETIC_FETCH_FAILURE\",\"message\":\"Synthetic upstream fetch failure\"},\"public_search_error\":true}; if(JSON.stringify($json)!==JSON.stringify(expected)) throw new Error('Reproduced handler output mismatch'); return {json:$json};",
+          "notice": ""
+        }
+      },
+      {
+        "id": "Reproduced-Stop",
+        "name": "Reproduced Stop",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          800,
+          0
+        ],
+        "parameters": {}
+      }
+    ],
+    "connections": {
+      "Manual Test Trigger": {
+        "main": [
+          [
+            {
+              "node": "Synthetic Fetch Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Synthetic Fetch Failure": {
+        "main": [
+          [
+            {
+              "node": "Handle Public Search Fetch Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Handle Public Search Fetch Error": {
+        "main": [
+          [
+            {
+              "node": "Verify Reproduced Handler Output",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Verify Reproduced Handler Output": {
+        "main": [
+          [
+            {
+              "node": "Reproduced Stop",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "all",
+      "saveDataErrorExecution": "all"
+    },
+    "staticData": null,
+    "pinData": null
+  },
+  "data": {
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Manual Test Trigger": [
+          {
+            "startTime": 1790914292274,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Synthetic Fetch Failure": [
+          {
+            "startTime": 1790914292274,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Test Trigger"
+              }
+            ],
+            "hints": [
+              {
+                "message": "To make sure expressions after this node work, return the input items that produced each output item. <a target=\"_blank\" href=\"https://docs.n8n.io/data/data-mapping/data-item-linking/item-linking-code-node/\">More info</a>",
+                "location": "outputPane"
+              }
+            ],
+            "executionTime": 31,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "correlation_id": "synthetic-recovery-001",
+                      "query": "synthetic business search",
+                      "search_html": "stale synthetic HTML",
+                      "request_context": {
+                        "batch_id": "synthetic-batch-001",
+                        "attempt": 1
+                      },
+                      "error": {
+                        "code": "SYNTHETIC_FETCH_FAILURE",
+                        "message": "Synthetic upstream fetch failure"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Handle Public Search Fetch Error": [
+          {
+            "startTime": 1790914292305,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Synthetic Fetch Failure"
+              }
+            ],
+            "hints": [],
+            "executionTime": 4,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "correlation_id": "synthetic-recovery-001",
+                      "query": "synthetic business search",
+                      "search_html": "",
+                      "request_context": {
+                        "batch_id": "synthetic-batch-001",
+                        "attempt": 1
+                      },
+                      "error": {
+                        "code": "SYNTHETIC_FETCH_FAILURE",
+                        "message": "Synthetic upstream fetch failure"
+                      },
+                      "public_search_error": true
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Verify Reproduced Handler Output": [
+          {
+            "startTime": 1790914292309,
+            "executionIndex": 3,
+            "source": [
+              {
+                "previousNode": "Handle Public Search Fetch Error"
+              }
+            ],
+            "hints": [],
+            "executionTime": 6,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "correlation_id": "synthetic-recovery-001",
+                      "query": "synthetic business search",
+                      "search_html": "",
+                      "request_context": {
+                        "batch_id": "synthetic-batch-001",
+                        "attempt": 1
+                      },
+                      "error": {
+                        "code": "SYNTHETIC_FETCH_FAILURE",
+                        "message": "Synthetic upstream fetch failure"
+                      },
+                      "public_search_error": true
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Reproduced Stop": [
+          {
+            "startTime": 1790914292315,
+            "executionIndex": 4,
+            "source": [
+              {
+                "previousNode": "Verify Reproduced Handler Output"
+              }
+            ],
+            "hints": [],
+            "executionTime": 0,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "correlation_id": "synthetic-recovery-001",
+                      "query": "synthetic business search",
+                      "search_html": "",
+                      "request_context": {
+                        "batch_id": "synthetic-batch-001",
+                        "attempt": 1
+                      },
+                      "error": {
+                        "code": "SYNTHETIC_FETCH_FAILURE",
+                        "message": "Synthetic upstream fetch failure"
+                      },
+                      "public_search_error": true
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Reproduced Stop"
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {}
+    }
+  }
+}
