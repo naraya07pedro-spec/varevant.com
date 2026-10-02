@@ -4,6 +4,8 @@
 
 This is the n8n review entry point for Evan Naraya's VAREVANT work. The selected historical export contains **117 nodes, 60 JavaScript Code nodes, and 153 connections**: discovery, evidence processing, queue handoff, dispatch, outcome handling, and bounce monitoring. These are source-structure counts, not execution or delivery metrics.
 
+**Recruiter path:** [flagship case study](FLAGSHIP-CASE-STUDY.md) → [five traceable cases](incidents/README.md) → [saved real-n8n reproduction](runtime-evidence/reproduced-recovery/recorded/report.json) → [source regressions](tests/incident-source.test.mjs). The catalog separates historical observations, inferred revision links and controlled tests.
+
 ## Proof in three minutes
 
 1. [Inspect the control code](extracted/verify-claim.js): reread a claimed row, match execution ownership, reject prior message IDs, and compare the frozen payload.

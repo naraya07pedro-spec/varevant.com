@@ -4,6 +4,8 @@
 
 This repository contains the [VAREVANT website](https://varevant.com), historical internal workflow source, reference examples and delivery documentation. Client implementations remain separate from internal and reference work.
 
+**Start in 30 seconds:** [flagship architecture and three repair cases](n8n/FLAGSHIP-CASE-STUDY.md) → [incident catalog](n8n/incidents/README.md) → [saved reproduced recovery](n8n/runtime-evidence/reproduced-recovery/recorded/report.json) → [tests and CI](https://github.com/naraya07pedro-spec/varevant.com/actions/workflows/n8n-evidence.yml).
+
 ## Technical review in three minutes
 
 1. **[n8n workflow engineering](n8n/README.md)** — sanitized historical JSON, extracted Code-node logic and offline control tests.

@@ -1,0 +1,93 @@
+{
+  "review_date": "2026-10-02",
+  "classification": "Historical source excerpts with synthetic identity substitutions; not saved historical executions",
+  "files": [
+    {
+      "path": "v2-policy.before.js",
+      "original_filename": "VAREVANT_REVENUE_LEAKAGE_SNIPER_ENGINE_V2_ADAPTIVE.json",
+      "source_sha256": "d61ba92e07603dc1f60594e9ad25d6c4b7cf6ec46332d384c40fab7f07d2f24b",
+      "original_code_sha256": "174db13c454ecf5284fffe3d03350e1ebda1a85563daad3fbd281d9503dc7447",
+      "published_code_sha256": "174db13c454ecf5284fffe3d03350e1ebda1a85563daad3fbd281d9503dc7447",
+      "node": "Load Policy + Territory Control",
+      "mode": "runOnceForAllItems",
+      "created_at": "2026-08-06T13:43:16.654879Z",
+      "library_file_id": "libfile_9ebbe31daa888191a372ca34b1741907",
+      "redaction_count": 0,
+      "redaction_policy": "Only email literals replaced by synthetic example.invalid addresses; control flow unchanged",
+      "execution_binding": "Archived source artifact; exact historical runtime snapshot unavailable"
+    },
+    {
+      "path": "v3-policy.after.js",
+      "original_filename": "VAREVANT_REVENUE_LEAKAGE_SNIPER_ENGINE_V3_RUNTIME_NATIVE.json",
+      "source_sha256": "80cd56017198bd9be153644cbb6bcddbc4cfacb957f02df791cd1a62fe515d70",
+      "original_code_sha256": "cdb4fa8e20c718d218fdfdc347cb824a2a085fbdcebd58d0d3b15f700f4971d8",
+      "published_code_sha256": "cdb4fa8e20c718d218fdfdc347cb824a2a085fbdcebd58d0d3b15f700f4971d8",
+      "node": "Load Policy + Territory Control",
+      "mode": "runOnceForAllItems",
+      "created_at": "2026-08-06T13:59:33.296983Z",
+      "library_file_id": "libfile_de7234f169d081918694b2bcc8509887",
+      "redaction_count": 0,
+      "redaction_policy": "Only email literals replaced by synthetic example.invalid addresses; control flow unchanged",
+      "execution_binding": "Archived source artifact; exact historical runtime snapshot unavailable"
+    },
+    {
+      "path": "v9-no-send.before.js",
+      "original_filename": "VAREVANT_REVENUE_LEAKAGE_SNIPER_ENGINE_V9_SINGLE_PATH_SENDER_REPAIR.json",
+      "source_sha256": "3f70ece9d403b4d2cc694b0f68dd921304b7d2042d6d271f5d9983d023d7b821",
+      "original_code_sha256": "ebc29ac8ee9fec2452e73898eaf546b6f89cd77538856a2b08b0964f27d6f726",
+      "published_code_sha256": "ebc29ac8ee9fec2452e73898eaf546b6f89cd77538856a2b08b0964f27d6f726",
+      "node": "SINGLE \u2014 No Sendable Rows",
+      "mode": "runOnceForEachItem",
+      "created_at": null,
+      "library_file_id": null,
+      "redaction_count": 0,
+      "redaction_policy": "Only email literals replaced by synthetic example.invalid addresses; control flow unchanged",
+      "execution_binding": "Archived source artifact; exact historical runtime snapshot unavailable"
+    },
+    {
+      "path": "v10-no-send.after.js",
+      "original_filename": "VAREVANT_REVENUE_LEAKAGE_SNIPER_ENGINE_V10_SELECTOR_AND_CODE_RUNTIME_FIX.json",
+      "source_sha256": "f6883ecc63cffda0e8c248f351f320d0915d62893cc5c38932c4b2eb79075978",
+      "original_code_sha256": "da5f9feb4b36227e8f30147627bb57f11eb3f3a1e8149a877123b3c88d884e1c",
+      "published_code_sha256": "da5f9feb4b36227e8f30147627bb57f11eb3f3a1e8149a877123b3c88d884e1c",
+      "node": "SINGLE \u2014 No Sendable Rows",
+      "mode": "runOnceForEachItem",
+      "created_at": null,
+      "library_file_id": null,
+      "redaction_count": 0,
+      "redaction_policy": "Only email literals replaced by synthetic example.invalid addresses; control flow unchanged",
+      "execution_binding": "Archived source artifact; exact historical runtime snapshot unavailable"
+    },
+    {
+      "path": "v10-1-selector.after.js",
+      "original_filename": "VAREVANT_V10_1_WORKER_IDENTITY_HANDOFF_FIX_IMPORT_READY.json",
+      "source_sha256": "5ccd73e9650baa3893ceb89c122aeef18e5c760f0f5cc40830a01343454444ae",
+      "original_code_sha256": "8c959a60d56a016d88b1febcbd19769767cfc76d08ab7ceb8017fe08e034032c",
+      "published_code_sha256": "f0577c6d1664397206d1ba48d0cdf52ebcdbcac82325c35f2d11c9049237f60f",
+      "node": "Select, Assign & Cap",
+      "mode": "runOnceForAllItems",
+      "created_at": null,
+      "library_file_id": null,
+      "redaction_count": 2,
+      "redaction_policy": "Only email literals replaced by synthetic example.invalid addresses; control flow unchanged",
+      "execution_binding": "Archived source artifact; exact historical runtime snapshot unavailable"
+    }
+  ],
+  "screenshots": [
+    {
+      "original_filename": "e023c6e7-1035-44d2-ad3f-a412778544df.png",
+      "sha256": "82e23e5d42dd5e620add64e3b352ff0aa2190650043138adc1b20dd333a0997e",
+      "uploaded_at": "2026-08-06T13:45:44.518052Z",
+      "visible_desktop_time": "2026-08-06 20:44; timezone not independently established",
+      "observed_error": "Load Policy + Territory Control: access to env vars denied"
+    },
+    {
+      "original_filename": "df31e05e-5a6b-42ff-a4e5-de3f7be355b3.png",
+      "sha256": "dc462187400e0c3c31d082f0db0b322873e99396ae02af8650f9575338873a4f",
+      "uploaded_at": null,
+      "visible_desktop_time": "2026-08-07 13:59; timezone not independently established",
+      "observed_error": "SINGLE \u2014 No Sendable Rows: A 'json' property isn't an object [item 0]"
+    }
+  ],
+  "private_sources": "Original screenshots and full exports retained privately; browser hosts, workflow IDs and account details omitted"
+}
