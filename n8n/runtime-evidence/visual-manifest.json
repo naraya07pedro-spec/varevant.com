@@ -1,0 +1,156 @@
+{
+  "reviewed_on": "2026-10-02",
+  "method": "Actual uploaded screenshots; deterministic crops and opaque gray redaction boxes before lossless WebP encoding. No reconstruction, compositing, relabeling or generated imagery.",
+  "coordinates": "Original pixels; crop and redaction arrays are [x,y,width,height].",
+  "time_boundary": "Upload times are archive metadata; desktop clocks are not execution start timestamps. Execution IDs and exact runtime snapshot versions are unavailable.",
+  "images": [
+    {
+      "file": "images/full-canvas-v7.webp",
+      "original_filename": "366d3a42-da7f-4dbd-ba88-e11d354106c5.png",
+      "original_sha256": "35c989caada0db529fcf953ac504fa39c0435218cd8e0a65bed306fdcacba0a4",
+      "published_sha256": "2f4caf5a4fa5c111f5eafa2fde0878902c7e3b1e96337123608d5d8afdaf7a2b",
+      "archive_uploaded_at": "2026-08-07T05:43:35.385246Z",
+      "visible_desktop_clock": "2026-08-07 12:41; timezone not shown",
+      "claim": "Editor topology overview; V7, not the selected V6 execution",
+      "crop": [
+        350,
+        260,
+        1280,
+        674
+      ],
+      "redaction_boxes": [
+        [
+          604,
+          275,
+          76,
+          60
+        ],
+        [
+          383,
+          682,
+          153,
+          8
+        ],
+        [
+          790,
+          613,
+          80,
+          12
+        ],
+        [
+          409,
+          893,
+          84,
+          12
+        ]
+      ]
+    },
+    {
+      "file": "images/v6-dispatcher-stop.webp",
+      "original_filename": "0dca6829-1e66-4710-94a8-e0d990f2cd87.png",
+      "original_sha256": "b4fb5fc79467cee7ff465ecba688413e1d82370fea617de44b9188ea8fbb630d",
+      "published_sha256": "5ed0bd60fbaad8ef17aaa375b5334d0722f0bc444183796c5cafce96cc9d1294",
+      "archive_uploaded_at": "2026-08-07T03:42:52.049394Z",
+      "visible_desktop_clock": "2026-08-07 10:40; timezone not shown",
+      "claim": "Editor with visible run data; V6 dispatcher false branch to Release Dispatcher Lease",
+      "crop": [
+        70,
+        140,
+        1420,
+        775
+      ],
+      "redaction_boxes": [
+        [
+          252,
+          638,
+          346,
+          16
+        ]
+      ]
+    },
+    {
+      "file": "images/v6-dispatcher-detail.webp",
+      "original_filename": "0dca6829-1e66-4710-94a8-e0d990f2cd87.png",
+      "original_sha256": "b4fb5fc79467cee7ff465ecba688413e1d82370fea617de44b9188ea8fbb630d",
+      "published_sha256": "18a476113e607b4b5541f8b7cf25cdb42d1ea9508bbe058f75266d6f35fb0f0a",
+      "archive_uploaded_at": "2026-08-07T03:42:52.049394Z",
+      "visible_desktop_clock": "2026-08-07 10:40; timezone not shown",
+      "claim": "Closer crop of the same V6 green branch; no additional run",
+      "crop": [
+        278,
+        679,
+        540,
+        227
+      ],
+      "redaction_boxes": []
+    },
+    {
+      "file": "images/v19-handler-failure.webp",
+      "original_filename": "0ce75fa0-cf4a-4a18-814c-967ba2a3d85a.png",
+      "original_sha256": "d01c463d7d3f05fbe56e55f01282b2b34ecf548e37a97b64da211115263126ea",
+      "published_sha256": "d4affb0097f5aa9b7ee7d2765c19542a55707634bca87b180ab8bf85c285dd9a",
+      "archive_uploaded_at": "2026-08-07T11:48:32.447184Z",
+      "visible_desktop_clock": "2026-08-07 18:48; timezone not shown",
+      "claim": "V19 error handler red with original payload-shape error toast",
+      "crop": [
+        60,
+        140,
+        1840,
+        840
+      ],
+      "redaction_boxes": [
+        [
+          230,
+          844,
+          285,
+          136
+        ]
+      ]
+    },
+    {
+      "file": "images/v19-1-handler-pass.webp",
+      "original_filename": "fa7662aa-6b31-4c62-9be1-18135571b030.png",
+      "original_sha256": "5ca9a6cbfd7dfd719ee8e953258532c5385df18a2e6385d72e975577f8a1c232",
+      "published_sha256": "225e99460d4705660cf5ec1d7b76ae368d111aa15c70b3230fa2d4b24d981b3d",
+      "archive_uploaded_at": "2026-08-07T12:31:52.748802Z",
+      "visible_desktop_clock": "2026-08-07 19:31; timezone not shown",
+      "claim": "V19.1 green handler and downstream no-candidate branch; complete execution status not shown",
+      "crop": [
+        60,
+        125,
+        1830,
+        755
+      ],
+      "redaction_boxes": [
+        [
+          478,
+          656,
+          196,
+          88
+        ],
+        [
+          966,
+          760,
+          50,
+          17
+        ]
+      ]
+    },
+    {
+      "file": "images/v19-1-handler-detail.webp",
+      "original_filename": "fa7662aa-6b31-4c62-9be1-18135571b030.png",
+      "original_sha256": "5ca9a6cbfd7dfd719ee8e953258532c5385df18a2e6385d72e975577f8a1c232",
+      "published_sha256": "9b651fa0d7667e10b03314208aa404a6c159bb490776f5e0bc06f78dd2f60e93",
+      "archive_uploaded_at": "2026-08-07T12:31:52.748802Z",
+      "visible_desktop_clock": "2026-08-07 19:31; timezone not shown",
+      "claim": "Closer crop of the same V19.1 handler-to-aggregator path; no additional run",
+      "crop": [
+        640,
+        240,
+        460,
+        231
+      ],
+      "redaction_boxes": []
+    }
+  ]
+}
