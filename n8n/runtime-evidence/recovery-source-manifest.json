@@ -1,0 +1,92 @@
+{
+  "reviewed_on": "2026-10-02",
+  "source_kind": "Archived model-generated workflow artifacts, not runtime exports or execution snapshots",
+  "base_comparison": {
+    "before": "VAREVANT_REVENUE_LEAKAGE_ALL_IN_ONE_V19_SEARXNG_OLLAMA_DIRECT_SEND.json",
+    "after": "VAREVANT_REVENUE_LEAKAGE_ALL_IN_ONE_V19_1_FETCH_ERROR_HANDLER_FIX.json",
+    "node_count_unchanged": true,
+    "connections_equal": true,
+    "changed_nodes": [
+      "Handle Public Search Fetch Error"
+    ],
+    "workflow_title_changed": true
+  },
+  "runtime_association": "Strong for the named error branch and corrected handler family; exact imported variant and embedded runtime code are unavailable. V19.1B was created after the selected passing screenshot.",
+  "artifacts": [
+    {
+      "original_filename": "VAREVANT_REVENUE_LEAKAGE_ALL_IN_ONE_V19_SEARXNG_OLLAMA_DIRECT_SEND.json",
+      "archive_created_at": "2026-08-07T09:27:11.724527Z",
+      "model_generated": true,
+      "original_sha256": "5a56a78cfb2ae0e9f90d6f36b7ace04123916086ce19bf74147bef4a9cd79807",
+      "workflow_name": "VAREVANT \u2014 Revenue Leakage ALL-IN-ONE V19 SearXNG + Ollama Direct Send",
+      "node_count": 73,
+      "handler_code_sha256": "78210477f1f7965e7fd2f43cfeb3e38b9dd1a2be8d9155c6f752ab0d3a6bc7f4",
+      "handler_mode": "runOnceForEachItem",
+      "handler_position": [
+        1000,
+        960
+      ]
+    },
+    {
+      "original_filename": "VAREVANT_REVENUE_LEAKAGE_ALL_IN_ONE_V19_1_FETCH_ERROR_HANDLER_FIX.json",
+      "archive_created_at": "2026-08-07T11:50:47.913450Z",
+      "model_generated": true,
+      "original_sha256": "30c5a5343e70acc43b990524892c8a1ee818748aee1c39b122512c37842cd7a1",
+      "workflow_name": "VAREVANT \u2014 Revenue Leakage ALL-IN-ONE V19.1 Fetch Error Handler Fix",
+      "node_count": 73,
+      "handler_code_sha256": "76877bbd3a3867288edaa80ab8204259e8d5e000ab7179adb5cbf2a571b1e1ac",
+      "handler_mode": "runOnceForEachItem",
+      "handler_position": [
+        1000,
+        960
+      ]
+    },
+    {
+      "original_filename": "VAREVANT_REVENUE_LEAKAGE_ALL_IN_ONE_V19_1A_SEARCH_AGGREGATOR_FIX.json",
+      "archive_created_at": "2026-08-07T12:21:01.437425Z",
+      "model_generated": true,
+      "original_sha256": "61883d1e0b096a8bfc8333d27b2c1cb236b09b051f6667fce5fd2996f15602c2",
+      "workflow_name": "VAREVANT \u2014 Revenue Leakage ALL-IN-ONE V19.1 Fetch Error Handler Fix",
+      "node_count": 73,
+      "handler_code_sha256": "76877bbd3a3867288edaa80ab8204259e8d5e000ab7179adb5cbf2a571b1e1ac",
+      "handler_mode": "runOnceForEachItem",
+      "handler_position": [
+        1000,
+        960
+      ]
+    },
+    {
+      "original_filename": "VAREVANT_REVENUE_LEAKAGE_ALL_IN_ONE_V19_1B_FETCH_SINGLE_STREAM_FIX.json",
+      "archive_created_at": "2026-08-07T12:36:09.092971Z",
+      "model_generated": true,
+      "original_sha256": "a1316ad5b4253c61dd2ec00ee3431c969c8f32059b14db367136da13973b1c0a",
+      "workflow_name": "VAREVANT \u2014 Revenue Leakage ALL-IN-ONE V19.1 Fetch Error Handler Fix",
+      "node_count": 73,
+      "handler_code_sha256": "76877bbd3a3867288edaa80ab8204259e8d5e000ab7179adb5cbf2a571b1e1ac",
+      "handler_mode": "runOnceForEachItem",
+      "handler_position": [
+        1000,
+        960
+      ]
+    },
+    {
+      "original_filename": "VAREVANT_REVENUE_LEAKAGE_ALL_IN_ONE_V19_2_SELECTOR_LINEAGE_FIX.json",
+      "archive_created_at": "2026-08-07T12:07:30.849305Z",
+      "model_generated": true,
+      "original_sha256": "6855e331d7486c258d9a8e303c92da1721484e2dad602a59ffe8c5445e460389",
+      "workflow_name": "VAREVANT \u2014 Revenue Leakage ALL-IN-ONE V19.1 Fetch Error Handler Fix",
+      "node_count": 73,
+      "handler_code_sha256": "76877bbd3a3867288edaa80ab8204259e8d5e000ab7179adb5cbf2a571b1e1ac",
+      "handler_mode": "runOnceForEachItem",
+      "handler_position": [
+        1000,
+        960
+      ]
+    }
+  ],
+  "public_node_excerpts": [
+    "source/v19-fetch-error-handler.json",
+    "source/v19-1-fetch-error-handler.json"
+  ],
+  "privacy": "Node IDs, full generated workflow bodies, credential bindings and resources are omitted; public excerpts contain only the non-sensitive handler and its outgoing graph edge."
+}

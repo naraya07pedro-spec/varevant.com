@@ -31,9 +31,11 @@ Repository trees, default-branch source, useful history/branches, open PRs, CI h
 | Runtime Fix 07 Auto Sender | Alternative Data Table/adapter design; 103 nodes. No verified import/execution association. |
 | Generated V19.2 revision | Located in stored artifacts. Generated packaging is not proof of deployment. |
 | Existing historical screenshot gallery | Five public captures visually reviewed; kept at their canonical source. |
-| PDF/video evidence archive | Reviewed. Raw video exposes a client-hosted endpoint and workflow/project IDs; PDF excerpts come from the same client-associated recording. Neither is published without a permission-safe content decision. |
+| PDF/video evidence archive | Re-reviewed on 2026-10-02. Safe crops are possible, but the separate MESIN EMAIL workflow does not establish a matched export, recovery chain or attributable client handoff. Not selected; see the [publication decision](runtime-evidence/SEARCH-AND-GAPS.md). |
 | Connected Drive | Relevant CV and operating sheets found; no JSON/video files returned by the targeted file-type search. |
 
 ## Remaining proof gaps
 
-An exact export-to-execution association, a verified n8n import/execution of this sanitized revision, and a demonstrated recovery of the previously failing path are not available in this public pack. Client-specific technical diagrams/source and permission-safe handoff details are also missing. None blocks inspection of the code and existing screenshots; none is implied by them.
+A [STRONG V6 workflow/path association](runtime-evidence/SOURCE-TO-EXECUTION.md) and [bounded V19 handler recovery](runtime-evidence/RECOVERY-CASE.md) are now documented. The follow-up compared uploaded/generated workflow artifacts, 24 actual workflow images and the complete 448-entry ZIP metadata inventory, with targeted client/Drive searches. The [search record](runtime-evidence/SEARCH-AND-GAPS.md) distinguishes selected evidence from rejected associations.
+
+Exact embedded runtime source, saved execution ID/start/final status, an n8n execution of the sanitized review snapshot, and client-specific accepted technical handoff remain unavailable. The handler case does not establish full-workflow or provider recovery. Client scope remains Level 5; no reference implementation is reassigned to a private client.

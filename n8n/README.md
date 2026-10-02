@@ -8,10 +8,10 @@ This is the n8n review entry point for Evan Naraya's VAREVANT work. The selected
 
 1. [Inspect the control code](extracted/verify-claim.js): reread a claimed row, match execution ownership, reject prior message IDs, and compare the frozen payload.
 2. [Inspect ambiguous-send handling](extracted/classify-send-error.js): distinguish permanent recipient failure, sender configuration failure, and an outcome requiring reconciliation.
-3. [Open historical execution evidence](https://github.com/naraya07pedro-spec/production-integration-reference/tree/main/docs/operational-evidence): successful no-candidate stop, no-send routing, execution history, and a surfaced failure.
+3. [Open source → execution and handler recovery](runtime-evidence/README.md): V6 workflow/path association, a bounded V19 handler correction, and a sanitized original full-canvas view.
 4. [Run the offline tests](tests/exported-controls.test.mjs), then read the [evidence matrix](EVIDENCE-MATRIX.md).
 
-The export and screenshots are **different historical revisions**. The screenshots do not establish that this exact JSON executed. The current live workflow is outside this repository's evidence.
+The new V6 screenshot and selected export have a **STRONG workflow/path match**, including a privately verified workflow ID. Exact runtime Code-node snapshot identity remains unverified. The V19 recovery case and older gallery are separate historical revisions; the current live workflow is outside this repository's evidence.
 
 ## Inspectable decisions
 
@@ -41,6 +41,7 @@ Tests execute selected Code-node bodies from the sanitized export in a local VM 
 
 - [Full sanitized JSON](workflows/revenue-workflow-v6.sanitized.json): original graph and Code-node logic, with privacy substitutions. Inactive; credential bindings removed; external nodes disabled.
 - [Source notes](SOURCE-NOTES.md): provenance, sanitization, extracted-code mapping, and other artifacts reviewed.
+- [Runtime evidence](runtime-evidence/README.md): full canvas, source association, handler recovery and precise remaining records.
 - [Architecture](ARCHITECTURE.md): actual branches and state checks.
 - [Failure modes](FAILURE-MODES.md): retry boundaries, race conditions, stale claims, logging risks, and recovery requirements.
 - [Security boundaries](SECURITY-BOUNDARIES.md): publication checks and execution restrictions.

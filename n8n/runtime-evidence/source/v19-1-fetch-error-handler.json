@@ -1,0 +1,25 @@
+{
+  "name": "Handle Public Search Fetch Error",
+  "type": "n8n-nodes-base.code",
+  "typeVersion": 2,
+  "position": [
+    1000,
+    960
+  ],
+  "parameters": {
+    "mode": "runOnceForEachItem",
+    "jsCode": "return {json:{...$json,search_html:'',public_search_error:true}};"
+  },
+  "onError": "stopWorkflow",
+  "outgoing_connections": {
+    "main": [
+      [
+        {
+          "node": "Aggregate Search Results for Ollama",
+          "type": "main",
+          "index": 0
+        }
+      ]
+    ]
+  }
+}
