@@ -8,10 +8,10 @@ This is the n8n review entry point for Evan Naraya's VAREVANT work. The selected
 
 1. [Inspect the control code](extracted/verify-claim.js): reread a claimed row, match execution ownership, reject prior message IDs, and compare the frozen payload.
 2. [Inspect ambiguous-send handling](extracted/classify-send-error.js): distinguish permanent recipient failure, sender configuration failure, and an outcome requiring reconciliation.
-3. [Open source → execution and handler recovery](runtime-evidence/README.md): V6 workflow/path association, a bounded V19 handler correction, and a sanitized original full-canvas view.
+3. [Open source → execution and handler recovery](runtime-evidence/README.md): V6 workflow/path association, historical V19 handler observations, a real n8n recovery reproduction, and a sanitized original full-canvas view.
 4. [Run the offline tests](tests/exported-controls.test.mjs), then read the [evidence matrix](EVIDENCE-MATRIX.md).
 
-The new V6 screenshot and selected export have a **STRONG workflow/path match**, including a privately verified workflow ID. Exact runtime Code-node snapshot identity remains unverified. The V19 recovery case and older gallery are separate historical revisions; the current live workflow is outside this repository's evidence.
+The new V6 screenshot and selected export have a **STRONG workflow/path match**, including a privately verified workflow ID. Exact runtime Code-node snapshot identity remains unverified. The V19 case separates historical observations from a clearly labeled same-input reproduction in real n8n; the older gallery covers other historical revisions; the current live workflow is outside this repository's evidence.
 
 ## Inspectable decisions
 
@@ -32,10 +32,13 @@ From the repository root, with Node.js 24:
 ```sh
 node n8n/scripts/extract-nodes.mjs --check
 node --test n8n/tests/*.test.mjs
+node n8n/runtime-evidence/reproduced-recovery/verify-recorded.mjs
 python3 scripts/check-portfolio.py
 ```
 
 Tests execute selected Code-node bodies from the sanitized export in a local VM with synthetic n8n inputs and a fixed clock. No n8n server, Gmail, Google Sheets, model API, database, or external HTTP request is involved. JavaScript compilation covers all 60 Code nodes. This is not an n8n import or end-to-end execution test.
+
+The separately [reproduced recovery test](runtime-evidence/reproduced-recovery/README.md) runs a five-node synthetic workflow in pinned n8n and a new SQLite data directory. Its final saved Error/Success records do not prove historical production recovery.
 
 ## Source and operating limits
 

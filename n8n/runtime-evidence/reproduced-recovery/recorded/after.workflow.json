@@ -1,0 +1,123 @@
+{
+  "id": "ReproducedHandlerOnly",
+  "name": "REPRODUCED RECOVERY TEST / NOT HISTORICAL PRODUCTION EXECUTION",
+  "active": false,
+  "nodes": [
+    {
+      "id": "Manual-Test-Trigger",
+      "name": "Manual Test Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "Synthetic-Fetch-Failure",
+      "name": "Synthetic Fetch Failure",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        200,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "jsCode": "return [{json:{\"correlation_id\":\"synthetic-recovery-001\",\"query\":\"synthetic business search\",\"search_html\":\"stale synthetic HTML\",\"request_context\":{\"batch_id\":\"synthetic-batch-001\",\"attempt\":1},\"error\":{\"code\":\"SYNTHETIC_FETCH_FAILURE\",\"message\":\"Synthetic upstream fetch failure\"}}}];"
+      }
+    },
+    {
+      "id": "Handle-Public-Search-Fetch-Error",
+      "name": "Handle Public Search Fetch Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "return {json:{...$json,search_html:'',public_search_error:true}};"
+      },
+      "onError": "stopWorkflow"
+    },
+    {
+      "id": "Verify-Reproduced-Handler-Output",
+      "name": "Verify Reproduced Handler Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        600,
+        0
+      ],
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const expected={\"correlation_id\":\"synthetic-recovery-001\",\"query\":\"synthetic business search\",\"search_html\":\"\",\"request_context\":{\"batch_id\":\"synthetic-batch-001\",\"attempt\":1},\"error\":{\"code\":\"SYNTHETIC_FETCH_FAILURE\",\"message\":\"Synthetic upstream fetch failure\"},\"public_search_error\":true}; if(JSON.stringify($json)!==JSON.stringify(expected)) throw new Error('Reproduced handler output mismatch'); return {json:$json};"
+      }
+    },
+    {
+      "id": "Reproduced-Stop",
+      "name": "Reproduced Stop",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        800,
+        0
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Manual Test Trigger": {
+      "main": [
+        [
+          {
+            "node": "Synthetic Fetch Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Synthetic Fetch Failure": {
+      "main": [
+        [
+          {
+            "node": "Handle Public Search Fetch Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Handle Public Search Fetch Error": {
+      "main": [
+        [
+          {
+            "node": "Verify Reproduced Handler Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Reproduced Handler Output": {
+      "main": [
+        [
+          {
+            "node": "Reproduced Stop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  }
+}

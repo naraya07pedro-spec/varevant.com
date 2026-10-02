@@ -18,5 +18,34 @@ jobs:
           node-version: '24'
       - run: node n8n/scripts/extract-nodes.mjs --check
       - run: node --test n8n/tests/*.test.mjs
+      - run: node n8n/runtime-evidence/reproduced-recovery/verify-recorded.mjs
       - run: python3 scripts/check-portfolio.py
       - run: git diff --check
+  recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+          cache: npm
+          cache-dependency-path: n8n/runtime-evidence/reproduced-recovery/package-lock.json
+      - name: Install the pinned isolated test runtime
+        working-directory: n8n/runtime-evidence/reproduced-recovery
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm rebuild sqlite3
+      - name: Reproduce archived handler failure and correction in n8n
+        working-directory: n8n/runtime-evidence/reproduced-recovery
+        run: npm run reproduce -- "$RUNNER_TEMP/reproduced-recovery"
+      - name: Retain the reproduced results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reproduced-handler-recovery
+          path: |
+            ${{ runner.temp }}/reproduced-recovery/report.json
+            ${{ runner.temp }}/reproduced-recovery/*.public.execution.json
+            ${{ runner.temp }}/reproduced-recovery/*.workflow.json
+          if-no-files-found: ignore

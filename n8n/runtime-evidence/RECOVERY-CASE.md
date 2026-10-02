@@ -1,6 +1,6 @@
 # Error-handler return-shape recovery
 
-**Status: bounded handler recovery observed; STRONG association to the archived V19 → V19.1 node correction. Exact imported source and complete execution success remain unverified.**
+**Status: REPRODUCED RECOVERY TEST / NOT HISTORICAL PRODUCTION EXECUTION.** The archived V19 handler fails and the historical V19.1 correction passes the same synthetic input in isolated n8n, with saved final `error` → `success` records. Historical screenshot/source association remains **STRONG**; exact historical imported source and complete historical Success remain unverified.
 
 ## Context
 
@@ -51,7 +51,7 @@ The mode remains `runOnceForEachItem`. Node name, type, position and outgoing ag
 
 These are contract checks in a local JavaScript VM, **not n8n engine validation or live provider re-execution**. They do not reproduce the historical server's exact error wording.
 
-## Successful re-execution
+## Historical passing-handler observation
 
 ![V19.1 title and later visible green handler branch](images/v19-1-handler-pass.webp)
 
@@ -63,12 +63,31 @@ The private workflow URLs identify **different workflow instances** across V19 a
 
 The later screenshot does not expose its runtime version. V19.1 and V19.1A were both available before it, with identical corrected handler bodies; V19.1B was created later and cannot be assigned to this run from its filename. A saved execution snapshot is still required to bind the exact source variant.
 
+## Reproduced recovery in the real n8n engine
+
+**REPRODUCED RECOVERY TEST / NOT HISTORICAL PRODUCTION EXECUTION** — captured October 2, 2026. The [reproduction pack](reproduced-recovery/README.md) isolates the exact archived handler body and mode in a five-node workflow: manual trigger → synthetic failed-fetch input → archived handler → output verification → local stop. The historical aggregator, model, search provider and Gmail branches are not run.
+
+Both imported test workflows and inputs are identical except for `nodes[2].parameters.jsCode`, which applies the one-line historical array-to-object patch above. n8n is pinned to **1.100.1**, Code node typeVersion **2**, with task runners disabled and a committed dependency lock. This is a selected test version, not an inferred historical server version.
+
+| Phase | Saved execution ID | UTC start | Final saved status | Captured result |
+| --- | --- | --- | --- | --- |
+| Archived V19 handler | 1, isolated test database | 2026-10-02 04:11:26.582 | `error`; unfinished | `Code doesn't return a single object [item 0]`; stopped at the handler. |
+| Archived V19.1 handler | 2, same isolated database | 2026-10-02 04:11:32.269 | `success`; finished | Handler, output verification and `Reproduced Stop` pass. |
+
+The reproduced error wording differs from the historical screenshot. Both are consistent with the archived per-item return-shape problem; the reproduction does not establish the hidden historical runtime body or validator version.
+
+The same synthetic item retains its correlation ID, nested request context and upstream-error detail; the corrected handler clears `search_html` and adds `public_search_error: true`. Saved records [before](reproduced-recovery/recorded/before.execution.json) and [after](reproduced-recovery/recorded/after.execution.json) contain the executed `workflowData`, node run data, execution ID/times and final database status. The CLI's transient `running` value is not treated as final success.
+
+[The report](reproduced-recovery/recorded/report.json) records input, archived source, handler, imported workflow, captured/public execution, harness and lock hashes; runtime validator hashes; and the evidence baseline Git commit. [Run instructions and CI scope](reproduced-recovery/README.md) allow the case to be rerun. Public copies replace generated stack-trace directory paths only; no private historical payload is used.
+
 ## What this proves
 
 The previously failing handler path is visibly green in a later related revision. A matching archived source correction removes its per-item array return without changing that base graph. This is defensible **handler-level recovery evidence**, with an explicit source/runtime association limit.
 
+Separately, the archived return-shape failure mechanism is reproduced in real n8n, and applying only the documented historical patch makes the same synthetic case complete successfully. **EXACT applies to the captured reproduced source/input/execution association**, not to historical production recovery.
+
 ## What this does not prove
 
-No complete workflow Success record, exact runtime source revision, same-input replay, public-search provider recovery, Gmail delivery, unattended operation or throughput is established. An error handler passing means the fallback path ran; it does not mean the upstream service recovered.
+No complete **historical** workflow Success record, exact historical runtime source revision, historical same-input replay, public-search provider recovery, Gmail delivery, unattended operation or throughput is established. The reproduced Success belongs to the isolated five-node test. An error handler passing means the fallback path ran; it does not mean the upstream service recovered.
 
 Browser/private IDs, sender labels and identity-bearing notes are removed or covered. Redactions leave the failing/passing handler, error message and relevant connections intact. [Search findings and the exact remaining execution record](SEARCH-AND-GAPS.md) document the unresolved boundary.

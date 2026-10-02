@@ -1,0 +1,163 @@
+{
+  "label": "REPRODUCED RECOVERY TEST",
+  "historical_production_execution": false,
+  "generated_at": "2026-10-02T04:11:32.493Z",
+  "scope": "Isolated five-node synthetic workflow; archived handler body/mode only. Historical downstream aggregator/provider/email nodes are not executed.",
+  "environment": {
+    "n8n": "1.100.1",
+    "node": "v24.19.0",
+    "platform": "linux",
+    "runners_enabled": false,
+    "package_lock_sha256": "f9e685774dd96b42301f63ade436c4e5899cbe620f47e0fa6218d850a25fd1f4"
+  },
+  "harness_sha256": "29f415e0b857ae85426a2243410a3af3fb6467fd969f95f583c311788d075519",
+  "evidence_baseline_commit": "eadbf25b5486ea0c2ac7cc555e703471736c6e74",
+  "input_sha256": "8e008187e8e331dc644dfda635635f38381aae793572a7a9c295b9199a7c3268",
+  "input": {
+    "correlation_id": "synthetic-recovery-001",
+    "query": "synthetic business search",
+    "search_html": "stale synthetic HTML",
+    "request_context": {
+      "batch_id": "synthetic-batch-001",
+      "attempt": 1
+    },
+    "error": {
+      "code": "SYNTHETIC_FETCH_FAILURE",
+      "message": "Synthetic upstream fetch failure"
+    }
+  },
+  "source_artifacts": [
+    {
+      "original_filename": "VAREVANT_REVENUE_LEAKAGE_ALL_IN_ONE_V19_SEARXNG_OLLAMA_DIRECT_SEND.json",
+      "archive_created_at": "2026-08-07T09:27:11.724527Z",
+      "model_generated": true,
+      "original_sha256": "5a56a78cfb2ae0e9f90d6f36b7ace04123916086ce19bf74147bef4a9cd79807",
+      "workflow_name": "VAREVANT — Revenue Leakage ALL-IN-ONE V19 SearXNG + Ollama Direct Send",
+      "node_count": 73,
+      "handler_code_sha256": "78210477f1f7965e7fd2f43cfeb3e38b9dd1a2be8d9155c6f752ab0d3a6bc7f4",
+      "handler_mode": "runOnceForEachItem",
+      "handler_position": [
+        1000,
+        960
+      ]
+    },
+    {
+      "original_filename": "VAREVANT_REVENUE_LEAKAGE_ALL_IN_ONE_V19_1_FETCH_ERROR_HANDLER_FIX.json",
+      "archive_created_at": "2026-08-07T11:50:47.913450Z",
+      "model_generated": true,
+      "original_sha256": "30c5a5343e70acc43b990524892c8a1ee818748aee1c39b122512c37842cd7a1",
+      "workflow_name": "VAREVANT — Revenue Leakage ALL-IN-ONE V19.1 Fetch Error Handler Fix",
+      "node_count": 73,
+      "handler_code_sha256": "76877bbd3a3867288edaa80ab8204259e8d5e000ab7179adb5cbf2a571b1e1ac",
+      "handler_mode": "runOnceForEachItem",
+      "handler_position": [
+        1000,
+        960
+      ]
+    }
+  ],
+  "only_changed_workflow_field": "nodes[2].parameters.jsCode",
+  "privacy": "Synthetic input and generated execution IDs only; runtime/data-directory paths in captured stack traces are replaced. Error text, payload, workflow snapshot and node statuses are unchanged.",
+  "runtime_validation": {
+    "n8n_nodes_base": "1.98.0",
+    "javascript_sandbox_sha256": "0ca6f91676add6c48cb56d11fe940e72b5b2b84cdfe691b860ad17742fe8e563",
+    "sandbox_sha256": "0e27a8a185bf9a4b9346ce367a52d7d771af9ebf747f19f9e5a788df48b13031"
+  },
+  "results": {
+    "before": {
+      "workflow_sha256": "fba1786dc9a8b0c73f973bca81ba4c15aff5910a94c6dd692f3bcd83d0919e21",
+      "handler_code_sha256": "78210477f1f7965e7fd2f43cfeb3e38b9dd1a2be8d9155c6f752ab0d3a6bc7f4",
+      "original_execution_sha256": "654de2b6841e0e13b9f57c8734d5ffdaa00f6d987bb305cbe155de46a384a6b1",
+      "published_execution_sha256": "d2116be14066de10e332e29bad2d85ac2fd2bc7220adc189ed4b7a68f2de53e0",
+      "process_exit_code": 1,
+      "cli_reported_status": "running",
+      "execution_id": "1",
+      "started_at": "2026-10-02 04:11:26.582",
+      "stopped_at": "2026-10-02 04:11:26.670",
+      "status": "error",
+      "finished": false,
+      "last_node": "Handle Public Search Fetch Error",
+      "error": {
+        "message": "Code doesn't return a single object [item 0]",
+        "description": "An array of objects was returned. If you need to output multiple items, please use the 'Run Once for All Items' mode instead.",
+        "node": "Handle Public Search Fetch Error"
+      },
+      "node_results": [
+        {
+          "name": "Manual Test Trigger",
+          "status": "success",
+          "item_count": 1
+        },
+        {
+          "name": "Synthetic Fetch Failure",
+          "status": "success",
+          "item_count": 1
+        },
+        {
+          "name": "Handle Public Search Fetch Error",
+          "status": "error",
+          "item_count": 0
+        }
+      ],
+      "handler_output": null,
+      "embedded_workflow_handler_code": "return [{json:{...$json,search_html:'',public_search_error:true}}];"
+    },
+    "after": {
+      "workflow_sha256": "cec5a962c3d931d2d3edfc10d2d693693f5abbb1cebbad0789833043d8ff81e9",
+      "handler_code_sha256": "76877bbd3a3867288edaa80ab8204259e8d5e000ab7179adb5cbf2a571b1e1ac",
+      "original_execution_sha256": "5085596e1a502ede534de6891aa74a79202fc64b61c7be978e44f4e9a9f68d2c",
+      "published_execution_sha256": "5085596e1a502ede534de6891aa74a79202fc64b61c7be978e44f4e9a9f68d2c",
+      "process_exit_code": 0,
+      "cli_reported_status": "running",
+      "execution_id": "2",
+      "started_at": "2026-10-02 04:11:32.269",
+      "stopped_at": "2026-10-02 04:11:32.315",
+      "status": "success",
+      "finished": true,
+      "last_node": "Reproduced Stop",
+      "error": null,
+      "node_results": [
+        {
+          "name": "Manual Test Trigger",
+          "status": "success",
+          "item_count": 1
+        },
+        {
+          "name": "Synthetic Fetch Failure",
+          "status": "success",
+          "item_count": 1
+        },
+        {
+          "name": "Handle Public Search Fetch Error",
+          "status": "success",
+          "item_count": 1
+        },
+        {
+          "name": "Verify Reproduced Handler Output",
+          "status": "success",
+          "item_count": 1
+        },
+        {
+          "name": "Reproduced Stop",
+          "status": "success",
+          "item_count": 1
+        }
+      ],
+      "handler_output": {
+        "correlation_id": "synthetic-recovery-001",
+        "query": "synthetic business search",
+        "search_html": "",
+        "request_context": {
+          "batch_id": "synthetic-batch-001",
+          "attempt": 1
+        },
+        "error": {
+          "code": "SYNTHETIC_FETCH_FAILURE",
+          "message": "Synthetic upstream fetch failure"
+        },
+        "public_search_error": true
+      },
+      "embedded_workflow_handler_code": "return {json:{...$json,search_html:'',public_search_error:true}};"
+    }
+  }
+}

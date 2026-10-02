@@ -1,0 +1,7 @@
+{
+  "correlation_id": "synthetic-recovery-001",
+  "query": "synthetic business search",
+  "search_html": "stale synthetic HTML",
+  "request_context": { "batch_id": "synthetic-batch-001", "attempt": 1 },
+  "error": { "code": "SYNTHETIC_FETCH_FAILURE", "message": "Synthetic upstream fetch failure" }
+}

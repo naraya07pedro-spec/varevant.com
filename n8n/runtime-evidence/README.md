@@ -1,6 +1,6 @@
 # Runtime evidence
 
-**Strong V6 workflow/path association and a bounded V19 error-handler recovery case.** These are historical screenshots, with crops and visible privacy redactions.
+**Strong historical V6 workflow/path association and a reproduced V19 → V19.1 handler recovery in real n8n.** The screenshots are historical; the clearly labeled synthetic recovery records were captured on October 2, 2026.
 
 ![Original V7 full-canvas topology, cropped and redacted](images/full-canvas-v7.webp)
 
@@ -9,7 +9,8 @@ Full-canvas **EDITOR TOPOLOGY**, V7. Top: discovery and evidence processing; mid
 | Open next | What it establishes | Limit |
 | --- | --- | --- |
 | [Source → execution](SOURCE-TO-EXECUTION.md) | Selected uploaded V6 export and screenshot share a privately checked workflow identity; visible dispatcher false branch agrees with source connections and positions. | **STRONG MATCH** for workflow identity and path, not exact runtime Code-node snapshot. |
-| [Handler recovery](RECOVERY-CASE.md) | V19 failure, a one-node return-shape correction in archived generated source, and a later V19.1 green execution of the same error branch. | Bounded handler recovery; exact imported file and complete workflow success are unverified. |
+| [Handler recovery](RECOVERY-CASE.md) | Historical handler failure/patch/passing-path observations, plus real n8n reproduction using identical synthetic input and saved final error/success records. | **REPRODUCED**, not historical production recovery. Exact historical imported file and complete historical success remain unverified. |
+| [Reproduce and inspect saved records](reproduced-recovery/README.md) | Pinned n8n runtime, one-field patch, executed workflow snapshots, hashes and CI rerun. | Five-node local test; historical provider/aggregator/email branches are excluded. |
 | [Search, privacy and remaining material](SEARCH-AND-GAPS.md) | Sources reviewed, rejected associations, client evidence level and precise missing records. | Search findings are scoped to accessible artifacts. |
 | [Visual provenance](visual-manifest.json) | Original/published SHA-256, archive dates, crops and redaction coordinates. | Original private URLs and identities are withheld. |
 

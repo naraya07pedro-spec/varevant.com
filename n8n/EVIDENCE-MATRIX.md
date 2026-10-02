@@ -10,11 +10,11 @@
 | Bounded AI draft validation and fallback | [Copy Gate](extracted/copy-gate.js), [routing reference](../examples/reliable-lead-routing/) | Validated lexical gates/reference classifier output. Model accuracy and semantic factuality unverified. |
 | Historical manual execution and no-send path | [Five screenshot gallery](https://github.com/naraya07pedro-spec/production-integration-reference/tree/main/docs/evidence) | Visible execution states from other revisions. Not this JSON's execution. |
 | Selected V6 workflow → visible dispatcher stop path | [Source-to-execution record](runtime-evidence/SOURCE-TO-EXECUTION.md) | **STRONG MATCH**: private workflow-ID equality plus visible node order, positions and false branch. Exact runtime snapshot is unverified. |
-| Error-handler correction and later passing error route | [Recovery case](runtime-evidence/RECOVERY-CASE.md) | V19 failure → generated source correction → green V19.1 handler. Bounded handler recovery; exact imported variant and complete Success record are unverified. |
+| Error-handler correction and later passing error route | [Recovery case](runtime-evidence/RECOVERY-CASE.md) | Historical V19 failure/patch/green-handler observations plus **REPRODUCED** real n8n Error → Success with identical synthetic input and embedded executed source. EXACT for the test; historical imported variant/final success unverified. |
 | Whole-workflow visual topology | [Original V7 full canvas](runtime-evidence/images/full-canvas-v7.webp) | Sanitized Editor overview from another revision; small labels, no execution or deployment claim. |
 | Atomic reservation and classified retries | [Backend reference](https://github.com/naraya07pedro-spec/production-integration-reference) | Runnable TypeScript/PostgreSQL reference, separate from historical n8n implementation. |
 | Supabase query/Realtime consumer | [BIMMCA](https://github.com/naraya07pedro-spec/bimmca-intelligence) | Browser source and offline tests. Ingestion, RLS and metric provenance unverified. |
-| Two client engagements | [Client scope notes](../docs/SELECTED-WORK.md), [search findings](runtime-evidence/SEARCH-AND-GAPS.md) | Level 5: Evan's stated scope only. No attributable client technical handoff/source or ROI verification found. |
+| Two client engagements | [Client scope notes](../docs/SELECTED-WORK.md), [search findings](runtime-evidence/SEARCH-AND-GAPS.md) | Level E: Evan's stated scope only. No attributable client technical handoff/source or ROI verification found. |
 | Reusable sub-workflows, enforced human approval, LLM tool calling | No selected implementation establishes these | Do not claim from this export. |
 | Exactly-once sends, uptime, throughput, ROI | No supporting public measurement | Do not claim. |
 

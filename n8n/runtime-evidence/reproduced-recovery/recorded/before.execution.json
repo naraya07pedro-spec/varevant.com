@@ -1,0 +1,347 @@
+{
+  "label": "REPRODUCED RECOVERY TEST / NOT HISTORICAL PRODUCTION EXECUTION",
+  "executionId": "1",
+  "workflowId": "ReproducedHandlerOnly",
+  "status": "error",
+  "finished": false,
+  "mode": "cli",
+  "startedAt": "2026-10-02 04:11:26.582",
+  "stoppedAt": "2026-10-02 04:11:26.670",
+  "workflowData": {
+    "id": "ReproducedHandlerOnly",
+    "name": "REPRODUCED RECOVERY TEST / NOT HISTORICAL PRODUCTION EXECUTION",
+    "active": false,
+    "isArchived": false,
+    "createdAt": "2026-10-02T04:11:23.041Z",
+    "updatedAt": "2026-10-02T04:11:23.041Z",
+    "nodes": [
+      {
+        "id": "Manual-Test-Trigger",
+        "name": "Manual Test Trigger",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "parameters": {
+          "notice": ""
+        }
+      },
+      {
+        "id": "Synthetic-Fetch-Failure",
+        "name": "Synthetic Fetch Failure",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          200,
+          0
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "language": "javaScript",
+          "jsCode": "return [{json:{\"correlation_id\":\"synthetic-recovery-001\",\"query\":\"synthetic business search\",\"search_html\":\"stale synthetic HTML\",\"request_context\":{\"batch_id\":\"synthetic-batch-001\",\"attempt\":1},\"error\":{\"code\":\"SYNTHETIC_FETCH_FAILURE\",\"message\":\"Synthetic upstream fetch failure\"}}}];",
+          "notice": ""
+        }
+      },
+      {
+        "id": "Handle-Public-Search-Fetch-Error",
+        "name": "Handle Public Search Fetch Error",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          400,
+          0
+        ],
+        "parameters": {
+          "mode": "runOnceForEachItem",
+          "language": "javaScript",
+          "jsCode": "return [{json:{...$json,search_html:'',public_search_error:true}}];",
+          "notice": ""
+        },
+        "onError": "stopWorkflow"
+      },
+      {
+        "id": "Verify-Reproduced-Handler-Output",
+        "name": "Verify Reproduced Handler Output",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          600,
+          0
+        ],
+        "parameters": {
+          "mode": "runOnceForEachItem",
+          "language": "javaScript",
+          "jsCode": "const expected={\"correlation_id\":\"synthetic-recovery-001\",\"query\":\"synthetic business search\",\"search_html\":\"\",\"request_context\":{\"batch_id\":\"synthetic-batch-001\",\"attempt\":1},\"error\":{\"code\":\"SYNTHETIC_FETCH_FAILURE\",\"message\":\"Synthetic upstream fetch failure\"},\"public_search_error\":true}; if(JSON.stringify($json)!==JSON.stringify(expected)) throw new Error('Reproduced handler output mismatch'); return {json:$json};",
+          "notice": ""
+        }
+      },
+      {
+        "id": "Reproduced-Stop",
+        "name": "Reproduced Stop",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          800,
+          0
+        ],
+        "parameters": {}
+      }
+    ],
+    "connections": {
+      "Manual Test Trigger": {
+        "main": [
+          [
+            {
+              "node": "Synthetic Fetch Failure",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Synthetic Fetch Failure": {
+        "main": [
+          [
+            {
+              "node": "Handle Public Search Fetch Error",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Handle Public Search Fetch Error": {
+        "main": [
+          [
+            {
+              "node": "Verify Reproduced Handler Output",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Verify Reproduced Handler Output": {
+        "main": [
+          [
+            {
+              "node": "Reproduced Stop",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveDataSuccessExecution": "all",
+      "saveDataErrorExecution": "all"
+    },
+    "staticData": null,
+    "pinData": null
+  },
+  "data": {
+    "startData": {},
+    "resultData": {
+      "runData": {
+        "Manual Test Trigger": [
+          {
+            "startTime": 1790914286586,
+            "executionIndex": 0,
+            "source": [],
+            "hints": [],
+            "executionTime": 1,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {},
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Synthetic Fetch Failure": [
+          {
+            "startTime": 1790914286587,
+            "executionIndex": 1,
+            "source": [
+              {
+                "previousNode": "Manual Test Trigger"
+              }
+            ],
+            "hints": [
+              {
+                "message": "To make sure expressions after this node work, return the input items that produced each output item. <a target=\"_blank\" href=\"https://docs.n8n.io/data/data-mapping/data-item-linking/item-linking-code-node/\">More info</a>",
+                "location": "outputPane"
+              }
+            ],
+            "executionTime": 43,
+            "executionStatus": "success",
+            "data": {
+              "main": [
+                [
+                  {
+                    "json": {
+                      "correlation_id": "synthetic-recovery-001",
+                      "query": "synthetic business search",
+                      "search_html": "stale synthetic HTML",
+                      "request_context": {
+                        "batch_id": "synthetic-batch-001",
+                        "attempt": 1
+                      },
+                      "error": {
+                        "code": "SYNTHETIC_FETCH_FAILURE",
+                        "message": "Synthetic upstream fetch failure"
+                      }
+                    },
+                    "pairedItem": {
+                      "item": 0
+                    }
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        "Handle Public Search Fetch Error": [
+          {
+            "startTime": 1790914286630,
+            "executionIndex": 2,
+            "source": [
+              {
+                "previousNode": "Synthetic Fetch Failure"
+              }
+            ],
+            "hints": [],
+            "executionTime": 40,
+            "executionStatus": "error",
+            "error": {
+              "level": "error",
+              "tags": {},
+              "description": "An array of objects was returned. If you need to output multiple items, please use the 'Run Once for All Items' mode instead.",
+              "itemIndex": 0,
+              "context": {
+                "itemIndex": 0
+              },
+              "node": {
+                "id": "Handle-Public-Search-Fetch-Error",
+                "name": "Handle Public Search Fetch Error",
+                "type": "n8n-nodes-base.code",
+                "typeVersion": 2,
+                "position": [
+                  400,
+                  0
+                ],
+                "parameters": {
+                  "mode": "runOnceForEachItem",
+                  "language": "javaScript",
+                  "jsCode": "return [{json:{...$json,search_html:'',public_search_error:true}}];",
+                  "notice": ""
+                },
+                "onError": "stopWorkflow"
+              },
+              "message": "Code doesn't return a single object [item 0]",
+              "stack": "Error: Code doesn't return a single object [item 0]\n    at JavaScriptSandbox.validateRunCodeEachItem ($N8N_RUNTIME_ROOT/node_modules/n8n-nodes-base/nodes/Code/Sandbox.ts:93:10)\n    at JavaScriptSandbox.runCodeEachItem ($N8N_RUNTIME_ROOT/node_modules/n8n-nodes-base/nodes/Code/JavaScriptSandbox.ts:121:15)\n    at ExecuteContext.execute ($N8N_RUNTIME_ROOT/node_modules/n8n-nodes-base/nodes/Code/Code.node.ts:182:14)\n    at WorkflowExecute.runNode ($N8N_RUNTIME_ROOT/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1193:9)\n    at $N8N_RUNTIME_ROOT/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1542:27\n    at $N8N_RUNTIME_ROOT/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2108:11"
+            }
+          }
+        ]
+      },
+      "lastNodeExecuted": "Handle Public Search Fetch Error",
+      "error": {
+        "level": "error",
+        "tags": {},
+        "description": "An array of objects was returned. If you need to output multiple items, please use the 'Run Once for All Items' mode instead.",
+        "itemIndex": 0,
+        "context": {
+          "itemIndex": 0
+        },
+        "node": {
+          "id": "Handle-Public-Search-Fetch-Error",
+          "name": "Handle Public Search Fetch Error",
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            400,
+            0
+          ],
+          "parameters": {
+            "mode": "runOnceForEachItem",
+            "language": "javaScript",
+            "jsCode": "return [{json:{...$json,search_html:'',public_search_error:true}}];",
+            "notice": ""
+          },
+          "onError": "stopWorkflow"
+        },
+        "message": "Code doesn't return a single object [item 0]",
+        "stack": "Error: Code doesn't return a single object [item 0]\n    at JavaScriptSandbox.validateRunCodeEachItem ($N8N_RUNTIME_ROOT/node_modules/n8n-nodes-base/nodes/Code/Sandbox.ts:93:10)\n    at JavaScriptSandbox.runCodeEachItem ($N8N_RUNTIME_ROOT/node_modules/n8n-nodes-base/nodes/Code/JavaScriptSandbox.ts:121:15)\n    at ExecuteContext.execute ($N8N_RUNTIME_ROOT/node_modules/n8n-nodes-base/nodes/Code/Code.node.ts:182:14)\n    at WorkflowExecute.runNode ($N8N_RUNTIME_ROOT/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1193:9)\n    at $N8N_RUNTIME_ROOT/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1542:27\n    at $N8N_RUNTIME_ROOT/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2108:11"
+      }
+    },
+    "executionData": {
+      "contextData": {},
+      "nodeExecutionStack": [
+        {
+          "node": {
+            "id": "Handle-Public-Search-Fetch-Error",
+            "name": "Handle Public Search Fetch Error",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+              400,
+              0
+            ],
+            "parameters": {
+              "mode": "runOnceForEachItem",
+              "language": "javaScript",
+              "jsCode": "return [{json:{...$json,search_html:'',public_search_error:true}}];",
+              "notice": ""
+            },
+            "onError": "stopWorkflow"
+          },
+          "data": {
+            "main": [
+              [
+                {
+                  "json": {
+                    "correlation_id": "synthetic-recovery-001",
+                    "query": "synthetic business search",
+                    "search_html": "stale synthetic HTML",
+                    "request_context": {
+                      "batch_id": "synthetic-batch-001",
+                      "attempt": 1
+                    },
+                    "error": {
+                      "code": "SYNTHETIC_FETCH_FAILURE",
+                      "message": "Synthetic upstream fetch failure"
+                    }
+                  },
+                  "pairedItem": {
+                    "item": 0
+                  }
+                }
+              ]
+            ]
+          },
+          "source": {
+            "main": [
+              {
+                "previousNode": "Synthetic Fetch Failure"
+              }
+            ]
+          }
+        }
+      ],
+      "metadata": {},
+      "waitingExecution": {},
+      "waitingExecutionSource": {}
+    }
+  }
+}
