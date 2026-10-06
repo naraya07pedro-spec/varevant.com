@@ -43,6 +43,7 @@ The historical workflow contains discovery, evidence processing, queue handoff, 
 | Reference | Inspect / run | Boundary |
 | --- | --- | --- |
 | [Reliable Lead Routing](examples/reliable-lead-routing/) | `node --test examples/reliable-lead-routing/workflow.test.js` | Injected classifier, hard gates and manual-review route; process-memory dedupe and broad retries need hardening. |
+| **[Agentic Automation Systems Lab](examples/agentic-systems-lab/)** | `npm test` + `npm run check` inside the lab | **24 tests**, 3 credential-free n8n workflow skeletons; HITL effect policy, bounded polling, RAG lifecycle, observability, model routing and subworkflow contracts. |
 | [Standalone integration reference](https://github.com/naraya07pedro-spec/production-integration-reference) | `npm ci`, typecheck, tests, database tests and signed demo in that repo | Maintained synthetic reference, not client production source. |
 | [Older local integration example](examples/production-integration-reference/) | Historical source of the standalone reference | Retained for provenance; use the standalone implementation for current reliability review. |
 
