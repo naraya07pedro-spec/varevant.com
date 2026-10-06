@@ -64,7 +64,7 @@ npm test
 npm run check
 ```
 
-No API credentials are required for the test suite. The workflow JSONs are deliberately credential-free reference skeletons so the reviewer can inspect control logic without external services.
+No API credentials are required for the test suite. The workflow JSONs are deliberately credential-free reference skeletons so the reviewer can inspect control logic without external services. See the [verification record](docs/VERIFICATION.md) for the latest recorded test result.
 
 ## 1. Deterministic effect / approval policy
 
