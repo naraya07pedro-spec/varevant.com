@@ -1,5 +1,21 @@
 # VAREVANT
 
+## Hiring manager quick scan
+
+**Role fit:** n8n Automation · Integration · Implementation · Revenue Systems
+
+This repository contains the strongest public n8n evidence behind my automation work.
+
+- Historical **117-node** workflow graph with **60 JavaScript Code nodes**
+- Live-state rereads, suppression, deduplication and claim/verify controls
+- Explicit no-send and uncertain-send paths
+- Traceable failure cases with regression tests
+- Saved real-n8n recovery reproduction for a repaired handler contract
+- Separate TypeScript/PostgreSQL reference for stronger reservation and retry semantics
+
+**Fastest review path:** [flagship case study](n8n/FLAGSHIP-CASE-STUDY.md) → [incident catalog](n8n/incidents/README.md) → [saved recovery](n8n/runtime-evidence/reproduced-recovery/recorded/report.json)
+
+
 **n8n automation, API integrations and bounded AI workflows — engineering by Evan Naraya.**
 
 This repository contains the [VAREVANT website](https://varevant.com), historical internal workflow source, reference examples and delivery documentation. Client implementations remain separate from internal and reference work.
