@@ -1,0 +1,19 @@
+{
+  "name": "Agentic Systems Lab - Effect Policy Gateway",
+  "nodes": [
+    {"parameters": {}, "id": "trigger", "name": "Manual Trigger", "type": "n8n-nodes-base.manualTrigger", "typeVersion": 1, "position": [-520,0]},
+    {"parameters": {"jsCode": "return [{json:{effect:'WRITE_EXTERNAL',confidence:0.91,hasVerifiedTarget:true,explicitlyApproved:false,deterministic:false,ambiguity:true,sideEffect:true}}];"}, "id": "sample", "name": "Sample Request", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [-300,0]},
+    {"parameters": {"jsCode": "const x=$json; const valid=['READ','DRAFT','WRITE_REVERSIBLE','WRITE_EXTERNAL']; if(!valid.includes(x.effect)) return [{json:{...x,policy:{action:'REJECT',reason:'UNKNOWN_EFFECT_CLASS'}}}]; let policy; if(x.effect==='READ') policy={action:'ALLOW',reason:'READ_ONLY'}; else if(x.effect==='DRAFT') policy=Number(x.confidence||0)>=0.6?{action:'ALLOW',reason:'DRAFT_ONLY'}:{action:'REVIEW',reason:'LOW_CONFIDENCE_DRAFT'}; else if(!x.hasVerifiedTarget) policy={action:'REVIEW',reason:'TARGET_NOT_VERIFIED'}; else if(!x.explicitlyApproved) policy={action:'REVIEW',reason:'HUMAN_APPROVAL_REQUIRED'}; else policy={action:'ALLOW',reason:'APPROVED_EFFECT'}; const mode=(x.deterministic&&!x.ambiguity)?'WORKFLOW':(x.sideEffect?'AGENT_WITH_GUARDRAILS':'AGENT'); return [{json:{...x,mode,policy}}];"}, "id": "gate", "name": "Deterministic Effect Gate", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [-60,0]},
+    {"parameters": {"jsCode": "return [{json:{decision:$json.policy,execution_mode:$json.mode,notice:'External writes stay blocked until target verification and explicit approval.'}}];"}, "id": "result", "name": "Result", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [180,0]}
+  ],
+  "connections": {
+    "Manual Trigger": {"main": [[{"node":"Sample Request","type":"main","index":0}]]},
+    "Sample Request": {"main": [[{"node":"Deterministic Effect Gate","type":"main","index":0}]]},
+    "Deterministic Effect Gate": {"main": [[{"node":"Result","type":"main","index":0}]]}
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "lab-effect-policy-v1",
+  "meta": {"templateCredsSetupCompleted": true},
+  "tags": []
+}
