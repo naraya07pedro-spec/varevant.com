@@ -1,0 +1,19 @@
+{
+  "name": "Agentic Systems Lab - Bounded Async Polling",
+  "nodes": [
+    {"parameters": {}, "id": "trigger", "name": "Manual Trigger", "type": "n8n-nodes-base.manualTrigger", "typeVersion": 1, "position": [-520,0]},
+    {"parameters": {"jsCode": "return [{json:{provider_status:'processing',attempt:4,max_attempts:12,elapsed_ms:17000,max_elapsed_ms:300000}}];"}, "id": "sample", "name": "Async Job Snapshot", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [-300,0]},
+    {"parameters": {"jsCode": "const s=String($json.provider_status||'').trim().toLowerCase(); const ok=['completed','succeeded','done','success']; const fail=['failed','cancelled','canceled','error']; let decision; if(ok.includes(s)) decision={action:'COMPLETE',reason:'TERMINAL_SUCCESS'}; else if(fail.includes(s)) decision={action:'STOP',reason:'TERMINAL_FAILURE'}; else if(Number($json.attempt)>=Number($json.max_attempts)) decision={action:'STOP',reason:'MAX_ATTEMPTS'}; else if(Number($json.elapsed_ms)>=Number($json.max_elapsed_ms)) decision={action:'STOP',reason:'DEADLINE_EXCEEDED'}; else decision={action:'WAIT_AND_POLL',reason:'NON_TERMINAL',delay_ms:Math.min(30000,1000*(2**Math.min(Number($json.attempt||0),5)))}; return [{json:{...$json,decision}}];"}, "id": "decide", "name": "Bounded Poll Decision", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [-60,0]},
+    {"parameters": {"jsCode": "return [{json:{decision:$json.decision,guardrails:{bounded_attempts:true,bounded_deadline:true,no_infinite_loop:true}}}];"}, "id": "result", "name": "Polling Contract", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [180,0]}
+  ],
+  "connections": {
+    "Manual Trigger": {"main": [[{"node":"Async Job Snapshot","type":"main","index":0}]]},
+    "Async Job Snapshot": {"main": [[{"node":"Bounded Poll Decision","type":"main","index":0}]]},
+    "Bounded Poll Decision": {"main": [[{"node":"Polling Contract","type":"main","index":0}]]}
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "lab-bounded-polling-v1",
+  "meta": {"templateCredsSetupCompleted": true},
+  "tags": []
+}
