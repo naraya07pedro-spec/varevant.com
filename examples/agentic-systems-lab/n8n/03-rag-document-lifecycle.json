@@ -1,0 +1,19 @@
+{
+  "name": "Agentic Systems Lab - RAG Document Lifecycle",
+  "nodes": [
+    {"parameters": {}, "id": "trigger", "name": "Manual Trigger", "type": "n8n-nodes-base.manualTrigger", "typeVersion": 1, "position": [-520,0]},
+    {"parameters": {"jsCode": "return [{json:{type:'updated',tenant:'demo',source_id:'drive-file-42',path:'/policies/refund.pdf',version:2}}];"}, "id": "event", "name": "Document Event", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [-300,0]},
+    {"parameters": {"jsCode": "const x=$json; if(!x.source_id&&!x.path) throw new Error('source_id or path is required'); const raw=String(x.tenant||'default')+':'+String(x.source_id||x.path); let h=2166136261; for(let i=0;i<raw.length;i++){h^=raw.charCodeAt(i); h=Math.imul(h,16777619);} const document_id='doc_'+(h>>>0).toString(16).padStart(8,'0'); const type=String(x.type||'').toLowerCase(); let steps; if(type==='created') steps=['LOAD','CHUNK','EMBED','UPSERT']; else if(type==='updated') steps=['DELETE_OLD_VERSION','LOAD','CHUNK','EMBED','UPSERT']; else if(type==='deleted') steps=['DELETE_BY_DOCUMENT_ID']; else throw new Error('unsupported lifecycle event'); return [{json:{...x,document_id,steps,metadata:{document_id,tenant:x.tenant||'default',source_id:x.source_id||null,path:x.path||null,version:Number(x.version||1)}}}];"}, "id": "plan", "name": "Lifecycle Planner", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [-60,0]},
+    {"parameters": {"jsCode": "return [{json:{document_id:$json.document_id,steps:$json.steps,metadata_filter:{document_id:$json.document_id,tenant:$json.metadata.tenant},notice:'Update deletes old vectors before re-embedding; delete removes vectors by stable document identity.'}}];"}, "id": "result", "name": "RAG Lifecycle Contract", "type": "n8n-nodes-base.code", "typeVersion": 2, "position": [180,0]}
+  ],
+  "connections": {
+    "Manual Trigger": {"main": [[{"node":"Document Event","type":"main","index":0}]]},
+    "Document Event": {"main": [[{"node":"Lifecycle Planner","type":"main","index":0}]]},
+    "Lifecycle Planner": {"main": [[{"node":"RAG Lifecycle Contract","type":"main","index":0}]]}
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "lab-rag-lifecycle-v1",
+  "meta": {"templateCredsSetupCompleted": true},
+  "tags": []
+}
