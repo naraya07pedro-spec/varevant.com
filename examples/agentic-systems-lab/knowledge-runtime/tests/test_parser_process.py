@@ -4,7 +4,6 @@ import subprocess
 import sys
 
 import pytest
-
 from document_fixtures import docx
 
 from knowledge_runtime.document_providers import run_process

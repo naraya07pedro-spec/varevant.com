@@ -27,6 +27,7 @@ jobs:
           --health-cmd "pg_isready -U knowledge -d knowledge_test"
           --health-interval 5s --health-timeout 5s --health-retries 12
     env:
+      KNOWLEDGE_VERIFICATION_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       TEST_DATABASE_URL: postgresql://knowledge:local-demo-only@localhost:5432/knowledge_test
     defaults:
       run:
@@ -55,8 +56,9 @@ jobs:
       - name: Real PostgreSQL/pgvector behavior and failure cases
         run: |
           mkdir -p artifacts
-          uv run --locked pytest tests/test_parser_process.py -vv --maxfail=1 --cov=knowledge_runtime --cov-report=term-missing
-          uv run --locked pytest -vv --maxfail=1 --cov=knowledge_runtime --cov-report=term-missing --cov-report=json:artifacts/coverage.json --junitxml=artifacts/junit.xml
+          uv run --locked pytest -vv --maxfail=1 --cov=knowledge_runtime --cov-fail-under=88 --cov-report=term-missing --cov-report=json:artifacts/coverage.json --junitxml=artifacts/junit.xml
+      - name: Inspectable verification summary
+        run: uv run --locked python scripts/verification_summary.py
       - name: Deterministic retrieval evaluations
         run: uv run --locked python -m knowledge_runtime.evaluate
       - name: Existing Node contracts and n8n skeleton validation
