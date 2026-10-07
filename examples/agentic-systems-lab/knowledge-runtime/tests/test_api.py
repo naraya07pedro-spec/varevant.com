@@ -21,7 +21,7 @@ async def test_api_runs_ingestion_search_status_delete(client):
     assert "knowledge_operations_total" in (await client.get("/metrics")).text
 
 
-@pytest.mark.parametrize("token", ["", b"Bearer \\xe9", "Bearer invalid"])
+@pytest.mark.parametrize("token", ["", b"Bearer \xe9", "Bearer invalid"])
 async def test_api_authentication_fails_closed(client, token):
     response = await client.post(
         "/search", json={"query": "booking"}, headers={"Authorization": token}
