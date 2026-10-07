@@ -11,6 +11,13 @@ from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
 INVOICE_TEXT = "Invoice INV-DEMO-1\nTotal: 125.50 USD"
 
 
+def write_zip_entry(archive, name, content):
+    # Byte identity must stay stable across replay/lease tests.
+    info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
+    info.compress_type = zipfile.ZIP_DEFLATED
+    archive.writestr(info, content)
+
+
 def docx(text=INVOICE_TEXT, xml=None, extras=None):
     document = xml or (
         '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
@@ -22,10 +29,10 @@ def docx(text=INVOICE_TEXT, xml=None, extras=None):
     )
     output = io.BytesIO()
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as archive:
-        archive.writestr("[Content_Types].xml", "<Types/>")
-        archive.writestr("word/document.xml", document)
+        write_zip_entry(archive, "[Content_Types].xml", "<Types/>")
+        write_zip_entry(archive, "word/document.xml", document)
         for key, value in (extras or {}).items():
-            archive.writestr(key, value)
+            write_zip_entry(archive, key, value)
     return output.getvalue()
 
 
