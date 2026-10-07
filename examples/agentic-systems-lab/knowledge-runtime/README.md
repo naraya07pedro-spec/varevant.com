@@ -9,10 +9,13 @@ prevents delayed ingestion from resurrecting deleted content, retrieves/filter/r
 chunks in PostgreSQL and binds every answer quote to a current source span. A native
 MCP/HTTP gateway exposes registered capabilities and turns send requests into
 immutable proposals, with separate human approval before a durable local handoff.
+A binary document pipeline parses PDF, PNG/JPEG and DOCX, uses local OCR for scans,
+validates invoice fields and commits a handoff only after quality/schema checks.
 
 **Why it is hard:** duplicate and concurrent ingestion, failed providers and updates
 during query execution must not leave stale chunks or invented citations. Tenant,
 permissions and external targets must remain outside model-controlled parameters.
+Parser failures, retries and worker crashes must not forward partial document data.
 
 **Inspect in 30 seconds:** [retrieval commit boundary](knowledge_runtime/retrieval.py)
 → [concurrency/provenance tests](tests/test_retrieval.py)
@@ -34,6 +37,7 @@ uv run python scripts/bootstrap.py
 docker compose up --build -d --wait api
 docker compose exec -T api python -m knowledge_runtime.seed
 uv run python scripts/smoke.py
+uv run python scripts/document_smoke.py
 ```
 
 Credentials are generated locally in ignored `.env`; no fixed API token is in
@@ -67,6 +71,8 @@ and treating prompt-injection text as data.
 | `GET /documents/{id}` | Tenant-scoped version/status; read permission |
 | `DELETE /documents/{id}` | Delete permission and current expected version |
 | `POST /search` | Strict filter vocabulary and candidate limits; grounded source spans |
+| `POST /document-jobs` | Binary MIME/signature/size limits; ingest permission; persisted quality/review state |
+| `GET /document-jobs/{id}` | Tenant-bound extraction status without raw text |
 | `GET /metrics` | Authenticated operation/outcome counters; no payload labels |
 | `GET /tools`, `POST /tools/{name}` | Credential-bound registry; strict schemas and read/propose permissions |
 | `GET/POST /approvals/{id}` | Separate human principal; exact proposal hash, expiry and target recheck |
@@ -102,6 +108,15 @@ implement its own effect/reconciliation and late-suppression policy.
 The old [JavaScript lifecycle planner](../src/rag-lifecycle.js) remains a compact
 source-derived contract. This service is the database-backed implementation;
 its stronger version and filter semantics are tested separately.
+
+## Document intelligence
+
+[Pipeline](docs/document-pipeline.md) runs bounded parser processes and real local
+Tesseract OCR. [Tests](tests/test_documents.py) generate PDF, scanned PDF,
+PNG/JPEG and DOCX fixtures, then exercise validation/review, transient retry
+budgets, replay, lease takeover and atomic handoff failure. Extraction status is
+also available through the native MCP registry. No incomplete extraction is
+silently forwarded.
 
 ## Verified boundary
 

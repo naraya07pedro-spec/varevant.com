@@ -11,6 +11,9 @@
 | API and binary intake limits | [Body boundary](../knowledge_runtime/http_boundary.py), bearer identity | Length mismatch, missing header, streamed over-limit and permission tests | Local reference token binding, not managed identity |
 | Native MCP transport | [SDK server](../knowledge_runtime/mcp_server.py), [registry](../knowledge_runtime/gateway.py) | [Real SDK wire tests](../tests/test_mcp_wire.py): initialize, discovery, read, proposal, authority/target injection and restricted credential | Stdio process binding; no remote OAuth claim |
 | Approved workflow handoff | [Workflow](../knowledge_runtime/workflow.py), [gateway schema](../migrations/002_gateway.sql) | [Approval tests](../tests/test_gateway.py), [overlapping replay and failure tests](../tests/test_gateway_failures.py) | Immutable target/message hash, expiry and independent human; durable local outbox, no email delivery |
+| Multiformat document intake | [Parser worker](../knowledge_runtime/parser_worker.py), [format/provider adapters](../knowledge_runtime/document_providers.py) | [Synthetic native PDF, scan, PNG/JPEG and DOCX tests](../tests/test_documents.py); real Tesseract/Poppler | Bounded Linux processes; small invoice schema, English OCR |
+| Review and durable extraction | [Document service](../knowledge_runtime/documents.py), [job/handoff schema](../migrations/003_document_jobs.sql) | Low quality/ambiguous/malformed outputs; concurrent replay; expired lease/stale owner; atomic handoff failure and recovery | Local READY handoff; review state, no reviewer correction UI |
+| Runnable service | [Compose](../compose.yml), [TCP smoke](../scripts/document_smoke.py) | Non-root Docker service, real PostgreSQL/API/parser/OCR | Synthetic local reference; no public production deployment |
 
 Evidence classes: study documents and the original JavaScript planner are
 **SOURCE-DERIVED/UNDERSTOOD** material. The linked Python and SQL implement new

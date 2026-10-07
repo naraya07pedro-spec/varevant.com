@@ -52,24 +52,10 @@ jobs:
           uv run --locked ruff check knowledge_runtime tests scripts
           uv run --locked mypy knowledge_runtime
           uv run --locked python scripts/check_secrets.py
-      - name: Diagnose static formatting
-        if: failure()
-        run: |
-          uv run --locked ruff format knowledge_runtime tests scripts
-          uv run --locked ruff check --fix knowledge_runtime tests scripts || true
-          uv run --locked mypy knowledge_runtime || true
-          uv run --locked python - <<'PY'
-          import json
-          from pathlib import Path
-          print("FORMATTED_FILES_BEGIN")
-          files = sorted([*Path("knowledge_runtime").glob("*.py"), *Path("tests").glob("*.py")])
-          print(json.dumps({str(p): p.read_text() for p in files}))
-          print("FORMATTED_FILES_END")
-          PY
       - name: Real PostgreSQL/pgvector behavior and failure cases
         run: |
           mkdir -p artifacts
-          uv run --locked pytest --cov=knowledge_runtime --cov-report=term-missing --cov-report=json:artifacts/coverage.json --junitxml=artifacts/junit.xml
+          uv run --locked pytest -vv --maxfail=1 --cov=knowledge_runtime --cov-report=term-missing --cov-report=json:artifacts/coverage.json --junitxml=artifacts/junit.xml
       - name: Deterministic retrieval evaluations
         run: uv run --locked python -m knowledge_runtime.evaluate
       - name: Existing Node contracts and n8n skeleton validation
@@ -114,6 +100,7 @@ jobs:
         run: |
           docker compose exec -T api python -m knowledge_runtime.seed
           uv run --locked python scripts/smoke.py
+          uv run --locked python scripts/document_smoke.py
       - name: Diagnose failed stack
         if: failure()
         run: docker compose logs --no-color --tail 60
