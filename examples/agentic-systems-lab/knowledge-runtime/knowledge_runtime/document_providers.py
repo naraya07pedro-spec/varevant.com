@@ -19,10 +19,21 @@ from knowledge_runtime.domain import BoundaryError, ProviderFailure
 
 PARSER_CODES = frozenset(
     {
-        "mime_mismatch", "image_limit", "archive_limit", "invalid_archive",
-        "encrypted_document", "invalid_docx", "page_limit", "pdf_stream_limit",
-        "text_limit", "invalid_text", "ocr_page_limit", "parser_failed",
-        "parser_dependency_unavailable", "file_size", "unsupported_mime",
+        "mime_mismatch",
+        "image_limit",
+        "archive_limit",
+        "invalid_archive",
+        "encrypted_document",
+        "invalid_docx",
+        "page_limit",
+        "pdf_stream_limit",
+        "text_limit",
+        "invalid_text",
+        "ocr_page_limit",
+        "parser_failed",
+        "parser_dependency_unavailable",
+        "file_size",
+        "unsupported_mime",
     }
 )
 

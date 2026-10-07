@@ -17,7 +17,7 @@ from defusedxml.ElementTree import fromstring
 from PIL import Image
 from pypdf import PdfReader
 
-from knowledge_runtime.document_types import DOCX, JPEG, PDF, PNG, MAX_FILE_BYTES
+from knowledge_runtime.document_types import DOCX, JPEG, MAX_FILE_BYTES, PDF, PNG
 from knowledge_runtime.domain import BoundaryError
 
 MAX_TEXT = 100_000
@@ -96,8 +96,18 @@ def pdf_text(content: bytes) -> dict[str, object]:
         source.write_bytes(content)
         subprocess.run(
             [
-                "pdftoppm", "-f", "1", "-l", str(count), "-r", "100",
-                "-scale-to", "1600", "-gray", "-png", str(source),
+                "pdftoppm",
+                "-f",
+                "1",
+                "-l",
+                str(count),
+                "-r",
+                "100",
+                "-scale-to",
+                "1600",
+                "-gray",
+                "-png",
+                str(source),
                 str(Path(directory) / "page"),
             ],
             check=True,

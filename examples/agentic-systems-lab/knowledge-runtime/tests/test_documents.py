@@ -78,7 +78,11 @@ async def test_disabled_ocr_enters_manual_review_without_handoff(database, princ
         (digital_pdf(text="", pages=6), PDF, "ocr_page_limit"),
         (docx(extras={"../escape.xml": "unsafe"}), DOCX, "invalid_archive"),
         (docx(extras={"large.xml": "A" * 20_000_001}), DOCX, "archive_limit"),
-        (docx(xml='<!DOCTYPE w [<!ENTITY x SYSTEM "file:///etc/passwd">]><w>&x;</w>'), DOCX, "parser_failed"),
+        (
+            docx(xml='<!DOCTYPE w [<!ENTITY x SYSTEM "file:///etc/passwd">]><w>&x;</w>'),
+            DOCX,
+            "parser_failed",
+        ),
         (image_file(size=(2001, 2001)), PNG, "image_limit"),
     ],
 )
@@ -138,7 +142,9 @@ async def test_concurrent_replay_admits_one_parser_and_handoff(database, princip
         ("Invoice INV-DEMO-1\nTotal: 0.00 USD", "invalid_extraction"),
     ],
 )
-async def test_missing_ambiguous_or_invalid_fields_require_review(database, principal, text, reason):
+async def test_missing_ambiguous_or_invalid_fields_require_review(
+    database, principal, text, reason
+):
     service = Documents(database, Audit(database), parser=FixedParser(text))
     result = await service.ingest(principal, "invalid-fields", docx(), DOCX)
     assert result["state"] == "MANUAL_REVIEW" and result["reason"] == reason
@@ -167,16 +173,19 @@ class BadExtractor:
 
     async def extract(self, text):
         return ExtractionCandidate(
-            fields={"invoice_id": "INV-DEMO-1", "total": "125.50", "currency": "USD", "approved": True},
+            fields={
+                "invoice_id": "INV-DEMO-1",
+                "total": "125.50",
+                "currency": "USD",
+                "approved": True,
+            },
             quality=1.0,
             reason="complete",
         )
 
 
 async def test_structured_provider_extra_authority_field_is_rejected(database, principal):
-    service = Documents(
-        database, Audit(database), parser=FixedParser(), extractor=BadExtractor()
-    )
+    service = Documents(database, Audit(database), parser=FixedParser(), extractor=BadExtractor())
     result = await service.ingest(principal, "bad-output", docx(), DOCX)
     assert result["state"] == "MANUAL_REVIEW" and result["reason"] == "invalid_extraction"
     assert result["fields"] is None
@@ -236,7 +245,9 @@ async def test_expired_lease_takeover_fences_old_worker(database, principal):
     old = Documents(database, Audit(database), parser=BlockedParser())
     task = asyncio.create_task(old.ingest(principal, "lease", docx(), DOCX))
     await started.wait()
-    await database.execute("UPDATE document_jobs SET lease_until=clock_timestamp()-interval '1 second'")
+    await database.execute(
+        "UPDATE document_jobs SET lease_until=clock_timestamp()-interval '1 second'"
+    )
     fresh = Documents(database, Audit(database), parser=FixedParser())
     result = await fresh.ingest(principal, "lease", docx(), DOCX)
     release.set()
@@ -264,7 +275,9 @@ async def test_finish_and_handoff_are_atomic_under_database_failure(database, pr
             DROP TRIGGER reject_document_handoff ON document_handoffs;
             DROP FUNCTION fail_document_handoff();
         """)
-    await database.execute("UPDATE document_jobs SET lease_until=clock_timestamp()-interval '1 second'")
+    await database.execute(
+        "UPDATE document_jobs SET lease_until=clock_timestamp()-interval '1 second'"
+    )
     recovered = await service.ingest(principal, "atomic", docx(), DOCX)
     assert recovered["state"] == "EXTRACTED" and recovered["attempts"] == 2
 
@@ -286,7 +299,8 @@ async def test_tenant_identity_persistence_and_log_privacy(
 
 async def test_binary_http_status_gateway_and_cross_tenant_boundary(client):
     result = await client.post(
-        "/document-jobs", content=docx(),
+        "/document-jobs",
+        content=docx(),
         headers={"Content-Type": DOCX, "X-Source-Key": "api-invoice"},
     )
     assert result.status_code == 200 and result.json()["state"] == "EXTRACTED", result.text
@@ -301,19 +315,27 @@ async def test_binary_http_status_gateway_and_cross_tenant_boundary(client):
     )
     assert hidden.status_code == 404
     denied = await client.post(
-        "/document-jobs", content=docx(),
-        headers={"Authorization": "Bearer " + READER_TOKEN, "Content-Type": DOCX, "X-Source-Key": "x"},
+        "/document-jobs",
+        content=docx(),
+        headers={
+            "Authorization": "Bearer " + READER_TOKEN,
+            "Content-Type": DOCX,
+            "X-Source-Key": "x",
+        },
     )
     assert denied.status_code == 403
 
 
 async def test_invalid_source_key_and_mime_http_errors_are_fixed(client):
     invalid = await client.post(
-        "/document-jobs", content=docx(), headers={"Content-Type": DOCX, "X-Source-Key": "has spaces"}
+        "/document-jobs",
+        content=docx(),
+        headers={"Content-Type": DOCX, "X-Source-Key": "has spaces"},
     )
     assert invalid.status_code == 422 and invalid.json()["code"] == "invalid_source_key"
     wrong = await client.post(
-        "/document-jobs", content=b"private-binary-content",
+        "/document-jobs",
+        content=b"private-binary-content",
         headers={"Content-Type": PDF, "X-Source-Key": "x"},
     )
     assert wrong.status_code == 415 and wrong.json()["code"] == "mime_mismatch"

@@ -15,7 +15,9 @@ def docx(text=INVOICE_TEXT, xml=None, extras=None):
     document = xml or (
         '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'
         "<w:body>"
-        + "".join("<w:p><w:r><w:t>" + escape(line) + "</w:t></w:r></w:p>" for line in text.splitlines())
+        + "".join(
+            "<w:p><w:r><w:t>" + escape(line) + "</w:t></w:r></w:p>" for line in text.splitlines()
+        )
         + "</w:body></w:document>"
     )
     output = io.BytesIO()
