@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import math
 from decimal import Decimal
 from typing import Any, Literal, Protocol
 
@@ -45,6 +44,11 @@ class OCRResult(StrictModel):
     text: str = Field(max_length=100_000)
     quality: float = Field(ge=0, le=1, allow_inf_nan=False)
 
+    @field_validator("text")
+    @classmethod
+    def valid_text(cls, value: str) -> str:
+        return ParseResult.valid_text(value)
+
 
 class ExtractionCandidate(StrictModel):
     fields: dict[str, Any]
@@ -81,7 +85,3 @@ class Extractor(Protocol):
     name: str
 
     async def extract(self, text: str) -> ExtractionCandidate: ...
-
-
-def valid_quality(value: float) -> bool:
-    return math.isfinite(value) and 0 <= value <= 1

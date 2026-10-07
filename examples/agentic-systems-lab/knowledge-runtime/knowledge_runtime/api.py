@@ -6,10 +6,13 @@ from typing import Annotated, Any
 
 import asyncpg
 from fastapi import Depends, FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, Response
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from knowledge_runtime.database import pool
+from knowledge_runtime.document_providers import SubprocessParser, TesseractOCR
+from knowledge_runtime.documents import Documents
 from knowledge_runtime.domain import (
     BoundaryError,
     DeleteDocument,
@@ -17,8 +20,6 @@ from knowledge_runtime.domain import (
     SearchQuery,
     StrictModel,
 )
-from knowledge_runtime.document_providers import SubprocessParser, TesseractOCR
-from knowledge_runtime.documents import Documents
 from knowledge_runtime.gateway import Gateway
 from knowledge_runtime.http_boundary import BodyLimitMiddleware
 from knowledge_runtime.observability import Audit
@@ -68,6 +69,10 @@ def create_app(settings: Settings, database: asyncpg.Pool[Any] | None = None) ->
     @app.exception_handler(BoundaryError)
     async def boundary_error(request: Request, error: BoundaryError) -> JSONResponse:
         return JSONResponse({"ok": False, "code": error.code}, status_code=error.status)
+
+    @app.exception_handler(RequestValidationError)
+    async def invalid_request(request: Request, error: RequestValidationError) -> JSONResponse:
+        return JSONResponse({"ok": False, "code": "invalid_request"}, status_code=422)
 
     @app.exception_handler(asyncpg.PostgresError)
     async def database_error(request: Request, error: asyncpg.PostgresError) -> JSONResponse:
