@@ -1,0 +1,112 @@
+name: Knowledge runtime verification
+on:
+  push:
+    branches: [main]
+    paths: ['examples/agentic-systems-lab/**', '.github/workflows/knowledge-runtime.yml']
+  pull_request:
+    paths: ['examples/agentic-systems-lab/**', '.github/workflows/knowledge-runtime.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: knowledge-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: knowledge
+          POSTGRES_PASSWORD: local-demo-only
+          POSTGRES_DB: knowledge_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U knowledge -d knowledge_test"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    env:
+      KNOWLEDGE_VERIFICATION_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      TEST_DATABASE_URL: postgresql://knowledge:local-demo-only@localhost:5432/knowledge_test
+    defaults:
+      run:
+        working-directory: examples/agentic-systems-lab/knowledge-runtime
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+        with:
+          version: '0.12.19'
+          enable-cache: true
+      - name: Install local OCR and PDF renderers
+        run: sudo apt-get update && sudo apt-get install -y tesseract-ocr poppler-utils fonts-dejavu-core
+      - run: uv sync --locked
+      - name: Static quality and credential patterns
+        run: |
+          uv run --locked ruff format --check --diff knowledge_runtime tests scripts
+          uv run --locked ruff check knowledge_runtime tests scripts
+          uv run --locked mypy knowledge_runtime
+          uv run --locked python scripts/check_secrets.py
+      - name: Real PostgreSQL/pgvector behavior and failure cases
+        run: |
+          mkdir -p artifacts
+          uv run --locked pytest -vv --maxfail=1 --cov=knowledge_runtime --cov-fail-under=88 --cov-report=term-missing --cov-report=json:artifacts/coverage.json --junitxml=artifacts/junit.xml
+      - name: Inspectable verification summary
+        run: uv run --locked python scripts/verification_summary.py
+      - name: Deterministic retrieval evaluations
+        run: uv run --locked python -m knowledge_runtime.evaluate
+      - name: Existing Node contracts and n8n skeleton validation
+        working-directory: examples/agentic-systems-lab
+        run: |
+          npm test
+          npm run check
+      - name: Portfolio link integrity
+        working-directory: .
+        run: python scripts/check-portfolio.py
+      - name: Runtime dependency audit
+        run: |
+          uv export --locked --no-dev --no-emit-project --format requirements-txt > /tmp/knowledge-requirements.txt
+          uv run --locked pip-audit -r /tmp/knowledge-requirements.txt --disable-pip --no-deps
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: knowledge-evidence-${{ github.event.pull_request.head.sha || github.sha }}
+          path: examples/agentic-systems-lab/knowledge-runtime/artifacts/
+          retention-days: 30
+  container-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: examples/agentic-systems-lab/knowledge-runtime
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+        with:
+          version: '0.12.19'
+      - name: Bootstrap local credentials
+        run: |
+          uv sync --locked
+          uv run --locked python scripts/bootstrap.py
+      - name: Build non-root service and start PostgreSQL stack
+        run: docker compose up --build -d --wait --wait-timeout 120 api
+      - name: Exercise real TCP API
+        run: |
+          docker compose exec -T api python -m knowledge_runtime.seed
+          uv run --locked python scripts/smoke.py
+          uv run --locked python scripts/document_smoke.py
+      - name: Diagnose failed stack
+        if: failure()
+        run: docker compose logs --no-color --tail 60
+      - name: Remove isolated CI stack
+        if: always()
+        run: docker compose down -v

@@ -1,14 +1,25 @@
 # Agentic Automation Systems Lab
 
-**Advanced n8n / AI systems engineering implemented as tested contracts — not tutorial screenshots.**
+**Python/PostgreSQL knowledge runtime and tested n8n/AI orchestration contracts.**
 
-This portfolio lab turns a nine-document n8n/AI architecture study into independently implemented, testable reference code and importable n8n workflow skeletons. The source material covered APIs, tool calling, RAG, HITL, multi-agent delegation, observability, polling, error handling, OCR, MCP, memory, model routing, Data Tables, and asynchronous workflows.
+The [Knowledge Workflow Runtime](knowledge-runtime/) implements three connected
+capabilities: pgvector retrieval with a version/deletion lifecycle and current
+citations, a native MCP gateway with deterministic authority and human approval,
+and PDF/image/DOCX extraction with OCR, review states and durable handoffs.
+Source, database tests, native protocol tests and a Docker/TCP demo are linked
+from its README.
 
-The important part is the implementation work: I extracted recurring failure-prone patterns, rewrote them as explicit contracts, and tested those contracts independently. The result is a compact proof surface for advanced n8n/AI orchestration rather than a collection of tutorial clones.
+The original six JavaScript contracts and three n8n workflow skeletons remain
+the compact orchestration foundation. [Source audit](docs/SOURCE-AUDIT.md)
+records the study material; the runtime supplies independently implemented,
+database-backed behavior.
 
 ## Recruiter quick scan
 
-**What this proves:** repeated hands-on work across advanced workflow boundaries — external effects, async jobs, retrieval lifecycle, observability, model selection and modular agent/workflow contracts.
+**Inspect first:** [runtime](knowledge-runtime/) → [retrieval tests](knowledge-runtime/tests/test_retrieval.py) → [MCP wire tests](knowledge-runtime/tests/test_mcp_wire.py) → [document tests](knowledge-runtime/tests/test_documents.py) → [CI](https://github.com/naraya07pedro-spec/varevant.com/actions/workflows/knowledge-runtime.yml).
+
+**Runtime:** actual PostgreSQL/pgvector persistence, native MCP stdio and local
+Tesseract/Poppler, with synthetic fixtures. **Contract foundation:**
 
 - **24 passing Node.js tests** across six reusable contracts.
 - **3 n8n workflow JSONs** validated for structural integrity.
@@ -48,6 +59,7 @@ agentic-systems-lab/
 │   └── subworkflow-contract.js
 ├── test/
 │   └── *.test.js
+├── knowledge-runtime/  # Python service, migrations, tests, Docker and evidence
 ├── n8n/
 │   ├── 01-effect-policy-gateway.json
 │   ├── 02-bounded-async-polling.json
@@ -66,7 +78,7 @@ npm test
 npm run check
 ```
 
-No API credentials are required for the test suite. The workflow JSONs are deliberately credential-free reference skeletons so the reviewer can inspect control logic without external services. See the [verification record](docs/VERIFICATION.md) for the latest recorded test result.
+No paid API credentials are required for these Node tests. The [Python runtime](knowledge-runtime/) has its own PostgreSQL/pgvector verification and locally generated process credentials. The workflow JSONs are deliberately credential-free reference skeletons so the reviewer can inspect control logic without external services. See the [verification record](docs/VERIFICATION.md) for the latest recorded test result.
 
 ## 1. Deterministic effect / approval policy
 
