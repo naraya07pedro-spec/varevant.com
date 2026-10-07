@@ -17,6 +17,8 @@ from knowledge_runtime.domain import (
     SearchQuery,
     StrictModel,
 )
+from knowledge_runtime.document_providers import SubprocessParser, TesseractOCR
+from knowledge_runtime.documents import Documents
 from knowledge_runtime.gateway import Gateway
 from knowledge_runtime.http_boundary import BodyLimitMiddleware
 from knowledge_runtime.observability import Audit
@@ -40,7 +42,17 @@ def create_app(settings: Settings, database: asyncpg.Pool[Any] | None = None) ->
         app.state.audit = Audit(active)
         app.state.retrieval = Retrieval(active, app.state.audit, timeout=settings.provider_timeout)
         app.state.workflow = Workflow(active, app.state.audit)
-        app.state.gateway = Gateway(app.state.retrieval, app.state.workflow, app.state.audit)
+        app.state.documents = Documents(
+            active,
+            app.state.audit,
+            parser=SubprocessParser(settings.parser_timeout),
+            ocr=TesseractOCR(settings.provider_timeout) if settings.ocr == "tesseract" else None,
+            timeout=settings.provider_timeout,
+            lease_seconds=max(120, 7 * settings.provider_timeout + settings.parser_timeout + 10),
+        )
+        app.state.gateway = Gateway(
+            app.state.retrieval, app.state.workflow, app.state.audit, app.state.documents
+        )
         yield
         if owned:
             await active.close()
@@ -96,6 +108,24 @@ def create_app(settings: Settings, database: asyncpg.Pool[Any] | None = None) ->
     ) -> dict[str, Any]:
         service: Retrieval = request.app.state.retrieval
         return (await service.search(principal, body)).model_dump()
+
+    @app.post("/document-jobs")
+    async def process_document(
+        request: Request, principal: Principal = Depends(identity)
+    ) -> dict[str, Any]:
+        service: Documents = request.app.state.documents
+        principal.require("ingest")
+        mime = request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+        return await service.ingest(
+            principal, request.headers.get("x-source-key", ""), await request.body(), mime
+        )
+
+    @app.get("/document-jobs/{job_id}")
+    async def extraction_status(
+        job_id: str, request: Request, principal: Principal = Depends(identity)
+    ) -> dict[str, Any]:
+        service: Documents = request.app.state.documents
+        return await service.status(principal, job_id)
 
     @app.get("/metrics")
     async def metrics(request: Request, principal: Principal = Depends(identity)) -> Response:

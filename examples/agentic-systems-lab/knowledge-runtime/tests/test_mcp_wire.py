@@ -107,3 +107,21 @@ async def test_native_mcp_process_identity_limits_discovery_and_execution(
         )
         assert result.isError and result.structuredContent["code"] == "tool_not_allowed"
     assert await database.fetchval("SELECT count(*) FROM workflow_outbox") == 0
+
+
+@pytest.mark.wire
+async def test_native_mcp_reads_persisted_document_extraction(settings, database, principal):
+    from document_fixtures import docx
+
+    from knowledge_runtime.document_providers import SubprocessParser
+    from knowledge_runtime.document_types import DOCX
+    from knowledge_runtime.documents import Documents
+    from knowledge_runtime.observability import Audit
+
+    service = Documents(database, Audit(database), parser=SubprocessParser(8), timeout=10)
+    saved = await service.ingest(principal, "wire-invoice", docx(), DOCX)
+    assert saved["state"] == "EXTRACTED"
+    async with session(settings, WORKER_TOKEN) as client:
+        result = await client.call_tool("get_extraction_status", {"job_id": saved["job_id"]})
+        assert not result.isError
+        assert result.structuredContent["data"]["fields"]["total"] == "125.50"

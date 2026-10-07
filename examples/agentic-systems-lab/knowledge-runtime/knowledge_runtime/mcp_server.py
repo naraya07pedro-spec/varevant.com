@@ -9,6 +9,8 @@ from mcp.server import Server
 from mcp.server.stdio import stdio_server
 
 from knowledge_runtime.database import pool
+from knowledge_runtime.document_providers import SubprocessParser, TesseractOCR
+from knowledge_runtime.documents import Documents
 from knowledge_runtime.domain import BoundaryError
 from knowledge_runtime.gateway import Gateway
 from knowledge_runtime.observability import Audit
@@ -26,7 +28,15 @@ async def main() -> None:
     database = await pool(settings.database_url)
     audit = Audit(database)
     retrieval = Retrieval(database, audit, timeout=settings.provider_timeout)
-    gateway = Gateway(retrieval, Workflow(database, audit), audit)
+    documents = Documents(
+        database,
+        audit,
+        parser=SubprocessParser(settings.parser_timeout),
+        ocr=TesseractOCR(settings.provider_timeout) if settings.ocr == "tesseract" else None,
+        timeout=settings.provider_timeout,
+        lease_seconds=max(120, 7 * settings.provider_timeout + settings.parser_timeout + 10),
+    )
+    gateway = Gateway(retrieval, Workflow(database, audit), audit, documents)
     server: Server[Any] = Server("knowledge-workflow-gateway")
 
     @server.list_tools()  # type: ignore[no-untyped-call,untyped-decorator]

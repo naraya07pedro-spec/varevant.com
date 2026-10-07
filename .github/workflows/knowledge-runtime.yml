@@ -43,13 +43,29 @@ jobs:
         with:
           version: '0.12.19'
           enable-cache: true
+      - name: Install local OCR and PDF renderers
+        run: sudo apt-get update && sudo apt-get install -y tesseract-ocr poppler-utils fonts-dejavu-core
       - run: uv sync --locked
       - name: Static quality and credential patterns
         run: |
-          uv run --locked ruff format --check knowledge_runtime tests scripts
+          uv run --locked ruff format --check --diff knowledge_runtime tests scripts
           uv run --locked ruff check knowledge_runtime tests scripts
           uv run --locked mypy knowledge_runtime
           uv run --locked python scripts/check_secrets.py
+      - name: Diagnose static formatting
+        if: failure()
+        run: |
+          uv run --locked ruff format knowledge_runtime tests scripts
+          uv run --locked ruff check --fix knowledge_runtime tests scripts || true
+          uv run --locked mypy knowledge_runtime || true
+          uv run --locked python - <<'PY'
+          import json
+          from pathlib import Path
+          print("FORMATTED_FILES_BEGIN")
+          files = sorted([*Path("knowledge_runtime").glob("*.py"), *Path("tests").glob("*.py")])
+          print(json.dumps({str(p): p.read_text() for p in files}))
+          print("FORMATTED_FILES_END")
+          PY
       - name: Real PostgreSQL/pgvector behavior and failure cases
         run: |
           mkdir -p artifacts

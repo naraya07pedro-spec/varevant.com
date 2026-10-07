@@ -1,7 +1,7 @@
 FROM ghcr.io/astral-sh/uv:0.12.19 AS uv
 FROM python:3.12-slim-bookworm
 COPY --from=uv /uv /usr/local/bin/uv
-RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr \
+RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr poppler-utils \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY pyproject.toml uv.lock ./
