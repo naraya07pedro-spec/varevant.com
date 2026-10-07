@@ -55,6 +55,7 @@ jobs:
       - name: Real PostgreSQL/pgvector behavior and failure cases
         run: |
           mkdir -p artifacts
+          uv run --locked pytest tests/test_parser_process.py -vv --maxfail=1 --cov=knowledge_runtime --cov-report=term-missing
           uv run --locked pytest -vv --maxfail=1 --cov=knowledge_runtime --cov-report=term-missing --cov-report=json:artifacts/coverage.json --junitxml=artifacts/junit.xml
       - name: Deterministic retrieval evaluations
         run: uv run --locked python -m knowledge_runtime.evaluate
