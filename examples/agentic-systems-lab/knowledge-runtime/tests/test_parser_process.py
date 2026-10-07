@@ -2,11 +2,13 @@ import asyncio
 import json
 import subprocess
 import sys
+import tempfile
+from pathlib import Path
 
 import pytest
 from document_fixtures import docx
 
-from knowledge_runtime.document_providers import run_process
+from knowledge_runtime.document_providers import SubprocessParser, run_process
 from knowledge_runtime.document_types import DOCX
 
 
@@ -47,3 +49,44 @@ async def test_actual_process_timeout_kills_and_reaps(monkeypatch):
     with pytest.raises(TimeoutError):
         await run_process([sys.executable, "-c", "import time; time.sleep(30)"], None, 0.05)
     assert len(active) == 1 and active[0].returncode == -9
+
+
+async def test_worker_environment_omits_service_and_cloud_credentials(monkeypatch):
+    names = ["KNOWLEDGE_TOKEN_BINDINGS", "KNOWLEDGE_DATABASE_URL", "AWS_SECRET_ACCESS_KEY"]
+    for name in names:
+        monkeypatch.setenv(name, "synthetic-do-not-forward")
+    monkeypatch.setenv("LANG", "C.UTF-8")
+    code = (
+        "import json, os;"
+        "print(json.dumps({k:os.environ.get(k) for k in "
+        "['KNOWLEDGE_TOKEN_BINDINGS','KNOWLEDGE_DATABASE_URL','AWS_SECRET_ACCESS_KEY','LANG']}))"
+    )
+    output = await run_process([sys.executable, "-c", code], None, 5)
+    result = json.loads(output)
+    assert all(result[name] is None for name in names)
+    assert result["LANG"] == "C.UTF-8"
+    assert b"synthetic-do-not-forward" not in output
+
+
+async def test_parent_removes_files_after_killed_parser(monkeypatch, tmp_path):
+    monkeypatch.setattr(tempfile, "tempdir", str(tmp_path))
+    marker = tmp_path / "worker-path.txt"
+    original = asyncio.create_subprocess_exec
+    code = (
+        "import os, sys, time;"
+        "from pathlib import Path;"
+        "folder=Path(os.environ['TMPDIR']);"
+        "(folder/'synthetic-private.pdf').write_bytes(b'synthetic-private-file');"
+        "Path(sys.argv[1]).write_text(str(folder));"
+        "time.sleep(30)"
+    )
+
+    async def synthetic_worker(*arguments, **kwargs):
+        return await original(sys.executable, "-c", code, str(marker), **kwargs)
+
+    monkeypatch.setattr(asyncio, "create_subprocess_exec", synthetic_worker)
+    with pytest.raises(TimeoutError):
+        await SubprocessParser(timeout=1.5).parse(docx(), DOCX)
+    assert marker.exists()
+    assert not Path(marker.read_text()).exists()
+    assert list(tmp_path.iterdir()) == [marker]
