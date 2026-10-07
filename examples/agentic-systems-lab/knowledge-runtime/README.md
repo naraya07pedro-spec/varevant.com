@@ -29,7 +29,7 @@ Python 3.12+, uv and Docker Compose:
 ```sh
 uv sync --locked
 uv run python scripts/bootstrap.py
-docker compose up --build -d --wait
+docker compose up --build -d --wait api
 uv run python scripts/smoke.py
 ```
 
@@ -78,4 +78,5 @@ commercial semantic quality, client traffic, production deployment, ROI, uptime
 and live paid providers are not established here. Citations are revalidated at a
 database snapshot; a later concurrent update can naturally occur after the reply.
 
-See [architecture](docs/architecture.md) for authority, parser and workflow design.
+See [architecture](docs/architecture.md), [evidence matrix](docs/evidence-matrix.md),
+[security](docs/security.md) and [limitations](docs/limitations.md).

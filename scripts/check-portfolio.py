@@ -9,7 +9,7 @@ paths += list((root / 'n8n').rglob('*.md'))
 paths += list((root / 'examples').rglob('*.md'))
 count = 0
 for path in paths:
-    if any(part in {'node_modules', '.git'} for part in path.parts):
+    if any(part in {'node_modules', '.git', '.venv', 'venv', '.tox'} for part in path.parts):
         continue
     for target in re.findall(r'\[[^\]]*\]\(([^\s)]+)\)', path.read_text(encoding='utf-8')):
         parsed = urlsplit(target)

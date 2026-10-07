@@ -1,5 +1,6 @@
 import json
 import os
+from uuid import uuid4
 
 import httpx
 
@@ -14,7 +15,7 @@ with httpx.Client(
     base_url=url, headers={"Authorization": "Bearer " + worker}, timeout=15
 ) as client:
     request = {
-        "source_key": "smoke/booking",
+        "source_key": "smoke/" + uuid4().hex,
         "version": 1,
         "text": "Emergency plumbing appointments use the verified calendar.",
     }

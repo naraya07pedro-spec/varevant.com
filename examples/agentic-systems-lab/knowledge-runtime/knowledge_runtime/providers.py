@@ -75,12 +75,16 @@ class ExtractiveAnswer:
 
 
 def validate_vectors(vectors: list[list[float]], expected: int, dimensions: int) -> None:
-    if len(vectors) != expected:
+    if not isinstance(vectors, list) or len(vectors) != expected:
         raise ProviderFailure("invalid_output")
     for vector in vectors:
         if (
-            len(vector) != dimensions
-            or not all(math.isfinite(x) for x in vector)
+            not isinstance(vector, list)
+            or len(vector) != dimensions
+            or not all(
+                isinstance(x, (float, int)) and not isinstance(x, bool) and math.isfinite(x)
+                for x in vector
+            )
             or sum(x * x for x in vector) == 0
         ):
             raise ProviderFailure("invalid_output")
