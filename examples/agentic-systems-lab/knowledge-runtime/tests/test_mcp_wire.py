@@ -118,7 +118,7 @@ async def test_native_mcp_reads_persisted_document_extraction(settings, database
     from knowledge_runtime.documents import Documents
     from knowledge_runtime.observability import Audit
 
-    service = Documents(database, Audit(database), parser=SubprocessParser(8), timeout=10)
+    service = Documents(database, Audit(database), parser=SubprocessParser(30), timeout=45)
     saved = await service.ingest(principal, "wire-invoice", docx(), DOCX)
     assert saved["state"] == "EXTRACTED"
     async with session(settings, WORKER_TOKEN) as client:

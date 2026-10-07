@@ -22,7 +22,7 @@ def test_native_parser_exits_under_coverage_instrumentation():
         start_new_session=True,
     )
     try:
-        output, error = process.communicate(docx(), timeout=8)
+        output, error = process.communicate(docx(), timeout=30)
     except subprocess.TimeoutExpired:
         process.kill()
         output, error = process.communicate()

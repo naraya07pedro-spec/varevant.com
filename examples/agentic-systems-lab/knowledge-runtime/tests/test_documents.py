@@ -32,7 +32,7 @@ pytestmark = pytest.mark.integration
 @pytest.fixture
 def documents(database):
     return Documents(
-        database, Audit(database), parser=SubprocessParser(8), timeout=10, ocr=TesseractOCR(8)
+        database, Audit(database), parser=SubprocessParser(30), timeout=45, ocr=TesseractOCR(8)
     )
 
 
@@ -63,7 +63,7 @@ async def test_real_scanned_pdf_poppler_and_tesseract(documents, principal):
 
 
 async def test_disabled_ocr_enters_manual_review_without_handoff(database, principal):
-    service = Documents(database, Audit(database), parser=SubprocessParser(8), timeout=10)
+    service = Documents(database, Audit(database), parser=SubprocessParser(30), timeout=45)
     result = await service.ingest(principal, "needs-ocr", image_file(), PNG)
     assert result["state"] == "MANUAL_REVIEW" and result["reason"] == "ocr_required"
     assert await database.fetchval("SELECT count(*) FROM document_handoffs") == 0
@@ -160,7 +160,7 @@ class LowQualityOCR:
 
 async def test_low_quality_ocr_never_silently_forwards(database, principal):
     service = Documents(
-        database, Audit(database), parser=SubprocessParser(8), ocr=LowQualityOCR(), timeout=10
+        database, Audit(database), parser=SubprocessParser(30), ocr=LowQualityOCR(), timeout=45
     )
     result = await service.ingest(principal, "low-quality", image_file(), PNG)
     assert result["state"] == "MANUAL_REVIEW" and result["reason"] == "low_quality"

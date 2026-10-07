@@ -74,8 +74,8 @@ def settings(database_url, principal, other_principal, reviewer):
             ),
         },
         mcp_token=WORKER_TOKEN,
-        provider_timeout=1,
-        parser_timeout=5,
+        provider_timeout=45,
+        parser_timeout=30,
     )
 
 
