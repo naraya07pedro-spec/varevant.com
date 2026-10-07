@@ -19,8 +19,11 @@ and extraction results: it is **not** a de-identification or encryption system.
 Restrict database access and configure encryption, retention and deletion policy
 before processing sensitive real-world data.
 
-Original file bytes live only in request memory and temporary parser/OCR files;
-temporary directories are removed. Extracted raw text, structured fields, job
+Parser/OCR subprocesses receive an explicit runtime/locale environment allowlist;
+service bearer bindings, database DSNs and cloud credentials are not inherited.
+The parent owns parser/OCR temporary directories, so a worker SIGKILL or request
+cancellation still removes its nested PDF/image files. Original bytes are held
+in request memory and these temporary files. Extracted raw text, structured fields, job
 digests and source keys are persisted. No automatic retention/purge API or
 encryption-at-rest is supplied. Source deletion in retrieval does not delete
 document extraction jobs; these are separate data lifecycles. API schema errors
@@ -28,7 +31,10 @@ use fixed responses so input text and credentials are not reflected in errors.
 
 The ignored local `.env` is generated with random credentials. Compose publishes
 only the API on loopback, gives the database no host port and uses a clearly
-labeled isolated demo DB password. The container runs as a non-root user.
+labeled isolated demo DB password. The API container runs as a non-root user
+with a read-only root filesystem and a bounded, non-executable 64 MiB temporary
+tmpfs. A whole host/process crash still needs an operational cleanup/retention
+policy; this reference does not claim secure memory erasure.
 Remote TLS, managed identity, OAuth, rate limiting, key rotation, tenant quotas,
 backup policy, malware scanning and deployment hardening require a separate
 production design. The CI credential scanner detects selected known patterns;

@@ -17,6 +17,25 @@ from pydantic import ValidationError
 from knowledge_runtime.document_types import ExtractionCandidate, OCRResult, ParseResult
 from knowledge_runtime.domain import BoundaryError, ProviderFailure
 
+CHILD_ENV_KEYS = frozenset(
+    {
+        "PATH",
+        "LD_LIBRARY_PATH",
+        "LANG",
+        "LC_ALL",
+        "LC_CTYPE",
+        "PYTHONPATH",
+        "PYTHONHOME",
+        "PYTHONUTF8",
+        "PYTHONIOENCODING",
+        "PYTHONDONTWRITEBYTECODE",
+        "COVERAGE_PROCESS_CONFIG",
+        "COVERAGE_PROCESS_START",
+        "COVERAGE_FILE",
+        "COVERAGE_CORE",
+    }
+)
+
 PARSER_CODES = frozenset(
     {
         "mime_mismatch",
@@ -38,7 +57,15 @@ PARSER_CODES = frozenset(
 )
 
 
-async def run_process(arguments: list[str], content: bytes | None, timeout: float) -> bytes:
+async def run_process(
+    arguments: list[str],
+    content: bytes | None,
+    timeout: float,
+    temporary_directory: str | None = None,
+) -> bytes:
+    environment = {key: value for key, value in os.environ.items() if key in CHILD_ENV_KEYS}
+    if temporary_directory is not None:
+        environment["TMPDIR"] = temporary_directory
     try:
         process = await asyncio.create_subprocess_exec(
             *arguments,
@@ -46,6 +73,7 @@ async def run_process(arguments: list[str], content: bytes | None, timeout: floa
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.DEVNULL,
             start_new_session=True,
+            env=environment,
         )
     except OSError as exc:
         raise ProviderFailure("permanent") from exc
@@ -75,11 +103,14 @@ class SubprocessParser:
 
     async def parse(self, content: bytes, mime: str) -> ParseResult:
         try:
-            output = await run_process(
-                [sys.executable, "-m", "knowledge_runtime.parser_worker", mime],
-                content,
-                self.timeout,
-            )
+            # Parent ownership also removes a killed worker's nested PDF files.
+            with tempfile.TemporaryDirectory(prefix="knowledge-parser-") as directory:
+                output = await run_process(
+                    [sys.executable, "-m", "knowledge_runtime.parser_worker", mime],
+                    content,
+                    self.timeout,
+                    directory,
+                )
             payload = json.loads(output)
             if not isinstance(payload, dict) or not isinstance(payload.get("ok"), bool):
                 raise ProviderFailure("invalid_output")
@@ -119,6 +150,7 @@ class TesseractOCR:
                 ["tesseract", str(source), "stdout", "-l", "eng", "--psm", "6", "tsv"],
                 None,
                 self.timeout,
+                directory,
             )
         try:
             rows = csv.DictReader(io.StringIO(output.decode("utf-8")), delimiter="\t")

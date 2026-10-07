@@ -11,7 +11,7 @@ separate evidence.
 Built a workflow service combining versioned retrieval, credential-bound MCP
 tools and PDF/image/DOCX extraction with local OCR. Added source citations,
 strict action schemas, independent human approval, explicit review states,
-bounded retries and atomic durable handoffs. Verified with 132 tests,
+bounded retries and atomic durable handoffs. Verified with 134 tests,
 real PostgreSQL/pgvector, native SDK calls and Docker/TCP/OCR demos.
 
 ## Backend / Python variant
@@ -21,8 +21,8 @@ real PostgreSQL/pgvector, native SDK calls and Docker/TCP/OCR demos.
 Implemented atomic source replacement/deletion, SQL tenant/metadata filtering,
 reranking and current citation spans in PostgreSQL/pgvector. Built a native MCP
 gateway and leased document jobs with killable parsers, Tesseract OCR, strict
-invoice validation and transactionally persisted handoffs. Verified 132 tests,
-91.58% combined statement/branch coverage and 12/12 deterministic retrieval evals.
+invoice validation and transactionally persisted handoffs. Verified 134 tests,
+91.64% combined statement/branch coverage and 12/12 deterministic retrieval evals.
 
 ## Claim map
 

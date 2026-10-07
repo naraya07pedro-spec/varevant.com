@@ -27,7 +27,10 @@ does not render Word pagination or OCR embedded Word images.
 
 The parser runs in a new, killable Linux process group with memory/CPU/file
 descriptor limits. Parent timeout or cancellation kills and reaps the group,
-including a PDF renderer child. Fixed argv and local temporary files are used;
+including a PDF renderer child. Temporary directories are parent-owned and
+removed after timeout/cancellation even when the worker cannot run its own
+cleanup. Child environments omit service/cloud credentials. Fixed argv and
+local temporary files are used;
 no shell, user-controlled command or vendor network request is involved.
 These limits are containment measures, not a complete hostile-file sandbox.
 

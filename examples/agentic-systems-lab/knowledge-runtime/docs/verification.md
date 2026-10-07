@@ -1,22 +1,22 @@
 # Verification record
 
 Verified 7 October 2026 against source revision
-`7191632fe6e112fe9572547e223aa412d4d7d3db`.
+`0ccf6f89dc9e00665c5c68fd3527493ff20a4275`.
 
-[Passing CI run](https://github.com/naraya07pedro-spec/varevant.com/actions/runs/37605800035) includes the PostgreSQL/pgvector behavior job
+[Passing CI run](https://github.com/naraya07pedro-spec/varevant.com/actions/runs/37608859035) includes the PostgreSQL/pgvector behavior job
 and the non-root Docker/TCP smoke job. The checked-out commit is the explicit
 PR head, and each run uploads its revision-scoped machine-readable artifacts.
 
 | Check | Observed result |
 | --- | --- |
-| Python behavioral tests | 132 passed; 0 failed, 0 errors, 0 skipped |
-| Combined statement/branch coverage | 91.5811%; CI floor 88% |
+| Python behavioral tests | 134 passed; 0 failed, 0 errors, 0 skipped |
+| Combined statement/branch coverage | 91.6440%; CI floor 88% |
 | Retrieval regression evaluation | 12/12 |
 | Existing JavaScript contracts | 24 passed |
 | n8n workflow skeleton validation | 3 JSON files structurally valid |
 | Static source checks | Ruff format/lint and strict mypy passed |
 | Runtime Python dependency audit | No known vulnerabilities reported for the locked runtime dependencies |
-| Docker service | Non-root image, isolated PostgreSQL stack and real TCP API passed |
+| Docker service | Non-root/read-only API, 64 MiB temporary tmpfs, isolated PostgreSQL stack and real TCP API passed |
 | Native MCP | Real SDK subprocess initialization/discovery/read/proposal/injection/credential/extraction-status tests passed |
 | Document processing | Generated PDF, scanned PDF, PNG/JPEG and DOCX; actual local Tesseract/Poppler passed |
 | Docker document demo | Actual DOCX parser and PNG OCR over TCP; duplicate replay and status retrieval passed |
@@ -43,7 +43,9 @@ archive is separate evidence and has not been overwritten.
 
 Checked authority/target injection, strict schemas, parameterized tenant-scoped
 queries, raw-byte admission limits, file signature agreement, XML/ZIP defenses,
-parser/OCR deadlines, stale-owner fencing, replay and atomic handoffs. Tests
+parser/OCR deadlines, parent-owned temporary-file removal after SIGKILL,
+credential omission from worker environments, malformed bearer bytes,
+stale-owner fencing, replay and atomic handoffs. DOCX fixtures use fixed ZIP timestamps so replay/lease tests have stable byte identity. Tests
 use generated synthetic files and reserved-domain customer contact data.
 Audit/metric assertions check that document text, private source keys and
 provider exception messages are absent. API schema errors use fixed responses.

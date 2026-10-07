@@ -20,6 +20,9 @@ services:
         condition: service_healthy
   api:
     build: .
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=67108864,mode=1777
     env_file: .env
     ports: ["127.0.0.1:8000:8000"]
     depends_on:

@@ -10,6 +10,7 @@ COPY migrations ./migrations
 COPY evals ./evals
 RUN uv sync --locked --no-dev && useradd --uid 10001 --create-home knowledge
 ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONDONTWRITEBYTECODE=1
 USER 10001
 EXPOSE 8000
 CMD ["python", "-m", "uvicorn", "knowledge_runtime.api:factory", "--factory", "--host", "0.0.0.0", "--port", "8000", "--no-access-log"]
