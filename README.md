@@ -2,15 +2,17 @@
 
 ## Hiring manager quick scan
 
-**Role fit:** n8n Automation · Integration · Implementation · Revenue Systems
+**Role fit:** Advanced n8n Automation · Integration · AI Implementation · Revenue Systems
 
-This repository contains the strongest public n8n evidence behind my automation work.
+This repository contains the strongest public n8n evidence behind my automation work. Across the current artifacts, the work repeatedly centers on the parts that make automation difficult in practice: state, external effects, retries, uncertain outcomes, human authority, retrieval lifecycle, observability and recovery.
 
 - Historical **117-node** workflow graph with **60 JavaScript Code nodes**
 - Live-state rereads, suppression, deduplication and claim/verify controls
 - Explicit no-send and uncertain-send paths
 - Traceable failure cases with regression tests
 - Saved real-n8n recovery reproduction for a repaired handler contract
+- **Agentic Automation Systems Lab:** six independently implemented contracts with **24 passing tests** and **3 validated n8n workflow JSONs**
+- Tested patterns for approval/effect boundaries, bounded async polling, RAG lifecycle, redacted observability, model routing and parent/child workflow contracts
 - Separate TypeScript/PostgreSQL reference for stronger reservation and retry semantics
 
 **Fastest review path:** [flagship case study](n8n/FLAGSHIP-CASE-STUDY.md) → [incident catalog](n8n/incidents/README.md) → [saved recovery](n8n/runtime-evidence/reproduced-recovery/recorded/report.json)
@@ -31,6 +33,25 @@ This repository contains the [VAREVANT website](https://varevant.com), historica
 5. [Selected work](docs/SELECTED-WORK.md) — internal artifacts, two client engagement scopes and supporting application work.
 
 The [evidence matrix](n8n/EVIDENCE-MATRIX.md) states what each artifact establishes. Export structure and offline tests do not establish a live n8n deployment, delivered email, uptime or business results.
+
+## Advanced n8n / AI systems engineering
+
+My public work does not treat n8n as a canvas-only automation tool. I use it as an orchestration layer around explicit engineering contracts.
+
+The implemented portfolio surface covers:
+
+- deterministic workflow vs probabilistic model boundaries;
+- validated tool/action inputs before external effects;
+- human approval gates for risky writes;
+- bounded async job polling with terminal-state and deadline handling;
+- RAG document identity, update/delete lifecycle, metadata allowlisting and rerank selection;
+- audit-safe tool/action observability with token/cost/error capture and secret redaction;
+- capability/risk/budget-aware model routing;
+- explicit parent/child workflow request and result contracts;
+- suppression, deduplication, claim/verify controls and uncertain-send handling;
+- recovery-oriented testing instead of happy-path-only workflow screenshots.
+
+These claims are tied to source, tests and workflow artifacts in this repository; vendor-specific integrations named in study material are not presented as production experience unless separately implemented.
 
 ## n8n engineering surface
 
