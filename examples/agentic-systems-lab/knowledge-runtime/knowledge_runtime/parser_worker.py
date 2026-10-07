@@ -15,7 +15,6 @@ from pathlib import Path, PurePosixPath
 
 from defusedxml.ElementTree import fromstring
 from PIL import Image
-from pypdf import PdfReader
 
 from knowledge_runtime.document_types import DOCX, JPEG, MAX_FILE_BYTES, PDF, PNG
 from knowledge_runtime.domain import BoundaryError
@@ -68,6 +67,8 @@ def docx_text(content: bytes) -> str:
 
 
 def pdf_text(content: bytes) -> dict[str, object]:
+    from pypdf import PdfReader
+
     reader = PdfReader(io.BytesIO(content), strict=True)
     if reader.is_encrypted:
         raise BoundaryError("encrypted_document")
