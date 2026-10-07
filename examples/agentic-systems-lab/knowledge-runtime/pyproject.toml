@@ -49,6 +49,7 @@ markers = ["integration: real PostgreSQL/pgvector", "wire: native MCP stdio subp
 [tool.coverage.run]
 source = ["knowledge_runtime"]
 branch = true
+patch = ["subprocess"]
 
 [tool.coverage.report]
 show_missing = true

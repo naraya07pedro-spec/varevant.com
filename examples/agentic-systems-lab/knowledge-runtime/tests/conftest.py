@@ -21,6 +21,7 @@ ALL_TOOLS = [
     "search_customer",
     "draft_followup",
     "request_followup_send",
+    "get_pipeline_status",
 ]
 
 
@@ -110,3 +111,26 @@ async def client(database, settings):
         ) as active:
             active.app = app
             yield active
+
+
+@pytest_asyncio.fixture
+async def customer(database):
+    await database.execute("""
+        INSERT INTO customers(tenant,customer_id,display_name,recipient,verified)
+        VALUES('demo','synthetic-customer','Example Customer','customer@example.invalid',true)
+    """)
+    return "synthetic-customer"
+
+
+@pytest.fixture
+def workflow(database):
+    from knowledge_runtime.workflow import Workflow
+
+    return Workflow(database, Audit(database))
+
+
+@pytest.fixture
+def gateway(retrieval, workflow):
+    from knowledge_runtime.gateway import Gateway
+
+    return Gateway(retrieval, workflow, retrieval.audit)

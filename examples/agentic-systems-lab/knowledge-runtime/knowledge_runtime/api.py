@@ -10,13 +10,25 @@ from fastapi.responses import JSONResponse, Response
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from knowledge_runtime.database import pool
-from knowledge_runtime.domain import BoundaryError, DeleteDocument, IngestDocument, SearchQuery
+from knowledge_runtime.domain import (
+    BoundaryError,
+    DeleteDocument,
+    IngestDocument,
+    SearchQuery,
+    StrictModel,
+)
+from knowledge_runtime.gateway import Gateway
 from knowledge_runtime.http_boundary import BodyLimitMiddleware
 from knowledge_runtime.observability import Audit
 from knowledge_runtime.retrieval import Retrieval
 from knowledge_runtime.security import Principal, Settings
+from knowledge_runtime.workflow import ApprovalInput, GatewayReply, Workflow
 
 bearer = HTTPBearer(auto_error=False)
+
+
+class ToolCall(StrictModel):
+    parameters: dict[str, Any]
 
 
 def create_app(settings: Settings, database: asyncpg.Pool[Any] | None = None) -> FastAPI:
@@ -27,6 +39,8 @@ def create_app(settings: Settings, database: asyncpg.Pool[Any] | None = None) ->
         app.state.database = active
         app.state.audit = Audit(active)
         app.state.retrieval = Retrieval(active, app.state.audit, timeout=settings.provider_timeout)
+        app.state.workflow = Workflow(active, app.state.audit)
+        app.state.gateway = Gateway(app.state.retrieval, app.state.workflow, app.state.audit)
         yield
         if owned:
             await active.close()
@@ -88,6 +102,42 @@ def create_app(settings: Settings, database: asyncpg.Pool[Any] | None = None) ->
         principal.require("read")
         audit: Audit = request.app.state.audit
         return Response(audit.metrics(), media_type="text/plain; version=0.0.4")
+
+    @app.get("/tools")
+    async def tools(
+        request: Request, principal: Principal = Depends(identity)
+    ) -> list[dict[str, Any]]:
+        gateway: Gateway = request.app.state.gateway
+        return [
+            {"name": t.name, "effect": t.effect, "schema": t.schema.model_json_schema()}
+            for t in gateway.exposed(principal)
+        ]
+
+    @app.post("/tools/{name}")
+    async def tool_call(
+        name: str, body: ToolCall, request: Request, principal: Principal = Depends(identity)
+    ) -> JSONResponse:
+        gateway: Gateway = request.app.state.gateway
+        result = await gateway.call(principal, name, body.parameters)
+        return JSONResponse(result.model_dump(), status_code=result.http_status)
+
+    @app.get("/approvals/{proposal_id}")
+    async def review(
+        proposal_id: str, request: Request, principal: Principal = Depends(identity)
+    ) -> dict[str, Any]:
+        workflow: Workflow = request.app.state.workflow
+        return await workflow.review(principal, proposal_id)
+
+    @app.post("/approvals/{proposal_id}")
+    async def approve(
+        proposal_id: str,
+        body: ApprovalInput,
+        request: Request,
+        principal: Principal = Depends(identity),
+    ) -> JSONResponse:
+        workflow: Workflow = request.app.state.workflow
+        result: GatewayReply = await workflow.decide(principal, proposal_id, body)
+        return JSONResponse(result.model_dump(), status_code=result.http_status)
 
     return app
 

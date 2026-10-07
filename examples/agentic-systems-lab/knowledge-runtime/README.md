@@ -6,7 +6,9 @@
 
 **What I built:** a retrieval service that atomically replaces document versions,
 prevents delayed ingestion from resurrecting deleted content, retrieves/filter/reranks
-chunks in PostgreSQL and binds every answer quote to a current source span.
+chunks in PostgreSQL and binds every answer quote to a current source span. A native
+MCP/HTTP gateway exposes registered capabilities and turns send requests into
+immutable proposals, with separate human approval before a durable local handoff.
 
 **Why it is hard:** duplicate and concurrent ingestion, failed providers and updates
 during query execution must not leave stale chunks or invented citations. Tenant,
@@ -30,6 +32,7 @@ Python 3.12+, uv and Docker Compose:
 uv sync --locked
 uv run python scripts/bootstrap.py
 docker compose up --build -d --wait api
+docker compose exec -T api python -m knowledge_runtime.seed
 uv run python scripts/smoke.py
 ```
 
@@ -65,6 +68,36 @@ and treating prompt-injection text as data.
 | `DELETE /documents/{id}` | Delete permission and current expected version |
 | `POST /search` | Strict filter vocabulary and candidate limits; grounded source spans |
 | `GET /metrics` | Authenticated operation/outcome counters; no payload labels |
+| `GET /tools`, `POST /tools/{name}` | Credential-bound registry; strict schemas and read/propose permissions |
+| `GET/POST /approvals/{id}` | Separate human principal; exact proposal hash, expiry and target recheck |
+
+## Native MCP gateway
+
+[Server](knowledge_runtime/mcp_server.py) uses the official MCP Python SDK with
+stdio initialization, discovery and structured calls. [Wire tests](tests/test_mcp_wire.py)
+launch the real server in a subprocess and use the SDK client; these are protocol
+tests, not an HTTP endpoint renamed MCP. [Gateway tests](tests/test_gateway.py)
+exercise permission/target injection, approval expiry, target drift, concurrent
+replay and a database failure between approval and handoff.
+
+After starting Compose, an MCP client can launch:
+
+```sh
+docker compose exec -T api python -m knowledge_runtime.mcp_server
+```
+
+Configure the client's process working directory to this folder. The process's
+injected credential fixes its tenant and permitted tools. Remote Streamable HTTP
+OAuth is outside this reference; the HTTP API uses bearer bindings separately.
+SDK v1 decorators have narrow typing annotations at that adapter boundary;
+the service and gateway still pass strict mypy.
+
+`request_followup_send` cannot accept a recipient, URL, credential, tenant or
+approval status. It looks up a verified, unsuppressed server customer and creates
+a pending proposal. A different principal reviews the frozen target/message/hash
+and approves it; the transaction commits approval and a single `READY` outbox row
+together. **No email is sent by this reference.** A downstream dispatcher must
+implement its own effect/reconciliation and late-suppression policy.
 
 The old [JavaScript lifecycle planner](../src/rag-lifecycle.js) remains a compact
 source-derived contract. This service is the database-backed implementation;

@@ -14,6 +14,7 @@ tools = [
     "search_customer",
     "draft_followup",
     "request_followup_send",
+    "get_pipeline_status",
 ]
 bindings = {
     worker: {

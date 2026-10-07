@@ -10,6 +10,9 @@ settings = Settings()
 worker = next(
     key for key, principal in settings.token_bindings.items() if "ingest" in principal.permissions
 )
+reviewer = next(
+    key for key, principal in settings.token_bindings.items() if "approve" in principal.permissions
+)
 url = os.environ.get("KNOWLEDGE_SMOKE_URL", "http://127.0.0.1:8000")
 with httpx.Client(
     base_url=url, headers={"Authorization": "Bearer " + worker}, timeout=15
@@ -34,4 +37,38 @@ with httpx.Client(
         ).status_code
         == 200
     )
-print(json.dumps({"retrieval_tcp_smoke": "passed"}))
+    proposal = client.post(
+        "/tools/request_followup_send",
+        json={
+            "parameters": {
+                "customer_id": "synthetic-customer",
+                "business_key": "smoke-" + uuid4().hex,
+                "message": "Would you like a synthetic booking?",
+            }
+        },
+    )
+    assert proposal.status_code == 200 and proposal.json()["code"] == "approval_required"
+    proposal_id = proposal.json()["data"]["proposal_id"]
+    human = {"Authorization": "Bearer " + reviewer}
+    review = client.get("/approvals/" + proposal_id, headers=human)
+    assert review.status_code == 200
+    approved = client.post(
+        "/approvals/" + proposal_id,
+        headers=human,
+        json={
+            "decision": "approve",
+            "request_hash": review.json()["request_hash"],
+        },
+    )
+    assert approved.status_code == 200 and approved.json()["data"]["state"] == "APPROVED"
+    counts = client.post("/tools/get_pipeline_status", json={"parameters": {}})
+    assert counts.status_code == 200 and counts.json()["data"]["ready_handoffs"] >= 1
+print(
+    json.dumps(
+        {
+            "retrieval_tcp_smoke": "passed",
+            "gateway_tcp_smoke": "passed",
+            "external_delivery": "not_dispatched",
+        }
+    )
+)
