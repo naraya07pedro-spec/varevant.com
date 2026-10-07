@@ -142,7 +142,7 @@ def parse(content: bytes, mime: str) -> dict[str, object]:
 
 def main() -> None:
     resource.setrlimit(resource.RLIMIT_AS, (512 * 1024 * 1024, 512 * 1024 * 1024))
-    resource.setrlimit(resource.RLIMIT_CPU, (8, 8))
+    resource.setrlimit(resource.RLIMIT_CPU, (30, 30))
     resource.setrlimit(resource.RLIMIT_NOFILE, (64, 64))
     try:
         content = sys.stdin.buffer.read(MAX_FILE_BYTES + 1)

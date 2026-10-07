@@ -222,6 +222,8 @@ class Documents:
             reason = candidate.reason
             if candidate.reason == "complete":
                 validated = InvoiceFields.model_validate(candidate.fields)
+                if any(value not in text for value in validated.model_dump().values()):
+                    raise ProviderFailure("invalid_output")
                 if quality >= 0.85:
                     fields = validated.model_dump()
                     state = "EXTRACTED"

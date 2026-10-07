@@ -363,3 +363,22 @@ async def test_http_schema_error_never_reflects_input_text(client):
     )
     assert response.status_code == 422 and response.json()["code"] == "invalid_request"
     assert "private-input-text" not in response.text
+
+
+async def test_schema_valid_but_invented_invoice_fields_require_review(database, principal):
+    class InventedExtractor:
+        name = "synthetic-invented-extractor"
+
+        async def extract(self, text):
+            return ExtractionCandidate(
+                fields={"invoice_id": "INV-INVENTED", "total": "999.99", "currency": "USD"},
+                quality=1.0,
+                reason="complete",
+            )
+
+    service = Documents(
+        database, Audit(database), parser=FixedParser(), extractor=InventedExtractor()
+    )
+    result = await service.ingest(principal, "invented-fields", docx(), DOCX)
+    assert result["state"] == "MANUAL_REVIEW" and result["reason"] == "provider_invalid_output"
+    assert await database.fetchval("SELECT count(*) FROM document_handoffs") == 0
