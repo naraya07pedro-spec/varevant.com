@@ -2,7 +2,7 @@
 
 ## Hiring manager quick scan
 
-**Role fit:** Advanced n8n Automation · Integration · AI Implementation · Revenue Systems
+**Role fit:** Advanced n8n Automation · Integration · AI Application · Python/API Backend · Implementation
 
 This repository contains the strongest public n8n evidence behind my automation work. Across the current artifacts, the work repeatedly centers on the parts that make automation difficult in practice: state, external effects, retries, uncertain outcomes, human authority, retrieval lifecycle, observability and recovery.
 
@@ -11,18 +11,16 @@ This repository contains the strongest public n8n evidence behind my automation 
 - Explicit no-send and uncertain-send paths
 - Traceable failure cases with regression tests
 - Saved real-n8n recovery reproduction for a repaired handler contract
+- **[Knowledge Workflow Runtime](examples/agentic-systems-lab/knowledge-runtime/):** Python/FastAPI + PostgreSQL/pgvector retrieval, native MCP gateway, and PDF/image/DOCX extraction with local OCR and durable handoffs
 - **Agentic Automation Systems Lab:** six independently implemented contracts with **24 passing tests** and **3 validated n8n workflow JSONs**
 - Tested patterns for approval/effect boundaries, bounded async polling, RAG lifecycle, redacted observability, model routing and parent/child workflow contracts
 - Separate TypeScript/PostgreSQL reference for stronger reservation and retry semantics
 
 **Fastest review path:** [flagship case study](n8n/FLAGSHIP-CASE-STUDY.md) → [incident catalog](n8n/incidents/README.md) → [saved recovery](n8n/runtime-evidence/reproduced-recovery/recorded/report.json)
 
-
 **n8n automation, API integrations and bounded AI workflows — engineering by Evan Naraya.**
 
 This repository contains the [VAREVANT website](https://varevant.com), historical internal workflow source, reference examples and delivery documentation. Client implementations remain separate from internal and reference work.
-
-**Start in 30 seconds:** [flagship architecture and three repair cases](n8n/FLAGSHIP-CASE-STUDY.md) → [incident catalog](n8n/incidents/README.md) → [saved reproduced recovery](n8n/runtime-evidence/reproduced-recovery/recorded/report.json) → [tests and CI](https://github.com/naraya07pedro-spec/varevant.com/actions/workflows/n8n-evidence.yml).
 
 ## Technical review in three minutes
 
@@ -30,7 +28,8 @@ This repository contains the [VAREVANT website](https://varevant.com), historica
 2. [Claim verification](n8n/extracted/verify-claim.js) → [ambiguous-send handling](n8n/extracted/classify-send-error.js) → [failure modes](n8n/FAILURE-MODES.md).
 3. [Historical execution gallery](https://github.com/naraya07pedro-spec/production-integration-reference/tree/main/docs/operational-evidence) — visible stop/routing paths, history and failure; different workflow revisions.
 4. **[Production Integration Reference](https://github.com/naraya07pedro-spec/production-integration-reference)** — maintained TypeScript/PostgreSQL webhook, reservation, retry, test and CI proof.
-5. [Selected work](docs/SELECTED-WORK.md) — internal artifacts, two client engagement scopes and supporting application work.
+5. **[Knowledge Workflow Runtime](examples/agentic-systems-lab/knowledge-runtime/)** — atomic source lifecycle and citations, credential-bound MCP tools, document extraction/review and crash-safe local handoffs.
+6. [Selected work](docs/SELECTED-WORK.md) — internal artifacts, two client engagement scopes and supporting application work.
 
 The [evidence matrix](n8n/EVIDENCE-MATRIX.md) states what each artifact establishes. Export structure and offline tests do not establish a live n8n deployment, delivered email, uptime or business results.
 
@@ -44,7 +43,9 @@ The implemented portfolio surface covers:
 - validated tool/action inputs before external effects;
 - human approval gates for risky writes;
 - bounded async job polling with terminal-state and deadline handling;
-- RAG document identity, update/delete lifecycle, metadata allowlisting and rerank selection;
+- PostgreSQL/pgvector retrieval with atomic versions/deletion, SQL tenant/metadata filtering, reranking and source-bound citations;
+- native MCP initialization, discovery and structured tool calls with server-bound authority;
+- PDF, PNG/JPEG and DOCX parsing/OCR with schema validation, review states, bounded retries and persisted handoffs;
 - audit-safe tool/action observability with token/cost/error capture and secret redaction;
 - capability/risk/budget-aware model routing;
 - explicit parent/child workflow request and result contracts;
@@ -63,6 +64,7 @@ The historical workflow contains discovery, evidence processing, queue handoff, 
 
 | Reference | Inspect / run | Boundary |
 | --- | --- | --- |
+| **[Knowledge Workflow Runtime](examples/agentic-systems-lab/knowledge-runtime/)** | Docker Compose, locked Python dependencies, native MCP and TCP demos | Real PostgreSQL/pgvector, local Tesseract/Poppler and synthetic behavioral tests; see [evidence](examples/agentic-systems-lab/knowledge-runtime/docs/evidence-matrix.md). |
 | [Reliable Lead Routing](examples/reliable-lead-routing/) | `node --test examples/reliable-lead-routing/workflow.test.js` | Injected classifier, hard gates and manual-review route; process-memory dedupe and broad retries need hardening. |
 | **[Agentic Automation Systems Lab](examples/agentic-systems-lab/)** | `npm test` + `npm run check` inside the lab | **24 tests**, 3 credential-free n8n workflow skeletons; HITL effect policy, bounded polling, RAG lifecycle, observability, model routing and subworkflow contracts. |
 | [Standalone integration reference](https://github.com/naraya07pedro-spec/production-integration-reference) | `npm ci`, typecheck, tests, database tests and signed demo in that repo | Maintained synthetic reference, not client production source. |

@@ -4,6 +4,10 @@
 
 **Role fit:** AI Application · Automation/Integration · Python/API Backend · Implementation
 
+**Verified:** 132 passing Python tests · 91.58% statement/branch coverage ·
+12/12 retrieval evals · real PostgreSQL, native MCP and local OCR · Docker/TCP demo.
+[Revision-scoped verification](docs/verification.md).
+
 **What I built:** a retrieval service that atomically replaces document versions,
 prevents delayed ingestion from resurrecting deleted content, retrieves/filter/reranks
 chunks in PostgreSQL and binds every answer quote to a current source span. A native
