@@ -31,6 +31,8 @@ class Settings(BaseSettings):
     ocr: Literal["disabled", "tesseract"] = "disabled"
 
     def authenticate(self, token: str) -> Principal:
+        if not token.isascii():
+            raise BoundaryError("unauthenticated", 401)
         # Reject short configured credentials too; no built-in demo key fallback.
         for configured, identity in self.token_bindings.items():
             if len(configured) >= 32 and secrets.compare_digest(configured, token):
