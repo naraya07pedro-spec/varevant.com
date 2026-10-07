@@ -1,12 +1,14 @@
 # Agentic Automation Systems Lab
 
-**n8n patterns reimplemented as tested engineering contracts — not tutorial screenshots.**
+**Advanced n8n / AI systems engineering implemented as tested contracts — not tutorial screenshots.**
 
 This portfolio lab turns a nine-document n8n/AI architecture study into independently implemented, testable reference code and importable n8n workflow skeletons. The source material covered APIs, tool calling, RAG, HITL, multi-agent delegation, observability, polling, error handling, OCR, MCP, memory, model routing, Data Tables, and asynchronous workflows.
 
-The lab deliberately does **not** claim that every tutorial system was deployed to a client. It demonstrates how I translate architecture patterns into explicit engineering rules that can be tested and reviewed.
+The important part is the implementation work: I extracted recurring failure-prone patterns, rewrote them as explicit contracts, and tested those contracts independently. The result is a compact proof surface for advanced n8n/AI orchestration rather than a collection of tutorial clones.
 
 ## Recruiter quick scan
+
+**What this proves:** repeated hands-on work across advanced workflow boundaries — external effects, async jobs, retrieval lifecycle, observability, model selection and modular agent/workflow contracts.
 
 - **24 passing Node.js tests** across six reusable contracts.
 - **3 n8n workflow JSONs** validated for structural integrity.
@@ -119,6 +121,22 @@ Multi-agent systems become difficult to debug when sub-workflows communicate thr
 - structured success/failure result;
 - retryability flag;
 - parent decision that either continues, retries/falls back, or asks for clarification/stops.
+
+## Engineering scope demonstrated
+
+Across the six implemented contracts, the work demonstrates a consistent engineering approach:
+
+- keep deterministic business rules outside the model;
+- let models handle ambiguity, drafting and bounded judgment;
+- validate before any external effect;
+- persist or classify uncertain state instead of blindly retrying;
+- make long-running jobs finite and inspectable;
+- make RAG lifecycle-aware instead of append-only;
+- use explicit schemas between parent/child workflows;
+- treat model choice as a routing policy, not a hard-coded brand decision;
+- capture operational evidence without storing hidden chain-of-thought.
+
+That is the portfolio claim: **advanced workflow architecture implemented and tested across multiple recurring system concerns**, not familiarity based only on reading material.
 
 ## Portfolio boundary
 
