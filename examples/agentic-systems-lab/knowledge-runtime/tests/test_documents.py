@@ -85,6 +85,16 @@ async def test_disabled_ocr_enters_manual_review_without_handoff(database, princ
         ),
         (image_file(size=(2001, 2001)), PNG, "image_limit"),
     ],
+    ids=[
+        "malformed-pdf",
+        "encrypted-pdf",
+        "page-limit",
+        "scan-page-limit",
+        "zip-traversal",
+        "zip-expansion",
+        "xml-dtd",
+        "pixel-limit",
+    ],
 )
 async def test_hostile_inputs_never_create_handoff(
     documents, database, principal, content, mime, reason
@@ -104,6 +114,7 @@ async def test_hostile_inputs_never_create_handoff(
         (b"", PNG, "file_size"),
         (b"%PDF-" + b"A" * MAX_FILE_BYTES, PDF, "file_size"),
     ],
+    ids=["signature", "mime", "empty", "oversize"],
 )
 def test_binary_admission_limits(content, mime, code):
     with pytest.raises(BoundaryError, match=code):
@@ -344,3 +355,11 @@ async def test_invalid_source_key_and_mime_http_errors_are_fixed(client):
 
 async def test_extractor_contract_excludes_unsupported_fields():
     assert (await RuleInvoiceExtractor().extract(INVOICE_TEXT)).fields["total"] == "125.50"
+
+
+async def test_http_schema_error_never_reflects_input_text(client):
+    response = await client.post(
+        "/documents", json={"source_key": "x", "version": True, "text": "private-input-text"}
+    )
+    assert response.status_code == 422 and response.json()["code"] == "invalid_request"
+    assert "private-input-text" not in response.text
