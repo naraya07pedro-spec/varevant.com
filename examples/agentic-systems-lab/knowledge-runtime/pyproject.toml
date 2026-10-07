@@ -47,6 +47,7 @@ addopts = "-ra --strict-markers"
 markers = ["integration: real PostgreSQL/pgvector", "wire: native MCP stdio subprocess"]
 
 [tool.coverage.run]
+core = "ctrace"
 source = ["knowledge_runtime"]
 branch = true
 patch = ["subprocess"]
