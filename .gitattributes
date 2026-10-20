@@ -1,0 +1,5 @@
+dist/** linguist-vendored
+build/** linguist-vendored
+public/*.html linguist-vendored
+*.min.js linguist-vendored
+*.min.css linguist-vendored
